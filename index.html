@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wealth OS - Stoic Sovereign</title>
+    <title>Wealth OS - The Sovereign Guardian</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
             content: '';
             position: fixed; inset: 0;
             pointer-events: none;
-            opacity: .02; 
+            opacity: .022; 
             background-image: radial-gradient(#fff 1px, transparent 1px);
             background-size: 4px 4px;
             z-index: 100;
@@ -32,7 +32,7 @@
             font-variant-numeric: tabular-nums;
             letter-spacing: -0.06em;
             color: #f5f5f4;
-            filter: drop-shadow(0 0 30px rgba(255,255,255,0.05));
+            filter: drop-shadow(0 0 40px rgba(255,255,255,0.05));
         }
 
         #tap-container {
@@ -51,12 +51,12 @@
             background: radial-gradient(circle, transparent 35%, #020202 92%);
         }
 
-        /* Premium Mascot Filter Logic */
+        /* The Premium Guardian Filter */
         #capy-img {
             filter: 
                 drop-shadow(0 50px 100px rgba(0,0,0,0.95))
-                contrast(1.05)
-                saturate(0.85);
+                contrast(1.08)
+                saturate(0.8);
         }
     </style>
 </head>
@@ -64,17 +64,17 @@
 
     <header class="relative z-50 p-8 flex justify-between items-start opacity-25">
         <div class="flex flex-col gap-0.5">
-            <p class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em]">Network.Status</p>
-            <p class="text-[10px] font-bold tracking-tighter text-zinc-500">Sovereign_Asset_v6</p>
+            <p class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em]">System.Secure</p>
+            <p class="text-[10px] font-bold tracking-tighter text-zinc-500">Guardian_Asset_v6.1</p>
         </div>
         <div class="flex items-center gap-2">
             <div class="w-1 h-1 rounded-full bg-emerald-500/30"></div>
-            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-widest">Authorized</span>
+            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-widest">Node_Active</span>
         </div>
     </header>
 
     <div class="relative z-50 text-center mt-4">
-        <p class="text-[8px] font-black text-zinc-800 uppercase tracking-[0.8em] mb-4">Total Liquid Assets</p>
+        <p class="text-[8px] font-black text-zinc-800 uppercase tracking-[0.8em] mb-4">Net Capital Concentration</p>
         <div class="flex items-baseline justify-center">
             <h1 id="score" class="text-7xl font-black">0</h1>
             <span class="text-xl font-bold text-zinc-800 tabular-nums ml-2 opacity-40">.00</span>
@@ -82,7 +82,7 @@
         
         <div class="mt-12 px-48">
             <div class="h-[0.5px] w-full bg-white/[0.03] relative">
-                <div id="progress-bar" class="absolute h-full bg-gradient-to-r from-white/40 to-white/0 transition-all duration-1000" style="width: 65%"></div>
+                <div id="progress-bar" class="absolute h-full bg-gradient-to-r from-white/40 to-white/0 transition-all duration-1000" style="width: 75%"></div>
             </div>
         </div>
     </div>
@@ -97,41 +97,41 @@
                 <img id="capy-img"
                     src="https://image.pollinations.ai/prompt/ultra_minimal_stoic_capybara_front_view_clean_round_face_soft_brown_fur_luxury_fintech_mascot_cinematic_shadow_black_background_high_end_3d_render_octane_symmetrical_composition_no_pig_features_no_rat_features_--ar_1:1"
                     class="relative z-10 w-64 h-64 md:w-72 md:h-72 object-contain brightness-[0.9] select-none pointer-events-none"
-                    alt="The Sovereign">
+                    alt="Stoic Guardian">
             </div>
         </div>
     </main>
 
     <div class="relative z-50 px-16 grid grid-cols-3 gap-12 mb-32">
         <div class="flex flex-col items-start opacity-20">
-            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Yield_Rate</span>
+            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Net_Yield</span>
             <span class="text-[9px] font-bold text-zinc-600 tabular-nums">+1.00</span>
         </div>
         
         <div class="py-5 bg-white/[0.01] border-x border-white/[0.02] flex flex-col items-center -translate-y-4">
-            <span class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.6em] mb-2.5">Capital_PPh</span>
+            <span class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.6em] mb-2.5">Protocol_PPh</span>
             <span class="text-xs font-black text-zinc-300 tabular-nums">7.5M</span>
         </div>
 
         <div class="flex flex-col items-end opacity-20">
-            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Node_Sync</span>
+            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Sync_Quality</span>
             <span class="text-[9px] font-bold text-zinc-600 tabular-nums">99.8%</span>
         </div>
     </div>
 
     <footer class="fixed bottom-0 left-0 right-0 h-24 bg-black/60 backdrop-blur-3xl flex items-center justify-around px-16 pb-12 z-50">
         <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="shield" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
+            <i data-lucide="shield-check" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
             <i data-lucide="bar-chart-3" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
         </div>
 
         <div class="w-10 h-10 bg-zinc-900/10 rounded-full flex items-center justify-center border border-white/5 opacity-10">
-            <i data-lucide="scan-face" class="w-3.5 h-3.5 text-white"></i>
+            <i data-lucide="scan-eye" class="w-3.5 h-3.5 text-white"></i>
         </div>
 
         <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="layers" class="w-4 h-4 text-zinc-300 transition-all cursor-pointer"></i>
-            <i data-lucide="terminal" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
+            <i data-lucide="layers-3" class="w-4 h-4 text-zinc-300 transition-all cursor-pointer"></i>
+            <i data-lucide="fingerprint" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
         </div>
     </footer>
 
@@ -143,14 +143,14 @@
         const parallaxWrap = document.getElementById('parallax-wrap');
         let currentScore = 0;
 
-        // Extreme Heavy Weight Parallax
+        // Heavy Weight Inertia
         document.addEventListener('pointermove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 320; 
-            const y = (window.innerHeight / 2 - e.clientY) / 320;
+            const x = (window.innerWidth / 2 - e.clientX) / 300; 
+            const y = (window.innerHeight / 2 - e.clientY) / 300;
             parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        // Haptic Logic
+        // Haptic Simulation
         tapContainer.addEventListener('pointerdown', (e) => {
             currentScore += 1;
             scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
@@ -160,7 +160,7 @@
                 { transform: 'translateY(0)', opacity: 1 }
             ], { duration: 50, easing: 'ease-out' });
 
-            // Micro Signal: Laser Thread
+            // The Laser Signal
             const signal = document.createElement('div');
             signal.className = 'fixed w-[0.5px] h-4 bg-white/10 pointer-events-none z-[60]';
             signal.style.left = `${e.clientX}px`; 

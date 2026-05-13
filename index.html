@@ -26,6 +26,7 @@ body{
   user-select:none;
   color:#e7e5e4;
   background:#05070a;
+  padding-bottom:20px; /* ⬅️ biar nggak nempel bawah */
 }
 
 body::after{
@@ -131,6 +132,8 @@ body::after{
 .footer-blur{
   background:rgba(5,7,10,.9);
   border-top:1px solid rgba(34,211,238,.1);
+  padding-bottom:18px;   /* ⬅️ kasih ruang bawah */
+  height:90px;           /* ⬅️ sedikit lebih lega */
 }
 
 .nav-icon{color:#3f3f46;transition:.3s;}
@@ -220,19 +223,19 @@ body::after{
   </div>
 </section>
 
-<footer class="fixed bottom-0 left-0 right-0 h-20 footer-blur flex items-center justify-around px-10 pb-4 z-50">
-  <div class="flex gap-12">
+<footer class="fixed bottom-0 left-0 right-0 h-24 footer-blur flex items-center justify-around px-10 pb-6 z-50">
+  <div class="flex gap-14">
     <i data-lucide="database" class="nav-icon w-5 h-5 cursor-pointer" onclick="location.href='nodes.html'"></i>
     <i data-lucide="activity" class="nav-icon w-5 h-5 cursor-pointer" onclick="location.href='stats.html'"></i>
   </div>
 
-  <div class="absolute -top-6 left-1/2 -translate-x-1/2">
+  <div class="absolute -top-8 left-1/2 -translate-x-1/2">
     <div class="w-16 h-16 bg-zinc-950 border border-cyan-500/40 rounded-xl flex items-center justify-center rotate-45 active:scale-90 transition-transform cursor-pointer shadow-[0_0_20px_rgba(34,211,238,0.2)]" onclick="location.href='exec.html'">
       <div class="-rotate-45 text-[9px] font-black text-cyan-400 tracking-tighter">EXEC</div>
     </div>
   </div>
 
-  <div class="flex gap-12">
+  <div class="flex gap-14">
     <i data-lucide="shield" class="nav-icon active w-5 h-5 cursor-pointer" onclick="location.href='security.html'"></i>
     <i data-lucide="cpu" class="nav-icon w-5 h-5 cursor-pointer" onclick="location.href='terminal.html'"></i>
   </div>

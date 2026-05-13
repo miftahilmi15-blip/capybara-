@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CapyTap Crypto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; touch-action: manipulation; }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tap-animation {
+            animation: push 0.1s ease-out;
+        }
+
+        @keyframes push {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); }
+            100% { transform: scale(1); }
+        }
+
+        .float-plus {
+            position: absolute;
+            animation: floatUp 0.8s ease-out forwards;
+            pointer-events: none;
+            font-weight: 800;
+            color: #fbbf24;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-100px) scale(1.5); }
+        }
+
+        /* Navigasi bawah */
+        .nav-item.active {
+            color: #fbbf24;
+            border-top: 2px solid #fbbf24;
+        }
+    </style>
+</head>
+<body class="bg-[#0f172a] text-white overflow-hidden h-screen flex flex-col items-center">
+
+    <div class="w-full p-4 flex justify-between items-center z-20">
+        <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-slate-900">M</div>
+            <span class="font-semibold text-sm">Miftah_Dev</span>
+        </div>
+        <div class="glass px-3 py-1 rounded-full text-xs flex items-center gap-2 border-yellow-500/50 text-yellow-400">
+            <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+            Wallet Connected
+        </div>
+    </div>
+
+    <div class="mt-8 text-center z-20">
+        <p class="text-slate-400 text-xs uppercase tracking-[0.2em] mb-1 font-bold">Total Earnings</p>
+        <div class="flex items-center justify-center gap-3">
+            <img src="https://img.icons8.com/emoji/96/gold-coin.png" class="w-10 h-10" alt="coin">
+            <h1 id="main-score" class="text-5xl font-extrabold tracking-tight">0</h1>
+        </div>
+    </div>
+
+    <div class="relative flex-grow flex items-center justify-center w-full z-10">
+        <div class="absolute w-64 h-64 bg-yellow-500/20 rounded-full blur-[80px]"></div>
+        
+        <div id="tap-container" class="relative group cursor-pointer">
+            <div id="float-container" class="absolute inset-0 pointer-events-none"></div>
+            
+            <img id="char-image" 
+                 src="https://image.pollinations.ai/prompt/Cute_chubby_capybara_character_wearing_gold_sunglasses_and_a_small_crown,_high_quality_2D_digital_art,_smooth_shading,_vector_style,_clean_lines,_centered_on_dark_background_--ar_1:1" 
+                 class="w-64 h-64 md:w-80 md:h-80 object-contain drop-shadow-[0_20px_50px_rgba(251,191,36,0.3)] transition-transform duration-75"
+                 alt="Capybara Hero">
+        </div>
+    </div>
+
+    <div class="w-full max-w-md px-6 pb-24 z-20">
+        <div class="glass rounded-2xl p-4 mb-4">
+            <div class="flex justify-between items-center mb-2">
+                <div class="flex items-center gap-2">
+                    <span>⚡</span>
+                    <span class="text-sm font-bold">Energy</span>
+                </div>
+                <span class="text-sm font-bold"><span id="current-energy">1000</span> / 1000</span>
+            </div>
+            <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+                <div id="energy-progress" class="h-full bg-gradient-to-r from-yellow-600 to-yellow-400 w-full transition-all duration-300"></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+            <div class="glass p-3 rounded-xl flex items-center justify-between">
+                <span class="text-[10px] text-slate-400">Profit/Tap</span>
+                <span class="text-yellow-400 font-bold">+1</span>
+            </div>
+            <div class="glass p-3 rounded-xl flex items-center justify-between">
+                <span class="text-[10px] text-slate-400">Profit/Hour</span>
+                <span class="text-green-400 font-bold">0</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-4 left-4 right-4 h-20 glass rounded-3xl flex items-center justify-around px-2 border-t border-white/10 z-30">
+        <div class="nav-item active flex flex-col items-center gap-1 cursor-pointer pt-2">
+            <span class="text-xl">🏠</span>
+            <span class="text-[10px]">Home</span>
+        </div>
+        <div class="nav-item flex flex-col items-center gap-1 cursor-pointer opacity-50">
+            <span class="text-xl">🛠️</span>
+            <span class="text-[10px]">Upgrade</span>
+        </div>
+        <div class="nav-item flex flex-col items-center gap-1 cursor-pointer opacity-50 text-center">
+            <span class="text-xl">👥</span>
+            <span class="text-[10px]">Friends</span>
+        </div>
+        <div class="nav-item flex flex-col items-center gap-1 cursor-pointer opacity-50">
+            <span class="text-xl">👻</span>
+            <span class="text-[10px]">Airdrop</span>
+        </div>
+    </div>
+
+    <script>
+        const scoreDisplay = document.getElementById('main-score');
+        const energyDisplay = document.getElementById('current-energy');
+        const energyBar = document.getElementById('energy-progress');
+        const charImage = document.getElementById('char-image');
+        const floatContainer = document.getElementById('float-container');
+        const tapContainer = document.getElementById('tap-container');
+
+        let score = parseInt(localStorage.getItem('capyScore')) || 0;
+        let energy = 1000;
+        const maxEnergy = 1000;
+
+        scoreDisplay.innerText = score.toLocaleString();
+
+        tapContainer.addEventListener('click', (e) => {
+            if (energy > 0) {
+                // Logic update
+                score += 1;
+                energy -= 1;
+                
+                // Save to local (buat sementara sblm kmu bikin backend)
+                localStorage.setItem('capyScore', score);
+
+                // UI Update
+                updateUI();
+                
+                // Animasi Gambar
+                charImage.classList.remove('tap-animation');
+                void charImage.offsetWidth; // Trigger reflow
+                charImage.classList.add('tap-animation');
+
+                // Floating Text
+                showFloatingText(e);
+            }
+        });
+
+        function updateUI() {
+            scoreDisplay.innerText = score.toLocaleString();
+            energyDisplay.innerText = energy;
+            energyBar.style.width = `${(energy / maxEnergy) * 100}%`;
+        }
+
+        function showFloatingText(e) {
+            const plusText = document.createElement('div');
+            plusText.className = 'float-plus';
+            plusText.innerText = '+1';
+            
+            // Atur posisi tepat di tempat jari ngetap
+            plusText.style.left = `${e.clientX - 20}px`;
+            plusText.style.top = `${e.clientY - 40}px`;
+            plusText.style.position = 'fixed';
+
+            document.body.appendChild(plusText);
+            
+            setTimeout(() => {
+                plusText.remove();
+            }, 800);
+        }
+
+        // Auto Regen Energy (1 energi tiap 1.5 detik)
+        setInterval(() => {
+            if (energy < maxEnergy) {
+                energy += 1;
+                updateUI();
+            }
+        }, 1500);
+
+    </script>
+</body>
+</html>

@@ -26,27 +26,26 @@
       color:#e7e5e4;
     }
 
-    /* soft grain */
     body::before{
       content:'';
       position:fixed;
       inset:0;
       pointer-events:none;
-      opacity:.03;
+      opacity:.025;
       background-image:
-      radial-gradient(rgba(255,255,255,.7) 1px, transparent 1px);
+      radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px);
       background-size:4px 4px;
       z-index:999;
     }
 
-    /* glow bg */
     .orb{
       position:absolute;
       width:420px;
       height:420px;
       border-radius:999px;
-      background:radial-gradient(circle, rgba(34,211,238,.10), transparent 70%);
-      filter:blur(40px);
+      background:
+      radial-gradient(circle, rgba(34,211,238,.08), transparent 70%);
+      filter:blur(45px);
       z-index:0;
     }
 
@@ -54,6 +53,7 @@
       background:rgba(255,255,255,.03);
       border:1px solid rgba(255,255,255,.05);
       backdrop-filter:blur(20px);
+
       box-shadow:
       0 10px 40px rgba(0,0,0,.45),
       inset 0 1px 0 rgba(255,255,255,.02);
@@ -63,6 +63,7 @@
       font-variant-numeric:tabular-nums;
       letter-spacing:-0.06em;
       color:#22d3ee;
+
       text-shadow:
       0 0 25px rgba(34,211,238,.25),
       0 0 60px rgba(34,211,238,.12);
@@ -101,11 +102,11 @@
     /* pedestal */
     .pedestal{
       position:absolute;
-      bottom:-10px;
+      bottom:6px;
       left:50%;
       transform:translateX(-50%);
-      width:260px;
-      height:60px;
+      width:210px;
+      height:48px;
       border-radius:999px;
 
       background:
@@ -120,37 +121,46 @@
       backdrop-filter:blur(10px);
 
       box-shadow:
-      0 30px 80px rgba(0,0,0,.9),
+      0 20px 60px rgba(0,0,0,.9),
       inset 0 2px 6px rgba(255,255,255,.03);
 
       z-index:1;
     }
 
-    /* shadow */
     .capy-shadow{
       position:absolute;
-      width:220px;
-      height:50px;
+      width:180px;
+      height:35px;
       background:black;
       opacity:.75;
       border-radius:999px;
-      filter:blur(30px);
+      filter:blur(24px);
 
       left:50%;
-      bottom:-20px;
+      bottom:-6px;
       transform:translateX(-50%);
       z-index:0;
     }
 
-    /* capybara */
     #capy-img{
       position:relative;
       z-index:5;
 
+      width:270px;
+      height:270px;
+      object-fit:contain;
+
       filter:
-      drop-shadow(0 40px 80px rgba(0,0,0,.85));
+      drop-shadow(0 30px 60px rgba(0,0,0,.8));
 
       animation:float 6s ease-in-out infinite;
+    }
+
+    @media (min-width:768px){
+      #capy-img{
+        width:320px;
+        height:320px;
+      }
     }
 
     @keyframes float{
@@ -158,7 +168,7 @@
         transform:translateY(0px);
       }
       50%{
-        transform:translateY(-10px);
+        transform:translateY(-8px);
       }
     }
 
@@ -169,7 +179,7 @@
       pointer-events:none;
 
       background:
-      radial-gradient(circle, transparent 28%, #020202 88%);
+      radial-gradient(circle, transparent 30%, #020202 88%);
     }
 
     .footer-blur{
@@ -202,7 +212,6 @@
 
 <body class="h-screen flex flex-col">
 
-  <!-- ambient orb -->
   <div class="orb left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
 
   <!-- HEADER -->
@@ -267,7 +276,7 @@
   </section>
 
   <!-- MAIN -->
-  <main class="flex-grow relative flex items-center justify-center -mt-6">
+  <main class="flex-grow relative flex items-center justify-center -mt-2">
 
     <div id="tap-container" class="relative cursor-pointer">
 
@@ -278,12 +287,12 @@
 
         <div class="char-mask scale-125"></div>
 
-        <!-- FULL BODY CAPYBARA -->
+        <!-- CAPYBARA -->
         <img
           id="capy-img"
-          src="https://image.pollinations.ai/prompt/full_body_realistic_capybara_standing_on_black_luxury_pedestal_soft_cinematic_lighting_brown_fur_realistic_proportions_clean_background_premium_3d_render_front_view_--ar_1:1"
-          class="w-[340px] h-[340px] md:w-[430px] md:h-[430px] object-contain pointer-events-none select-none"
+          src="https://image.pollinations.ai/prompt/full_body_realistic_capybara_brown_fur_standing_on_black_luxury_platform_soft_cinematic_lighting_clean_background_ultra_realistic_3d_render_front_view_subtle_shadow_--ar_1:1"
           alt="Capybara"
+          class="pointer-events-none select-none"
         />
 
       </div>
@@ -377,10 +386,10 @@
     document.addEventListener('pointermove', (e) => {
 
       const x =
-      (window.innerWidth / 2 - e.clientX) / 50;
+      (window.innerWidth / 2 - e.clientX) / 70;
 
       const y =
-      (window.innerHeight / 2 - e.clientY) / 50;
+      (window.innerHeight / 2 - e.clientY) / 70;
 
       parallaxWrap.style.transform =
       `translate(${x}px, ${y}px)`;
@@ -395,16 +404,14 @@
       scoreEl.innerText =
       Math.floor(currentScore).toLocaleString('en-US');
 
-      // progress movement
       const progress =
       Math.min(100, 75 + currentScore * 0.15);
 
       progressBar.style.width = `${progress}%`;
 
-      // score snap
       scoreEl.animate([
         {
-          transform:'scale(1.06)',
+          transform:'scale(1.05)',
           opacity:.8
         },
         {
@@ -417,7 +424,6 @@
         easing:'ease-out'
       });
 
-      // pulse signal
       const signal =
       document.createElement('div');
 

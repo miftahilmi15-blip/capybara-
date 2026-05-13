@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+
 *{
   margin:0;
   padding:0;
@@ -25,7 +26,9 @@ body{
   touch-action:none;
   user-select:none;
   color:#e7e5e4;
-  background: radial-gradient(circle at top,#0b1117 0%,#030303 50%,#000 100%);
+
+  background:
+  radial-gradient(circle at top,#0b1117 0%,#030303 50%,#000 100%);
 }
 
 body::before{
@@ -34,23 +37,72 @@ body::before{
   inset:0;
   pointer-events:none;
   opacity:.02;
-  background-image: radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px);
+
+  background-image:
+  radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px);
+
   background-size:4px 4px;
   z-index:999;
 }
+
+/* ===== ORB ===== */
 
 .main-orb{
   position:absolute;
   width:520px;
   height:520px;
   border-radius:999px;
-  background: radial-gradient(circle, rgba(34,211,238,.12), transparent 70%);
+
+  background:
+  radial-gradient(circle, rgba(34,211,238,.12), transparent 70%);
+
   filter:blur(60px);
+
   left:50%;
   top:48%;
   transform:translate(-50%,-50%);
   z-index:0;
 }
+
+/* ===== RING ===== */
+
+.stoic-ring{
+  position:absolute;
+  inset:50%;
+
+  width:430px;
+  height:430px;
+
+  transform:translate(-50%,-50%);
+  border-radius:999px;
+
+  border:1px solid rgba(103,232,249,.08);
+
+  z-index:1;
+
+  animation:ringRotate 20s linear infinite;
+}
+
+.stoic-ring::before{
+  content:'';
+  position:absolute;
+  inset:18px;
+
+  border-radius:999px;
+  border:1px solid rgba(103,232,249,.04);
+}
+
+@keyframes ringRotate{
+  from{
+    transform:translate(-50%,-50%) rotate(0deg);
+  }
+
+  to{
+    transform:translate(-50%,-50%) rotate(360deg);
+  }
+}
+
+/* ===== PARTICLES ===== */
 
 .particles{
   position:absolute;
@@ -64,238 +116,499 @@ body::before{
   width:2px;
   height:2px;
   border-radius:999px;
+
   background:#67e8f9;
+
   opacity:.5;
+
   animation:floatParticle linear infinite;
 }
 
 @keyframes floatParticle{
-  from{ transform:translateY(0px); opacity:0; }
-  30%{ opacity:.6; }
-  to{ transform:translateY(-120px); opacity:0; }
+
+  from{
+    transform:translateY(0px);
+    opacity:0;
+  }
+
+  30%{
+    opacity:.6;
+  }
+
+  to{
+    transform:translateY(-120px);
+    opacity:0;
+  }
+
 }
+
+/* ===== GLASS ===== */
 
 .glass{
   background:rgba(255,255,255,.03);
+
   border:1px solid rgba(255,255,255,.05);
+
   backdrop-filter:blur(24px);
-  box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
+
+  box-shadow:
+  0 10px 40px rgba(0,0,0,.45),
+  inset 0 1px 0 rgba(255,255,255,.03);
 }
+
+/* ===== SCORE ===== */
 
 #score{
   font-variant-numeric:tabular-nums;
   letter-spacing:-0.06em;
   color:#22d3ee;
-  text-shadow: 0 0 30px rgba(34,211,238,.35), 0 0 80px rgba(34,211,238,.15);
+
+  text-shadow:
+  0 0 30px rgba(34,211,238,.35),
+  0 0 80px rgba(34,211,238,.15);
+
   animation:breathe 5s ease-in-out infinite;
 }
 
 @keyframes breathe{
-  0%,100%{ text-shadow: 0 0 20px rgba(34,211,238,.25), 0 0 60px rgba(34,211,238,.1); }
-  50%{ text-shadow: 0 0 45px rgba(34,211,238,.45), 0 0 100px rgba(34,211,238,.18); }
+
+  0%,100%{
+    text-shadow:
+    0 0 20px rgba(34,211,238,.25),
+    0 0 60px rgba(34,211,238,.1);
+  }
+
+  50%{
+    text-shadow:
+    0 0 45px rgba(34,211,238,.45),
+    0 0 100px rgba(34,211,238,.18);
+  }
+
+}
+
+/* ===== MAIN ===== */
+
+main{
+  overflow:visible;
 }
 
 #tap-container{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+  min-height:420px;
+
   transition:transform .08s ease;
   will-change:transform;
 }
 
-#tap-container:active{ transform:scale(.98); }
+#tap-container:active{
+  transform:scale(.98);
+}
 
 #parallax-wrap{
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+
+  overflow:visible;
+
   transition:transform .18s ease-out;
   will-change:transform;
 }
 
+/* ===== PEDESTAL ===== */
+
 .pedestal{
   position:absolute;
-  bottom:8px;
+
+  bottom:18px;
   left:50%;
+
   transform:translateX(-50%);
+
   width:250px;
   height:58px;
+
   border-radius:18px;
-  background: linear-gradient(to bottom, rgba(255,255,255,.09), rgba(255,255,255,.01));
+
+  background:
+  linear-gradient(
+    to bottom,
+    rgba(255,255,255,.09),
+    rgba(255,255,255,.01)
+  );
+
   border:1px solid rgba(255,255,255,.05);
-  box-shadow: 0 30px 90px rgba(0,0,0,.95), inset 0 2px 8px rgba(255,255,255,.04);
+
+  box-shadow:
+  0 30px 90px rgba(0,0,0,.95),
+  inset 0 2px 8px rgba(255,255,255,.04);
+
   backdrop-filter:blur(10px);
+
   z-index:2;
 }
 
+/* ===== SHADOW ===== */
+
 .capy-shadow{
   position:absolute;
+
   width:220px;
   height:45px;
+
   background:black;
+
   border-radius:999px;
+
   filter:blur(28px);
+
   opacity:.8;
+
   left:50%;
-  bottom:-6px;
+  bottom:4px;
+
   transform:translateX(-50%);
+
   z-index:1;
 }
+
+/* ===== CAPY ===== */
 
 #capy-img{
   position:relative;
   z-index:5;
-  width:260px;
-  height:260px;
+
+  width:100%;
+  max-width:320px;
+
+  height:auto;
+
   object-fit:contain;
-  filter: drop-shadow(0 35px 70px rgba(0,0,0,.9));
+  object-position:center bottom;
+
+  display:block;
+
+  filter:
+  drop-shadow(0 35px 70px rgba(0,0,0,.9));
+
   animation:floatCapy 6s ease-in-out infinite;
+
+  transform-origin:center bottom;
 }
 
-@media (min-width:768px){ #capy-img{ width:320px; height:320px; } }
+@media (max-width:640px){
+
+  #capy-img{
+    max-width:250px;
+  }
+
+  #tap-container{
+    min-height:350px;
+  }
+
+  .stoic-ring{
+    width:340px;
+    height:340px;
+  }
+
+}
+
+@media (min-width:641px){
+
+  #capy-img{
+    max-width:320px;
+  }
+
+}
 
 @keyframes floatCapy{
-  0%,100%{ transform:translateY(0px); }
-  50%{ transform:translateY(-10px); }
+
+  0%,100%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-10px);
+  }
+
 }
+
+/* ===== MASK ===== */
 
 .char-mask{
   position:absolute;
-  inset:0;
+  inset:-40px;
+
   pointer-events:none;
+
   z-index:10;
-  background: radial-gradient(circle, transparent 28%, #000 88%);
+
+  background:
+  radial-gradient(
+    circle,
+    transparent 38%,
+    rgba(0,0,0,.25) 70%,
+    #000 100%
+  );
 }
 
-.stoic-ring{
-  position:absolute;
-  inset:50%;
-  width:430px;
-  height:430px;
-  transform:translate(-50%,-50%);
-  border-radius:999px;
-  border:1px solid rgba(103,232,249,.08);
-  z-index:1;
-  animation:ringRotate 20s linear infinite;
-}
-
-.stoic-ring::before{
-  content:'';
-  position:absolute;
-  inset:18px;
-  border-radius:999px;
-  border:1px solid rgba(103,232,249,.04);
-}
-
-@keyframes ringRotate{
-  from{ transform:translate(-50%,-50%) rotate(0deg); }
-  to{ transform:translate(-50%,-50%) rotate(360deg); }
-}
+/* ===== FOOTER ===== */
 
 .footer-blur{
   background:rgba(8,15,25,.5);
+
   backdrop-filter:blur(30px);
+
   border-top:1px solid rgba(255,255,255,.05);
 }
 
-.lucide{ stroke-width:1.7; }
+.lucide{
+  stroke-width:1.7;
+}
 
 .nav-icon{
   color:#52525b;
+
   transition:.25s;
-  cursor: pointer; /* Biar kelihatan bisa diklik */
+
+  cursor:pointer;
 }
 
 .nav-icon:hover{
   color:#22d3ee;
+
   transform:translateY(-2px);
 }
 
 .nav-icon.active{
   color:#67e8f9;
-  filter: drop-shadow(0 0 10px rgba(34,211,238,.45));
+
+  filter:
+  drop-shadow(0 0 10px rgba(34,211,238,.45));
 }
+
 </style>
 </head>
 
 <body class="h-screen flex flex-col">
 
+<!-- ORB -->
 <div class="main-orb"></div>
+
+<!-- RING -->
 <div class="stoic-ring"></div>
+
+<!-- PARTICLES -->
 <div class="particles" id="particles"></div>
 
+<!-- HEADER -->
 <header class="relative z-50 p-6 flex justify-between items-start">
+
   <div class="glass px-5 py-3 rounded-3xl flex items-center gap-4">
+
     <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-400/10 flex items-center justify-center">
       <span class="text-cyan-400 font-black text-xs">M</span>
     </div>
+
     <div>
-      <p class="text-[9px] uppercase tracking-[0.35em] text-zinc-600 font-black mb-1">Stoic Wisdom</p>
-      <p class="text-xs text-zinc-200 font-bold tracking-tight">Miftah_Prime_System</p>
+      <p class="text-[9px] uppercase tracking-[0.35em] text-zinc-600 font-black mb-1">
+        Stoic Wisdom
+      </p>
+
+      <p class="text-xs text-zinc-200 font-bold tracking-tight">
+        Miftah_Prime_System
+      </p>
     </div>
+
   </div>
+
   <div class="glass px-4 py-3 rounded-full flex items-center gap-2">
+
     <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-    <span class="text-[9px] uppercase tracking-[0.25em] text-cyan-300 font-black">Stable Sync</span>
+
+    <span class="text-[9px] uppercase tracking-[0.25em] text-cyan-300 font-black">
+      Stable Sync
+    </span>
+
   </div>
+
 </header>
 
+<!-- SCORE -->
 <section class="relative z-40 text-center mt-3">
-  <p class="text-[10px] uppercase tracking-[0.5em] text-zinc-700 font-black mb-4">Total Allocation</p>
+
+  <p class="text-[10px] uppercase tracking-[0.5em] text-zinc-700 font-black mb-4">
+    Total Allocation
+  </p>
+
   <div class="flex items-end justify-center">
-    <h1 id="score" class="text-7xl md:text-8xl font-black">0</h1>
-    <span class="text-2xl text-cyan-900 font-black mb-2 ml-1">.00</span>
+
+    <h1 id="score" class="text-7xl md:text-8xl font-black">
+      0
+    </h1>
+
+    <span class="text-2xl text-cyan-900 font-black mb-2 ml-1">
+      .00
+    </span>
+
   </div>
+
   <div class="mt-8 px-16 md:px-40">
+
     <div class="relative h-[2px] bg-white/5 overflow-hidden rounded-full">
-      <div id="progress-bar" class="absolute left-0 top-0 h-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,.6)] transition-all duration-500" style="width:75%"></div>
+
+      <div
+        id="progress-bar"
+        class="absolute left-0 top-0 h-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,.6)] transition-all duration-500"
+        style="width:75%"
+      ></div>
+
     </div>
+
   </div>
+
 </section>
 
-<main class="flex-grow relative flex items-center justify-center -mt-3">
-  <div id="tap-container" class="relative cursor-pointer">
+<!-- MAIN -->
+<main class="flex-grow relative flex items-center justify-center -mt-2">
+
+  <div id="tap-container" class="cursor-pointer">
+
     <div class="capy-shadow"></div>
+
     <div class="pedestal"></div>
-    <div id="parallax-wrap" class="relative">
+
+    <div id="parallax-wrap">
+
       <div class="char-mask"></div>
-      <img id="capy-img" src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_--ar_1:1" alt="Capybara" class="pointer-events-none select-none" />
+
+      <img
+        id="capy-img"
+        src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1"
+        alt="Capybara"
+        class="pointer-events-none select-none"
+      />
+
     </div>
+
   </div>
+
 </main>
 
+<!-- STATS -->
 <section class="relative z-40 px-6 grid grid-cols-3 gap-4 mb-28">
+
   <div class="glass rounded-3xl py-5 flex flex-col items-center">
-    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">Yield</span>
-    <span class="text-sm text-zinc-300 font-bold tabular-nums">+1.00</span>
+
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
+      Yield
+    </span>
+
+    <span class="text-sm text-zinc-300 font-bold tabular-nums">
+      +1.00
+    </span>
+
   </div>
+
   <div class="glass rounded-3xl py-6 flex flex-col items-center -translate-y-3 border border-cyan-400/10">
-    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-black mb-2">PPh Index</span>
-    <span class="text-base text-cyan-300 font-black tabular-nums">7.5M</span>
+
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-black mb-2">
+      PPh Index
+    </span>
+
+    <span class="text-base text-cyan-300 font-black tabular-nums">
+      7.5M
+    </span>
+
   </div>
+
   <div class="glass rounded-3xl py-5 flex flex-col items-center">
-    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">Sync</span>
-    <span class="text-sm text-zinc-300 font-bold tabular-nums">98.2%</span>
+
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
+      Sync
+    </span>
+
+    <span class="text-sm text-zinc-300 font-bold tabular-nums">
+      98.2%
+    </span>
+
   </div>
+
 </section>
 
+<!-- FOOTER -->
 <footer class="fixed bottom-0 left-0 right-0 h-24 footer-blur flex items-center justify-around px-8 pb-5 z-50">
+
   <div class="flex items-center gap-10">
-    <i data-lucide="layers-3" class="nav-icon w-5 h-5" onclick="window.location.href='layers.html'"></i>
-    <i data-lucide="bar-chart-3" class="nav-icon w-5 h-5" onclick="window.location.href='stats.html'"></i>
+
+    <i
+      data-lucide="layers-3"
+      class="nav-icon w-5 h-5"
+      onclick="window.location.href='layers.html'"
+    ></i>
+
+    <i
+      data-lucide="bar-chart-3"
+      class="nav-icon w-5 h-5"
+      onclick="window.location.href='stats.html'"
+    ></i>
+
   </div>
 
+  <!-- EXEC BUTTON -->
   <div class="absolute -top-8 left-1/2 -translate-x-1/2">
+
     <div class="w-20 h-20 rounded-full p-[1px] bg-gradient-to-b from-cyan-400/30 to-transparent">
+
       <div class="w-full h-full rounded-full bg-black/70 backdrop-blur-3xl flex items-center justify-center border border-cyan-400/10">
-        <div class="w-14 h-14 rounded-full bg-cyan-400/10 border border-cyan-300/10 flex items-center justify-center active:scale-90 transition cursor-pointer" onclick="window.location.href='exec.html'">
-          <span class="text-[10px] font-black tracking-[0.25em] text-cyan-300">EXEC</span>
+
+        <div
+          class="w-14 h-14 rounded-full bg-cyan-400/10 border border-cyan-300/10 flex items-center justify-center active:scale-90 transition cursor-pointer"
+          onclick="window.location.href='exec.html'"
+        >
+
+          <span class="text-[10px] font-black tracking-[0.25em] text-cyan-300">
+            EXEC
+          </span>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
 
   <div class="flex items-center gap-10">
-    <i data-lucide="shield-check" class="nav-icon active w-5 h-5" onclick="window.location.href='security.html'"></i>
-    <i data-lucide="command" class="nav-icon w-5 h-5" onclick="window.location.href='terminal.html'"></i>
+
+    <i
+      data-lucide="shield-check"
+      class="nav-icon active w-5 h-5"
+      onclick="window.location.href='security.html'"
+    ></i>
+
+    <i
+      data-lucide="command"
+      class="nav-icon w-5 h-5"
+      onclick="window.location.href='terminal.html'"
+    ></i>
+
   </div>
+
 </footer>
 
 <script>
+
 lucide.createIcons();
 
 const scoreEl = document.getElementById('score');
@@ -303,48 +616,109 @@ const tapContainer = document.getElementById('tap-container');
 const parallaxWrap = document.getElementById('parallax-wrap');
 const progressBar = document.getElementById('progress-bar');
 
+/* SCORE */
 let currentScore = 0;
 
+/* PARTICLES */
 const particles = document.getElementById('particles');
+
 for(let i = 0; i < 28; i++){
+
   const p = document.createElement('div');
+
   p.className = 'particle';
+
   p.style.left = Math.random() * 100 + '%';
+
   p.style.top = 50 + Math.random() * 40 + '%';
-  p.style.animationDuration = 6 + Math.random() * 8 + 's';
-  p.style.animationDelay = Math.random() * 5 + 's';
+
+  p.style.animationDuration =
+  6 + Math.random() * 8 + 's';
+
+  p.style.animationDelay =
+  Math.random() * 5 + 's';
+
   particles.appendChild(p);
+
 }
 
+/* PARALLAX */
 document.addEventListener('pointermove', (e)=>{
-  const x = (window.innerWidth / 2 - e.clientX) / 70;
-  const y = (window.innerHeight / 2 - e.clientY) / 70;
-  parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
+
+  const x =
+  (window.innerWidth / 2 - e.clientX) / 70;
+
+  const y =
+  (window.innerHeight / 2 - e.clientY) / 70;
+
+  parallaxWrap.style.transform =
+  `translate(${x}px, ${y}px)`;
+
 });
 
+/* TAP */
 tapContainer.addEventListener('pointerdown',(e)=>{
+
   currentScore += 1;
-  scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
-  const progress = Math.min(100, 75 + currentScore * 0.15);
+
+  scoreEl.innerText =
+  Math.floor(currentScore).toLocaleString('en-US');
+
+  const progress =
+  Math.min(100, 75 + currentScore * 0.15);
+
   progressBar.style.width = `${progress}%`;
 
+  /* SCORE ANIM */
   scoreEl.animate([
-    { transform:'scale(1.06)', opacity:.8 },
-    { transform:'scale(1)', opacity:1 }
-  ], { duration:120, easing:'ease-out' });
+    {
+      transform:'scale(1.06)',
+      opacity:.8
+    },
+    {
+      transform:'scale(1)',
+      opacity:1
+    }
+  ],
+  {
+    duration:120,
+    easing:'ease-out'
+  });
 
-  const signal = document.createElement('div');
-  signal.className = 'fixed w-[2px] h-5 rounded-full bg-cyan-400/70 pointer-events-none z-[999]';
+  /* SIGNAL */
+  const signal =
+  document.createElement('div');
+
+  signal.className =
+  'fixed w-[2px] h-5 rounded-full bg-cyan-400/70 pointer-events-none z-[999]';
+
   signal.style.left = `${e.clientX}px`;
-  signal.style.top = `${e.clientY}px`;
-  document.body.appendChild(signal);
-  signal.animate([
-    { transform:'translateY(0) scaleY(1)', opacity:1 },
-    { transform:'translateY(-28px) scaleY(0)', opacity:0 }
-  ], { duration:500, easing:'cubic-bezier(0.4,0,0.2,1)' });
 
-  setTimeout(()=>{ signal.remove(); },500);
+  signal.style.top = `${e.clientY}px`;
+
+  document.body.appendChild(signal);
+
+  signal.animate([
+    {
+      transform:'translateY(0) scaleY(1)',
+      opacity:1
+    },
+    {
+      transform:'translateY(-28px) scaleY(0)',
+      opacity:0
+    }
+  ],
+  {
+    duration:500,
+    easing:'cubic-bezier(0.4,0,0.2,1)'
+  });
+
+  setTimeout(()=>{
+    signal.remove();
+  },500);
+
 });
+
 </script>
 
 </body>

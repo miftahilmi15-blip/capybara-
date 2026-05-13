@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<title>Wealth OS — Blank Canvas</title>
+<title>Wealth OS — Stoic Capybara</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -28,7 +28,6 @@ body{
   background: radial-gradient(circle at top,#0b1117 0%,#030303 50%,#000 100%);
 }
 
-/* subtle grain */
 body::before{
   content:'';
   position:fixed;
@@ -40,7 +39,6 @@ body::before{
   z-index:999;
 }
 
-/* cinematic cyan aura */
 .main-orb{
   position:absolute;
   width:520px;
@@ -54,7 +52,6 @@ body::before{
   z-index:0;
 }
 
-/* floating particles */
 .particles{
   position:absolute;
   inset:0;
@@ -78,7 +75,92 @@ body::before{
   to{ transform:translateY(-120px); opacity:0; }
 }
 
-/* stoic rings */
+.glass{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.05);
+  backdrop-filter:blur(24px);
+  box-shadow: 0 10px 40px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+#score{
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-0.06em;
+  color:#22d3ee;
+  text-shadow: 0 0 30px rgba(34,211,238,.35), 0 0 80px rgba(34,211,238,.15);
+  animation:breathe 5s ease-in-out infinite;
+}
+
+@keyframes breathe{
+  0%,100%{ text-shadow: 0 0 20px rgba(34,211,238,.25), 0 0 60px rgba(34,211,238,.1); }
+  50%{ text-shadow: 0 0 45px rgba(34,211,238,.45), 0 0 100px rgba(34,211,238,.18); }
+}
+
+#tap-container{
+  transition:transform .08s ease;
+  will-change:transform;
+}
+
+#tap-container:active{ transform:scale(.98); }
+
+#parallax-wrap{
+  transition:transform .18s ease-out;
+  will-change:transform;
+}
+
+.pedestal{
+  position:absolute;
+  bottom:8px;
+  left:50%;
+  transform:translateX(-50%);
+  width:250px;
+  height:58px;
+  border-radius:18px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.09), rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.05);
+  box-shadow: 0 30px 90px rgba(0,0,0,.95), inset 0 2px 8px rgba(255,255,255,.04);
+  backdrop-filter:blur(10px);
+  z-index:2;
+}
+
+.capy-shadow{
+  position:absolute;
+  width:220px;
+  height:45px;
+  background:black;
+  border-radius:999px;
+  filter:blur(28px);
+  opacity:.8;
+  left:50%;
+  bottom:-6px;
+  transform:translateX(-50%);
+  z-index:1;
+}
+
+#capy-img{
+  position:relative;
+  z-index:5;
+  width:260px;
+  height:260px;
+  object-fit:contain;
+  filter: drop-shadow(0 35px 70px rgba(0,0,0,.9));
+  animation:floatCapy 6s ease-in-out infinite;
+}
+
+@media (min-width:768px){ #capy-img{ width:320px; height:320px; } }
+
+@keyframes floatCapy{
+  0%,100%{ transform:translateY(0px); }
+  50%{ transform:translateY(-10px); }
+}
+
+.char-mask{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:10;
+  background: radial-gradient(circle, transparent 28%, #000 88%);
+}
+
 .stoic-ring{
   position:absolute;
   inset:50%;
@@ -104,33 +186,125 @@ body::before{
   to{ transform:translate(-50%,-50%) rotate(360deg); }
 }
 
-/* Container utama untuk lu isi */
-#main-viewport {
-  position: relative;
-  z-index: 50;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+.footer-blur{
+  background:rgba(8,15,25,.5);
+  backdrop-filter:blur(30px);
+  border-top:1px solid rgba(255,255,255,.05);
 }
 
+.lucide{ stroke-width:1.7; }
+
+.nav-icon{
+  color:#52525b;
+  transition:.25s;
+  cursor: pointer; /* Biar kelihatan bisa diklik */
+}
+
+.nav-icon:hover{
+  color:#22d3ee;
+  transform:translateY(-2px);
+}
+
+.nav-icon.active{
+  color:#67e8f9;
+  filter: drop-shadow(0 0 10px rgba(34,211,238,.45));
+}
 </style>
 </head>
 
-<body>
+<body class="h-screen flex flex-col">
 
 <div class="main-orb"></div>
 <div class="stoic-ring"></div>
 <div class="particles" id="particles"></div>
 
-<main id="main-viewport">
-    
-    </main>
+<header class="relative z-50 p-6 flex justify-between items-start">
+  <div class="glass px-5 py-3 rounded-3xl flex items-center gap-4">
+    <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-400/10 flex items-center justify-center">
+      <span class="text-cyan-400 font-black text-xs">M</span>
+    </div>
+    <div>
+      <p class="text-[9px] uppercase tracking-[0.35em] text-zinc-600 font-black mb-1">Stoic Wisdom</p>
+      <p class="text-xs text-zinc-200 font-bold tracking-tight">Miftah_Prime_System</p>
+    </div>
+  </div>
+  <div class="glass px-4 py-3 rounded-full flex items-center gap-2">
+    <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+    <span class="text-[9px] uppercase tracking-[0.25em] text-cyan-300 font-black">Stable Sync</span>
+  </div>
+</header>
+
+<section class="relative z-40 text-center mt-3">
+  <p class="text-[10px] uppercase tracking-[0.5em] text-zinc-700 font-black mb-4">Total Allocation</p>
+  <div class="flex items-end justify-center">
+    <h1 id="score" class="text-7xl md:text-8xl font-black">0</h1>
+    <span class="text-2xl text-cyan-900 font-black mb-2 ml-1">.00</span>
+  </div>
+  <div class="mt-8 px-16 md:px-40">
+    <div class="relative h-[2px] bg-white/5 overflow-hidden rounded-full">
+      <div id="progress-bar" class="absolute left-0 top-0 h-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,.6)] transition-all duration-500" style="width:75%"></div>
+    </div>
+  </div>
+</section>
+
+<main class="flex-grow relative flex items-center justify-center -mt-3">
+  <div id="tap-container" class="relative cursor-pointer">
+    <div class="capy-shadow"></div>
+    <div class="pedestal"></div>
+    <div id="parallax-wrap" class="relative">
+      <div class="char-mask"></div>
+      <img id="capy-img" src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_--ar_1:1" alt="Capybara" class="pointer-events-none select-none" />
+    </div>
+  </div>
+</main>
+
+<section class="relative z-40 px-6 grid grid-cols-3 gap-4 mb-28">
+  <div class="glass rounded-3xl py-5 flex flex-col items-center">
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">Yield</span>
+    <span class="text-sm text-zinc-300 font-bold tabular-nums">+1.00</span>
+  </div>
+  <div class="glass rounded-3xl py-6 flex flex-col items-center -translate-y-3 border border-cyan-400/10">
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-black mb-2">PPh Index</span>
+    <span class="text-base text-cyan-300 font-black tabular-nums">7.5M</span>
+  </div>
+  <div class="glass rounded-3xl py-5 flex flex-col items-center">
+    <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">Sync</span>
+    <span class="text-sm text-zinc-300 font-bold tabular-nums">98.2%</span>
+  </div>
+</section>
+
+<footer class="fixed bottom-0 left-0 right-0 h-24 footer-blur flex items-center justify-around px-8 pb-5 z-50">
+  <div class="flex items-center gap-10">
+    <i data-lucide="layers-3" class="nav-icon w-5 h-5" onclick="window.location.href='layers.html'"></i>
+    <i data-lucide="bar-chart-3" class="nav-icon w-5 h-5" onclick="window.location.href='stats.html'"></i>
+  </div>
+
+  <div class="absolute -top-8 left-1/2 -translate-x-1/2">
+    <div class="w-20 h-20 rounded-full p-[1px] bg-gradient-to-b from-cyan-400/30 to-transparent">
+      <div class="w-full h-full rounded-full bg-black/70 backdrop-blur-3xl flex items-center justify-center border border-cyan-400/10">
+        <div class="w-14 h-14 rounded-full bg-cyan-400/10 border border-cyan-300/10 flex items-center justify-center active:scale-90 transition cursor-pointer" onclick="window.location.href='exec.html'">
+          <span class="text-[10px] font-black tracking-[0.25em] text-cyan-300">EXEC</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-10">
+    <i data-lucide="shield-check" class="nav-icon active w-5 h-5" onclick="window.location.href='security.html'"></i>
+    <i data-lucide="command" class="nav-icon w-5 h-5" onclick="window.location.href='terminal.html'"></i>
+  </div>
+</footer>
 
 <script>
 lucide.createIcons();
 
-/* logic partikel tetap jalan biar background hidup */
+const scoreEl = document.getElementById('score');
+const tapContainer = document.getElementById('tap-container');
+const parallaxWrap = document.getElementById('parallax-wrap');
+const progressBar = document.getElementById('progress-bar');
+
+let currentScore = 0;
+
 const particles = document.getElementById('particles');
 for(let i = 0; i < 28; i++){
   const p = document.createElement('div');
@@ -142,14 +316,35 @@ for(let i = 0; i < 28; i++){
   particles.appendChild(p);
 }
 
-/* parallax effect tetap aktif di background */
 document.addEventListener('pointermove', (e)=>{
-  const x = (window.innerWidth / 2 - e.clientX) / 80;
-  const y = (window.innerHeight / 2 - e.clientY) / 80;
-  const ring = document.querySelector('.stoic-ring');
-  if(ring) ring.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+  const x = (window.innerWidth / 2 - e.clientX) / 70;
+  const y = (window.innerHeight / 2 - e.clientY) / 70;
+  parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
 });
 
+tapContainer.addEventListener('pointerdown',(e)=>{
+  currentScore += 1;
+  scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
+  const progress = Math.min(100, 75 + currentScore * 0.15);
+  progressBar.style.width = `${progress}%`;
+
+  scoreEl.animate([
+    { transform:'scale(1.06)', opacity:.8 },
+    { transform:'scale(1)', opacity:1 }
+  ], { duration:120, easing:'ease-out' });
+
+  const signal = document.createElement('div');
+  signal.className = 'fixed w-[2px] h-5 rounded-full bg-cyan-400/70 pointer-events-none z-[999]';
+  signal.style.left = `${e.clientX}px`;
+  signal.style.top = `${e.clientY}px`;
+  document.body.appendChild(signal);
+  signal.animate([
+    { transform:'translateY(0) scaleY(1)', opacity:1 },
+    { transform:'translateY(-28px) scaleY(0)', opacity:0 }
+  ], { duration:500, easing:'cubic-bezier(0.4,0,0.2,1)' });
+
+  setTimeout(()=>{ signal.remove(); },500);
+});
 </script>
 
 </body>

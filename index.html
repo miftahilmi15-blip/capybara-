@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Miftah Wealth OS - Institutional Build</title>
+    <title>Wealth OS - Institutional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
@@ -11,130 +11,123 @@
         body { 
             font-family: 'Inter', sans-serif; 
             background: #050505; 
-            color: #fff; 
+            color: #d6d3d1; /* Softened base white */
             touch-action: none; 
             overflow: hidden;
             user-select: none;
         }
 
-        /* Subtle Noise Layer - The "Analog" Texture */
+        /* Material Simulation: Whispering Noise */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             pointer-events: none;
-            opacity: .018;
-            background-image: radial-gradient(rgba(255,255,255,.6) 1px, transparent 1px);
+            opacity: .022; /* Slightly increased for T450 display depth */
+            background-image: radial-gradient(#fff 1px, transparent 1px);
             background-size: 4px 4px;
             z-index: 100;
         }
 
-        /* Institutional Hard Edges */
-        .stats-panel { 
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.04);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
         #score {
             font-variant-numeric: tabular-nums;
-            letter-spacing: -0.04em;
-            text-shadow: 0 0 30px rgba(255,255,255,0.05);
+            letter-spacing: -0.05em;
+            color: #f5f5f4; /* Warmer White */
         }
 
-        /* Interaction: Snap over Bounce */
+        /* Movement Physics: Dense & Heavy */
         #tap-container {
-            transition: transform 0.06s ease-out;
+            transition: transform 0.05s cubic-bezier(0.2, 0, 0, 1);
             will-change: transform;
         }
         #tap-container:active {
-            transform: scale(0.98);
+            transform: scale(0.985) translateY(1px);
         }
 
         #parallax-wrap {
-            transition: transform 0.2s ease-out;
+            transition: transform 0.4s cubic-bezier(0.1, 0, 0, 1);
         }
 
-        /* The Ghost Mask - Character focus */
         .char-mask {
-            background: radial-gradient(circle, transparent 30%, #050505 85%);
+            background: radial-gradient(circle, transparent 20%, #050505 90%);
         }
 
-        /* Icon Utility */
-        .lucide { stroke-width: 2px; }
+        .stats-panel-ghost { 
+            background: rgba(255,255,255,0.015);
+            /* Border removed for luxury feel */
+        }
+
+        .stats-panel-center {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+        }
     </style>
 </head>
 <body class="h-screen flex flex-col">
 
-    <header class="relative z-50 p-6 flex justify-between items-center">
-        <div class="flex items-center gap-3 stats-panel py-2.5 px-4 rounded-2xl">
-            <div class="w-7 h-7 rounded-lg bg-white/5 flex items-center justify-center font-black text-white/40 text-[10px]">M</div>
-            <div>
-                <p class="text-[8px] text-zinc-600 font-black uppercase tracking-[0.2em] leading-none mb-1">Operator</p>
-                <p class="text-xs font-bold tracking-tight text-zinc-200">Miftah_Dev</p>
-            </div>
+    <header class="relative z-50 p-8 flex justify-between items-start opacity-60">
+        <div>
+            <p class="text-[9px] font-black text-zinc-700 uppercase tracking-[0.3em] mb-1">Authenticated</p>
+            <p class="text-[11px] font-bold tracking-tight text-zinc-400">Miftah_Daily_Hub.terminal</p>
         </div>
-        <div class="stats-panel px-4 py-2.5 rounded-2xl flex items-center gap-2">
-            <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
-            <span class="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Network Live</span>
+        <div class="flex items-center gap-2">
+            <div class="w-1 h-1 rounded-full bg-emerald-500/50"></div>
+            <span class="text-[8px] font-black text-zinc-700 uppercase tracking-widest">Stable Sync</span>
         </div>
     </header>
 
-    <div class="relative z-50 text-center mt-4">
-        <p class="text-[10px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-4">Total Allocation</p>
-        <div class="flex items-baseline justify-center gap-1">
-            <h1 id="score" class="text-7xl font-black text-white">0</h1>
-            <span class="text-xl font-bold text-zinc-700 tabular-nums">.00</span>
+    <div class="relative z-50 text-center mt-2 flex-shrink-0">
+        <p class="text-[10px] font-black text-zinc-800 uppercase tracking-[0.5em] mb-3">Net Capital Allocation</p>
+        <div class="flex items-baseline justify-center">
+            <h1 id="score" class="text-7xl font-black">0</h1>
+            <span class="text-xl font-bold text-zinc-800 tabular-nums ml-1">.00</span>
         </div>
         
-        <div class="mt-8 px-28">
-            <div class="h-[1px] bg-white/5 w-full relative">
-                <div id="progress-bar" class="absolute h-full bg-white/40 transition-all duration-700" style="width: 45%"></div>
+        <div class="mt-8 px-32">
+            <div class="h-[1px] bg-white/[0.03] w-full">
+                <div id="progress-bar" class="h-full bg-white/20 transition-all duration-1000" style="width: 75%"></div>
             </div>
         </div>
     </div>
 
-    <main class="relative flex-grow flex items-center justify-center z-10">
+    <main class="relative flex-grow flex items-center justify-center z-10 -mt-8">
         <div id="tap-container" class="relative cursor-pointer">
-            <div id="parallax-wrap" class="relative">
-                <div class="absolute inset-0 z-20 pointer-events-none char-mask scale-110"></div>
+            <div id="parallax-wrap" class="relative left-1"> <div class="absolute inset-0 z-20 pointer-events-none char-mask scale-125"></div>
                 <img id="capy-img"
-                    src="https://image.pollinations.ai/prompt/hyper-realistic_3D_capybara_obsidian_texture_minimalist_lighting_black_background_high_fashion_style_--ar_1:1"
-                    class="relative z-10 w-72 h-72 md:w-96 md:h-96 object-contain grayscale-[0.2] brightness-[0.9] contrast-[1.1] select-none pointer-events-none"
-                    alt="Asset">
+                    src="https://image.pollinations.ai/prompt/3D_render_of_a_capybara_made_of_black_obsidian_matte_finish_dramatic_studio_lighting_from_top_extreme_minimalism_--ar_1:1"
+                    class="relative z-10 w-72 h-72 md:w-80 md:h-80 object-contain grayscale-[0.4] brightness-[0.8] contrast-[1.2] select-none pointer-events-none opacity-90"
+                    alt="Core">
             </div>
         </div>
     </main>
 
-    <div class="relative z-50 px-8 grid grid-cols-3 gap-4 mb-24">
-        <div class="stats-panel py-4 rounded-2xl flex flex-col items-center">
-            <span class="text-[8px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-2">Tap Yield</span>
-            <span class="text-sm font-bold text-zinc-300 tabular-nums">+1.00</span>
+    <div class="relative z-50 px-10 grid grid-cols-3 gap-6 mb-28">
+        <div class="stats-panel-ghost py-4 rounded-2xl flex flex-col items-center">
+            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-[0.25em] mb-2">Yield / Tap</span>
+            <span class="text-xs font-bold text-zinc-500 tabular-nums">+1.00</span>
         </div>
-        <div class="stats-panel py-4 rounded-2xl flex flex-col items-center border-white/10">
-            <span class="text-[8px] font-black text-zinc-500 uppercase tracking-[0.2em] mb-2">Current PPh</span>
-            <span class="text-sm font-bold text-white tabular-nums">7.5M</span>
+        <div class="stats-panel-center py-5 rounded-2xl flex flex-col items-center -translate-y-2">
+            <span class="text-[8px] font-black text-zinc-500 uppercase tracking-[0.3em] mb-2">Hourly PPh</span>
+            <span class="text-sm font-black text-zinc-200 tabular-nums">7.5M</span>
         </div>
-        <div class="stats-panel py-4 rounded-2xl flex flex-col items-center">
-            <span class="text-[8px] font-black text-zinc-600 uppercase tracking-[0.2em] mb-2">Efficiency</span>
-            <span class="text-sm font-bold text-zinc-300 tabular-nums">98%</span>
+        <div class="stats-panel-ghost py-4 rounded-2xl flex flex-col items-center">
+            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-[0.25em] mb-2">Efficiency</span>
+            <span class="text-xs font-bold text-zinc-500 tabular-nums">98.2%</span>
         </div>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 h-20 bg-black/80 backdrop-blur-2xl border-t border-white/[0.02] flex items-center justify-around px-10 pb-4 z-50">
-        <div class="flex items-center gap-10">
-            <i data-lucide="layers" class="text-zinc-600 w-5 h-5"></i>
-            <i data-lucide="bar-chart-3" class="text-zinc-600 w-5 h-5"></i>
+    <footer class="fixed bottom-0 left-0 right-0 h-24 bg-black/60 backdrop-blur-3xl flex items-center justify-around px-12 pb-6 z-50">
+        <div class="flex items-center gap-12 text-zinc-700">
+            <i data-lucide="layout-grid" class="w-5 h-5 hover:text-zinc-500 transition-colors"></i>
+            <i data-lucide="zap" class="w-5 h-5 hover:text-zinc-500 transition-colors"></i>
         </div>
 
-        <div class="absolute -top-6 left-1/2 -translate-x-1/2">
-            <div class="w-14 h-14 bg-zinc-900 rounded-full flex items-center justify-center border border-white/5 active:scale-90 transition-all">
-                <div class="text-[10px] font-black text-white/20 tracking-tighter uppercase">EXEC</div>
-            </div>
+        <div class="w-12 h-12 bg-zinc-900/50 rounded-full flex items-center justify-center border border-white/5 opacity-40">
+            <span class="text-[8px] font-black text-white tracking-widest">LOG</span>
         </div>
 
-        <div class="flex items-center gap-10">
-            <i data-lucide="shield-check" class="text-white w-5 h-5"></i> <i data-lucide="command" class="text-zinc-600 w-5 h-5"></i>
+        <div class="flex items-center gap-12 text-zinc-700">
+            <i data-lucide="box" class="w-5 h-5 text-zinc-200"></i> <i data-lucide="database" class="w-5 h-5 hover:text-zinc-500 transition-colors"></i>
         </div>
     </footer>
 
@@ -146,37 +139,37 @@
         const parallaxWrap = document.getElementById('parallax-wrap');
         let currentScore = 0;
 
-        // Inertial Parallax
+        // Massive Parallax: Subtle status change
         document.addEventListener('pointermove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 80;
-            const y = (window.innerHeight / 2 - e.clientY) / 80;
+            const x = (window.innerWidth / 2 - e.clientX) / 160; // Lowered sensitivity
+            const y = (window.innerHeight / 2 - e.clientY) / 160;
             parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        // Precision Landing Logic
+        // Response Physics
         tapContainer.addEventListener('pointerdown', (e) => {
             currentScore += 1;
             scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
             
-            // Subtle Financial Snap
+            // Hard Snap
             scoreEl.animate([
-                { transform: 'translateY(2px)', opacity: 0.8 },
+                { transform: 'translateY(1px)', opacity: 0.8 },
                 { transform: 'translateY(0)', opacity: 1 }
-            ], { duration: 60, easing: 'ease-out' });
+            ], { duration: 50, easing: 'ease-out' });
 
-            // Micro-feedback (The "Signal")
-            const spark = document.createElement('div');
-            spark.className = 'fixed w-0.5 h-4 bg-white/20 pointer-events-none z-[60]';
-            spark.style.left = `${e.clientX}px`; 
-            spark.style.top = `${e.clientY}px`;
-            document.body.appendChild(spark);
+            // Precise Line Signal (White Line instead of Spark)
+            const signal = document.createElement('div');
+            signal.className = 'fixed w-[1px] h-3 bg-white/20 pointer-events-none z-[60]';
+            signal.style.left = `${e.clientX}px`; 
+            signal.style.top = `${e.clientY}px`;
+            document.body.appendChild(signal);
             
-            spark.animate([
-                { transform: 'translateY(0) scaleY(1)', opacity: 1 },
-                { transform: 'translateY(-20px) scaleY(0)', opacity: 0 }
-            ], { duration: 400, easing: 'cubic-bezier(0.2, 0, 0, 1)' });
+            signal.animate([
+                { transform: 'scaleY(1)', opacity: 1 },
+                { transform: 'translateY(-15px) scaleY(0)', opacity: 0 }
+            ], { duration: 300, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
             
-            setTimeout(() => spark.remove(), 400);
+            setTimeout(() => signal.remove(), 300);
         });
     </script>
 </body>

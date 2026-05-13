@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Wealth OS — Miftah Prime</title>
+<title>Miftah Prime — Wealth OS</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,271 +11,254 @@
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin: 0; padding: 0; box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  touch-action: none; /* Full control over touch */
+  touch-action: none;
 }
 
 body {
   font-family: 'Inter', sans-serif;
   overflow: hidden;
   user-select: none;
-  background: #05070a;
+  background: radial-gradient(circle at top, #0f172a 0%, #05070a 100%);
   color: #e7e5e4;
   height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
 }
 
+/* Background Grid ala Cyber */
 body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
+  content: ''; position: fixed; inset: 0;
   background: 
-    linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
-  background-size: 30px 30px;
-  z-index: -1;
+    linear-gradient(rgba(34,211,238,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.02) 1px, transparent 1px);
+  background-size: 40px 40px; z-index: -1;
 }
 
 /* HEADER */
-.header {
-  padding: 20px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
+.header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; }
+
+/* PROGRESS AREA */
+.progress-section { width: 100%; padding: 0 24px; margin-bottom: 10px; }
+.level-badge {
+  background: linear-gradient(90deg, #22d3ee, #3b82f6);
+  padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; color: #000;
 }
 
 /* CENTER AREA */
 .content-area {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; position: relative;
 }
 
 #score {
-  font-size: 72px;
-  font-weight: 900;
-  color: white;
-  line-height: 1;
-  margin-bottom: 20px;
-  text-shadow: 0 0 40px rgba(34, 211, 238, 0.4);
+  font-size: 56px; font-weight: 900; color: white;
+  text-shadow: 0 0 40px rgba(34, 211, 238, 0.4); margin-bottom: 5px;
 }
 
-/* CAPYBARA */
-.capy-container {
-  position: relative;
-  width: 300px;
-  pointer-events: none;
-}
-
-.float-wrapper {
-  animation: float 4s ease-in-out infinite;
-  display: flex;
-  justify-content: center;
-}
-
+.capy-container { position: relative; width: 320px; pointer-events: none; }
 #capy-img {
-  width: 100%;
-  filter: drop-shadow(0 0 50px rgba(0,0,0,1));
+  width: 100%; filter: drop-shadow(0 0 30px rgba(34,211,238,0.2));
   transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1.2);
 }
 
 .pedestal {
-  width: 240px;
-  height: 15px;
-  background: #0a0a0a;
-  border-top: 2px solid rgba(34,211,238,0.6);
-  border-radius: 50% / 100% 100% 0 0;
-  margin: -20px auto 0;
+  width: 260px; height: 10px; background: #000;
+  border-top: 2px solid #22d3ee; border-radius: 50% / 100% 100% 0 0;
+  margin: -30px auto 0; box-shadow: 0 10px 40px rgba(34,211,238,0.3);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+/* FLOATING TEXT (+2) */
+.plus-val {
+  position: absolute; color: white; font-weight: 900; font-size: 32px;
+  pointer-events: none; animation: flyUp 0.8s ease-out forwards; z-index: 100;
 }
-
-/* FLOATING TEXT (+1) */
-.plus-one {
-  position: absolute;
-  color: #22d3ee;
-  font-weight: 900;
-  font-size: 28px;
-  pointer-events: none;
-  animation: flyUp 0.7s ease-out forwards;
-  z-index: 100;
-  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
-}
-
 @keyframes flyUp {
   0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-150px) scale(1.2); opacity: 0; }
+  100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
 }
 
-/* STATS - BESAR & NAIK */
-.stats-container {
-  padding: 0 16px 160px; /* Jarak aman dari footer */
-  flex-shrink: 0;
-  width: 100%;
+/* MINI STATS (ALA CRYPTO CAT) */
+.mini-stats {
+  display: flex; justify-content: center; gap: 25px; margin-top: 20px;
 }
+.mini-item { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
+/* STATS CONTAINER */
+.stats-container { padding: 0 20px 140px; width: 100%; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .card {
-  background: rgba(10, 15, 20, 0.9);
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  padding: 16px 8px; /* Lebih gemuk */
-  border-radius: 16px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(34, 211, 238, 0.1);
+  padding: 12px 5px; border-radius: 12px; text-align: center; backdrop-filter: blur(10px);
 }
 
 /* FOOTER */
 .footer {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  height: 95px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 40px;
-  background: rgba(5, 7, 10, 0.98);
-  border-top: 1px solid rgba(34, 211, 238, 0.2);
-  z-index: 1000;
+  position: fixed; bottom: 0; left: 0; right: 0; height: 90px;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 40px; background: #05070a; border-top: 1px solid rgba(34,211,238,0.1); z-index: 1000;
 }
-
-.nav-group { display: flex; gap: 50px; }
-.nav-item { color: #3f3f46; cursor: pointer; transition: 0.3s; }
-.nav-item.active { color: #22d3ee; filter: drop-shadow(0 0 8px #22d3ee); }
-
 .exec-btn {
-  position: absolute;
-  left: 50%; bottom: 45px;
-  transform: translateX(-50%) rotate(45deg);
-  width: 65px; height: 65px;
-  background: #05070a;
-  border: 2px solid #22d3ee;
-  display: flex; justify-content: center; align-items: center;
-  box-shadow: 0 0 25px rgba(34, 211, 238, 0.4);
+  position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%) rotate(45deg);
+  width: 60px; height: 60px; background: #05070a; border: 2px solid #22d3ee;
+  display: flex; justify-content: center; align-items: center; box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
 }
-
-.exec-inner { transform: rotate(-45deg); font-size: 11px; font-weight: 900; color: #22d3ee; letter-spacing: 1px; }
+.exec-inner { transform: rotate(-45deg); font-size: 10px; font-weight: 900; color: #22d3ee; }
 </style>
 </head>
 
 <body>
 
   <div class="header">
-    <div>
-      <div style="font-weight:900;color:#22d3ee;font-size:24px;">M</div>
-      <div style="font-size:12px;color:white;font-weight:700;letter-spacing:1px">Miftah_Prime_OS</div>
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center border border-slate-700">
+        <span class="text-cyan-400 font-black text-xl">M</span>
+      </div>
+      <div>
+        <div class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">My Profile</div>
+        <div class="text-sm font-bold">Miftah Prime</div>
+      </div>
     </div>
-    <div class="glass" style="background:rgba(10,15,20,0.8); padding:8px 16px; border-radius:12px; border:1px solid rgba(34,211,238,0.2); font-size:11px;">
-      <span style="color:#22d3ee; margin-right: 5px;">●</span> SECURITY: ACTIVE
+    <div class="bg-indigo-600 px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-indigo-500/20">Upgrades</div>
+  </div>
+
+  <div class="progress-section">
+    <div class="flex justify-between items-end mb-2">
+      <div class="flex items-center gap-2">
+        <span class="text-sm font-bold">Explorer</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500"></i>
+      </div>
+      <div class="text-[11px] font-medium text-gray-400">Level <span class="text-white">2/10</span></div>
+    </div>
+    <div class="w-full h-2.5 bg-slate-800 rounded-full border border-slate-700 overflow-hidden">
+      <div id="level-bar" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_10px_#22d3ee]" style="width: 35%"></div>
     </div>
   </div>
 
   <div class="content-area" id="tap-zone">
     <div id="score">0</div>
-
+    
     <div class="capy-container">
-      <div class="float-wrapper">
+      <div class="float-wrapper" style="animation: float 4s ease-in-out infinite;">
         <img id="capy-img" 
-             src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1" 
+             src="https://r.jina.ai/i/05e6081437144e839e0839e557871b87" 
              alt="Core" />
       </div>
       <div class="pedestal"></div>
+    </div>
+
+    <div class="mini-stats">
+      <div class="mini-item">
+        <i data-lucide="hand-metal" class="w-4 h-4 text-orange-400"></i>
+        <span>2 <span class="text-gray-500 text-[10px]">Per tap</span></span>
+      </div>
+      <div class="mini-item">
+        <i data-lucide="gem" class="w-4 h-4 text-green-400"></i>
+        <span>6480 <span class="text-gray-500 text-[10px]">Per hour</span></span>
+      </div>
+      <div class="mini-item">
+        <i data-lucide="zap" class="w-4 h-4 text-yellow-400"></i>
+        <span id="energy-val">5000</span> <span class="text-gray-500 text-[10px]">/ 5000</span>
+      </div>
     </div>
   </div>
 
   <div class="stats-container">
     <div class="stats-grid">
       <div class="card">
-        <div style="font-size:11px; color:#888; margin-bottom: 4px;">Hash Rate</div>
-        <b style="font-size:16px; color:white">+1.0</b>
+        <div class="text-[10px] text-gray-500 mb-1">STAKING</div>
+        <i data-lucide="layers" class="w-4 h-4 mx-auto mb-1 text-slate-400"></i>
+      </div>
+      <div class="card" style="background: rgba(34, 211, 238, 0.1); border-color: rgba(34, 211, 238, 0.3);">
+        <div class="text-[10px] text-cyan-400 mb-1">MINING</div>
+        <i data-lucide="pickaxe" class="w-4 h-4 mx-auto mb-1 text-cyan-400"></i>
       </div>
       <div class="card">
-        <div style="font-size:11px; color:#888; margin-bottom: 4px;">Index PPh</div>
-        <b style="font-size:16px; color:#22d3ee">7.5M</b>
-      </div>
-      <div class="card">
-        <div style="font-size:11px; color:#888; margin-bottom: 4px;">Uptime</div>
-        <b style="font-size:16px; color:white">99.9%</b>
+        <div class="text-[10px] text-gray-500 mb-1">FRIENDS</div>
+        <i data-lucide="users" class="w-4 h-4 mx-auto mb-1 text-slate-400"></i>
       </div>
     </div>
   </div>
 
   <div class="footer">
     <div class="nav-group">
-      <div class="nav-item"><i data-lucide="database"></i></div>
-      <div class="nav-item"><i data-lucide="activity"></i></div>
+      <div class="nav-item"><i data-lucide="wallet"></i></div>
+      <div class="nav-item"><i data-lucide="list-checks"></i></div>
     </div>
     <div class="exec-btn"><div class="exec-inner">EXEC</div></div>
     <div class="nav-group">
-      <div class="nav-item active"><i data-lucide="shield"></i></div>
-      <div class="nav-item"><i data-lucide="cpu"></i></div>
+      <div class="nav-item active"><i data-lucide="layout-grid"></i></div>
+      <div class="nav-item"><i data-lucide="settings"></i></div>
     </div>
   </div>
 
 <script>
 lucide.createIcons();
 
-// Logic Skor
-let score = parseInt(localStorage.getItem('miftah_prime_score')) || 0;
+let score = parseInt(localStorage.getItem('miftah_score')) || 0;
+let energy = parseInt(localStorage.getItem('miftah_energy')) || 5000;
+const maxEnergy = 5000;
+const perTap = 2;
+
 const scoreDisplay = document.getElementById('score');
-const tapZone = document.getElementById('tap-zone');
+const energyDisplay = document.getElementById('energy-val');
 const capyImg = document.getElementById('capy-img');
+const tapZone = document.getElementById('tap-zone');
 
 scoreDisplay.innerText = score.toLocaleString();
+energyDisplay.innerText = energy;
 
-// Function handling click/touch
+// Fungsi Klik Utama
 const handleInput = (x, y) => {
-  score++;
-  scoreDisplay.innerText = score.toLocaleString();
-  localStorage.setItem('miftah_prime_score', score);
+  if (energy < perTap) {
+    if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+    return;
+  }
 
-  // Animasi Bounce Capy
-  capyImg.style.transform = 'scale(0.92)';
-  setTimeout(() => { capyImg.style.transform = 'scale(1)'; }, 80);
-
-  // Efek +1
-  const plusOne = document.createElement('div');
-  plusOne.innerText = '+1';
-  plusOne.className = 'plus-one';
-  plusOne.style.left = `${x - 20}px`;
-  plusOne.style.top = `${y - 40}px`;
+  score += perTap;
+  energy -= perTap;
   
-  document.body.appendChild(plusOne);
-  setTimeout(() => plusOne.remove(), 700);
+  scoreDisplay.innerText = score.toLocaleString();
+  energyDisplay.innerText = energy;
+  
+  localStorage.setItem('miftah_score', score);
+  localStorage.setItem('miftah_energy', energy);
 
-  // Haptic
-  if (navigator.vibrate) navigator.vibrate(12);
+  // Animasi Gambar
+  capyImg.style.transform = 'scale(0.94) translateY(5px)';
+  setTimeout(() => { capyImg.style.transform = 'scale(1) translateY(0)'; }, 80);
+
+  // Floating +2
+  const plus = document.createElement('div');
+  plus.innerText = `+${perTap}`;
+  plus.className = 'plus-val';
+  plus.style.left = `${x - 20}px`;
+  plus.style.top = `${y - 50}px`;
+  document.body.appendChild(plus);
+  setTimeout(() => plus.remove(), 800);
+
+  if (navigator.vibrate) navigator.vibrate(15);
 };
 
-// MULTI-TOUCH SUPPORT
+// Auto Regen Energy (1 per detik)
+setInterval(() => {
+  if (energy < maxEnergy) {
+    energy++;
+    energyDisplay.innerText = energy;
+    localStorage.setItem('miftah_energy', energy);
+  }
+}, 1000);
+
+// Multi-touch logic
 tapZone.addEventListener('touchstart', (e) => {
   e.preventDefault();
-  // Loop through all new touches
   for (let i = 0; i < e.changedTouches.length; i++) {
     handleInput(e.changedTouches[i].clientX, e.changedTouches[i].clientY);
   }
 }, { passive: false });
 
-// MOUSE SUPPORT (Fallback)
 tapZone.addEventListener('mousedown', (e) => {
-  if (window.matchMedia("(pointer: coarse)").matches) return; // Skip if mobile
+  if (window.matchMedia("(pointer: coarse)").matches) return;
   handleInput(e.clientX, e.clientY);
 });
 </script>

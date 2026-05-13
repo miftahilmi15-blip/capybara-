@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-<title>Wealth OS — Stoic Capybara</title>
+<title>Wealth OS — 404 Stoic</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -254,7 +254,7 @@ body::before{
   radial-gradient(circle, transparent 28%, #000 88%);
 }
 
-/* stoic lines */
+/* stoic rings */
 .stoic-ring{
   position:absolute;
   inset:50%;
@@ -306,6 +306,7 @@ body::before{
 .nav-icon{
   color:#52525b;
   transition:.25s;
+  cursor:pointer;
 }
 
 .nav-icon:hover{
@@ -320,6 +321,17 @@ body::before{
   drop-shadow(0 0 10px rgba(34,211,238,.45));
 }
 
+.error-float {
+  position: absolute;
+  color: #ef4444;
+  font-weight: 900;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  pointer-events: none;
+  z-index: 1000;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+}
+
 </style>
 </head>
 
@@ -329,13 +341,11 @@ body::before{
 
 <div class="stoic-ring"></div>
 
-<!-- particles -->
 <div class="particles" id="particles"></div>
 
-<!-- HEADER -->
 <header class="relative z-50 p-6 flex justify-between items-start">
 
-  <div class="glass px-5 py-3 rounded-3xl flex items-center gap-4">
+  <div class="glass px-5 py-3 rounded-3xl flex items-center gap-4 cursor-not-allowed nav-btn-404">
 
     <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-400/10 flex items-center justify-center">
       <span class="text-cyan-400 font-black text-xs">M</span>
@@ -353,7 +363,7 @@ body::before{
 
   </div>
 
-  <div class="glass px-4 py-3 rounded-full flex items-center gap-2">
+  <div class="glass px-4 py-3 rounded-full flex items-center gap-2 cursor-not-allowed nav-btn-404">
 
     <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
 
@@ -365,7 +375,6 @@ body::before{
 
 </header>
 
-<!-- SCORE -->
 <section class="relative z-40 text-center mt-3">
 
   <p class="text-[10px] uppercase tracking-[0.5em] text-zinc-700 font-black mb-4">
@@ -375,24 +384,23 @@ body::before{
   <div class="flex items-end justify-center">
 
     <h1 id="score" class="text-7xl md:text-8xl font-black">
-      0
+      404
     </h1>
 
     <span class="text-2xl text-cyan-900 font-black mb-2 ml-1">
-      .00
+      .err
     </span>
 
   </div>
 
-  <!-- progress -->
   <div class="mt-8 px-16 md:px-40">
 
     <div class="relative h-[2px] bg-white/5 overflow-hidden rounded-full">
 
       <div
       id="progress-bar"
-      class="absolute left-0 top-0 h-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,.6)] transition-all duration-500"
-      style="width:75%"
+      class="absolute left-0 top-0 h-full bg-red-500 shadow-[0_0_20px_rgba(239,68,68,.6)]"
+      style="width:100%"
       ></div>
 
     </div>
@@ -401,7 +409,6 @@ body::before{
 
 </section>
 
-<!-- MAIN -->
 <main class="flex-grow relative flex items-center justify-center -mt-3">
 
   <div id="tap-container" class="relative cursor-pointer">
@@ -413,7 +420,6 @@ body::before{
 
       <div class="char-mask"></div>
 
-      <!-- CAPY -->
       <img
       id="capy-img"
       src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_--ar_1:1"
@@ -427,66 +433,63 @@ body::before{
 
 </main>
 
-<!-- STATS -->
 <section class="relative z-40 px-6 grid grid-cols-3 gap-4 mb-28">
 
-  <div class="glass rounded-3xl py-5 flex flex-col items-center">
+  <div class="glass rounded-3xl py-5 flex flex-col items-center cursor-not-allowed nav-btn-404">
 
     <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
       Yield
     </span>
 
     <span class="text-sm text-zinc-300 font-bold tabular-nums">
-      +1.00
+      NULL
     </span>
 
   </div>
 
-  <div class="glass rounded-3xl py-6 flex flex-col items-center -translate-y-3 border border-cyan-400/10">
+  <div class="glass rounded-3xl py-6 flex flex-col items-center -translate-y-3 border border-red-400/20 cursor-not-allowed nav-btn-404">
 
     <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-black mb-2">
       PPh Index
     </span>
 
-    <span class="text-base text-cyan-300 font-black tabular-nums">
-      7.5M
+    <span class="text-base text-red-400 font-black tabular-nums">
+      404
     </span>
 
   </div>
 
-  <div class="glass rounded-3xl py-5 flex flex-col items-center">
+  <div class="glass rounded-3xl py-5 flex flex-col items-center cursor-not-allowed nav-btn-404">
 
     <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
       Sync
     </span>
 
     <span class="text-sm text-zinc-300 font-bold tabular-nums">
-      98.2%
+      LOST
     </span>
 
   </div>
 
 </section>
 
-<!-- FOOTER -->
 <footer class="fixed bottom-0 left-0 right-0 h-24 footer-blur flex items-center justify-around px-8 pb-5 z-50">
 
   <div class="flex items-center gap-10">
-    <i data-lucide="layers-3" class="nav-icon w-5 h-5"></i>
-    <i data-lucide="bar-chart-3" class="nav-icon w-5 h-5"></i>
+    <i data-lucide="layers-3" class="nav-icon w-5 h-5 nav-btn-404"></i>
+    <i data-lucide="bar-chart-3" class="nav-icon w-5 h-5 nav-btn-404"></i>
   </div>
 
-  <!-- center button -->
   <div class="absolute -top-8 left-1/2 -translate-x-1/2">
 
-    <div class="w-20 h-20 rounded-full p-[1px] bg-gradient-to-b from-cyan-400/30 to-transparent">
+    <div class="w-20 h-20 rounded-full p-[1px] bg-gradient-to-b from-red-400/30 to-transparent">
 
-      <div class="w-full h-full rounded-full bg-black/70 backdrop-blur-3xl flex items-center justify-center border border-cyan-400/10">
+      <div class="w-full h-full rounded-full bg-black/70 backdrop-blur-3xl flex items-center justify-center border border-red-400/10">
 
-        <div class="w-14 h-14 rounded-full bg-cyan-400/10 border border-cyan-300/10 flex items-center justify-center active:scale-90 transition">
+        <div class="w-14 h-14 rounded-full bg-red-400/10 border border-red-300/10 flex items-center justify-center active:scale-90 transition cursor-not-allowed nav-btn-404">
 
-          <span class="text-[10px] font-black tracking-[0.25em] text-cyan-300">
-            EXEC
+          <span class="text-[10px] font-black tracking-[0.25em] text-red-300">
+            404
           </span>
 
         </div>
@@ -498,8 +501,8 @@ body::before{
   </div>
 
   <div class="flex items-center gap-10">
-    <i data-lucide="shield-check" class="nav-icon active w-5 h-5"></i>
-    <i data-lucide="command" class="nav-icon w-5 h-5"></i>
+    <i data-lucide="shield-check" class="nav-icon active w-5 h-5 nav-btn-404"></i>
+    <i data-lucide="command" class="nav-icon w-5 h-5 nav-btn-404"></i>
   </div>
 
 </footer>
@@ -511,106 +514,80 @@ lucide.createIcons();
 const scoreEl = document.getElementById('score');
 const tapContainer = document.getElementById('tap-container');
 const parallaxWrap = document.getElementById('parallax-wrap');
-const progressBar = document.getElementById('progress-bar');
-
-let currentScore = 0;
 
 /* particles */
 const particles = document.getElementById('particles');
 
 for(let i = 0; i < 28; i++){
-
   const p = document.createElement('div');
-
   p.className = 'particle';
-
   p.style.left = Math.random() * 100 + '%';
   p.style.top = 50 + Math.random() * 40 + '%';
-
-  p.style.animationDuration =
-  6 + Math.random() * 8 + 's';
-
-  p.style.animationDelay =
-  Math.random() * 5 + 's';
-
+  p.style.animationDuration = 6 + Math.random() * 8 + 's';
+  p.style.animationDelay = Math.random() * 5 + 's';
   particles.appendChild(p);
 }
 
 /* parallax */
 document.addEventListener('pointermove', (e)=>{
-
-  const x =
-  (window.innerWidth / 2 - e.clientX) / 70;
-
-  const y =
-  (window.innerHeight / 2 - e.clientY) / 70;
-
-  parallaxWrap.style.transform =
-  `translate(${x}px, ${y}px)`;
-
+  const x = (window.innerWidth / 2 - e.clientX) / 70;
+  const y = (window.innerHeight / 2 - e.clientY) / 70;
+  parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-/* tap */
+/* functional logic for 404 behavior */
+function spawn404(e) {
+  const err = document.createElement('div');
+  err.className = 'error-float';
+  err.innerText = '404 - NOT FOUND';
+  err.style.left = `${e.clientX}px`;
+  err.style.top = `${e.clientY}px`;
+  document.body.appendChild(err);
+
+  err.animate([
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(-50px) scale(1.2)', opacity: 0 }
+  ], {
+    duration: 800,
+    easing: 'ease-out'
+  });
+
+  setTimeout(() => err.remove(), 800);
+}
+
+// Global click/tap listener for all 404 buttons
+document.querySelectorAll('.nav-btn-404').forEach(btn => {
+  btn.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    spawn404(e);
+    
+    // Slight jitter effect on the button
+    btn.animate([
+      { transform: 'translateX(-2px)' },
+      { transform: 'translateX(2px)' },
+      { transform: 'translateX(0)' }
+    ], { duration: 100 });
+  });
+});
+
+// Central Capy tap
 tapContainer.addEventListener('pointerdown',(e)=>{
+  spawn404(e);
 
-  currentScore += 1;
-
-  scoreEl.innerText =
-  Math.floor(currentScore).toLocaleString('en-US');
-
-  const progress =
-  Math.min(100, 75 + currentScore * 0.15);
-
-  progressBar.style.width =
-  `${progress}%`;
-
-  /* score pulse */
+  /* score pulse red */
+  scoreEl.style.color = '#ef4444';
   scoreEl.animate([
-    {
-      transform:'scale(1.06)',
-      opacity:.8
-    },
-    {
-      transform:'scale(1)',
-      opacity:1
-    }
+    { transform:'scale(1.1)', filter: 'blur(2px)' },
+    { transform:'scale(1)', filter: 'blur(0px)' }
   ],
   {
-    duration:120,
+    duration:150,
     easing:'ease-out'
   });
-
-  /* signal */
-  const signal =
-  document.createElement('div');
-
-  signal.className =
-  'fixed w-[2px] h-5 rounded-full bg-cyan-400/70 pointer-events-none z-[999]';
-
-  signal.style.left = `${e.clientX}px`;
-  signal.style.top = `${e.clientY}px`;
-
-  document.body.appendChild(signal);
-
-  signal.animate([
-    {
-      transform:'translateY(0) scaleY(1)',
-      opacity:1
-    },
-    {
-      transform:'translateY(-28px) scaleY(0)',
-      opacity:0
-    }
-  ],
-  {
-    duration:500,
-    easing:'cubic-bezier(0.4,0,0.2,1)'
-  });
-
-  setTimeout(()=>{
-    signal.remove();
-  },500);
-
+  
+  setTimeout(() => {
+    scoreEl.style.color = '#22d3ee';
+  }, 300);
 });
 
 </script>

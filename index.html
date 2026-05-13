@@ -21,7 +21,7 @@ body {
   font-family: 'Inter', sans-serif;
   overflow: hidden;
   user-select: none;
-  background: #05070a
+  background: #05070a;
   color: #e7e5e4;
   height: 100vh;
   display: flex;
@@ -62,10 +62,10 @@ body::after {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Pusatkan secara vertikal */
+  justify-content: center;
   align-items: center;
   position: relative;
-  padding-bottom: 40px; /* Ruang agar tidak tabrak stats */
+  padding-bottom: 40px;
 }
 
 #score-label {
@@ -93,15 +93,21 @@ body::after {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  touch-action: manipulation; /* Cegah zoom otomatis saat klik cepat */
+}
+
+.float-wrapper {
+  animation: float 4s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
 }
 
 #capy-img {
   width: 100%;
   max-width: 280px;
   filter: drop-shadow(0 0 40px rgba(0,0,0,1));
-  animation: float 4s ease-in-out infinite;
-  transition: transform 0.1s ease;
-  z-index: 5;
+  transition: transform 0.05s ease;
 }
 
 .pedestal {
@@ -110,7 +116,7 @@ body::after {
   background: #0a0a0a;
   border-top: 2px solid rgba(34, 211, 238, 0.6);
   border-radius: 50% / 100% 100% 0 0;
-  margin-top: -18px; /* Tarik ke atas agar nempel kaki */
+  margin-top: -18px; 
   box-shadow: 0 10px 20px rgba(0,0,0,0.5);
   z-index: 4;
 }
@@ -122,7 +128,7 @@ body::after {
 
 /* STATS */
 .stats-container {
-  padding: 0 20px 110px; /* Padding bottom 110px agar aman dari footer */
+  padding: 0 20px 110px;
   flex-shrink: 0;
 }
 
@@ -215,9 +221,11 @@ body::after {
     <div id="score">0</div>
 
     <div class="capy-container" id="click-target">
-      <img id="capy-img" 
-           src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1" 
-           alt="Core" />
+      <div class="float-wrapper">
+        <img id="capy-img" 
+             src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1" 
+             alt="Core" />
+      </div>
       <div class="pedestal"></div>
     </div>
   </div>
@@ -245,7 +253,7 @@ body::after {
       <div class="nav-item"><i data-lucide="activity"></i></div>
     </div>
 
-    <div class="exec-btn" onclick="console.log('EXEC Triggered')">
+    <div class="exec-btn" onclick="alert('SYSTEM OVERRIDE: ACTIVE')">
       <div class="exec-inner">EXEC</div>
     </div>
 
@@ -256,7 +264,7 @@ body::after {
   </div>
 
 <script>
-// Init Lucide
+// Init Lucide Icons
 lucide.createIcons();
 
 // Game Logic
@@ -265,7 +273,7 @@ const scoreDisplay = document.getElementById('score');
 const clickTarget = document.getElementById('click-target');
 const capyImg = document.getElementById('capy-img');
 
-// Render initial state
+// Load initial score
 scoreDisplay.innerText = score.toLocaleString();
 
 clickTarget.addEventListener('click', (e) => {
@@ -273,14 +281,14 @@ clickTarget.addEventListener('click', (e) => {
   scoreDisplay.innerText = score.toLocaleString();
   localStorage.setItem('miftah_prime_score', score);
 
-  // Animasi Pencet
+  // Animasi Pencet (Scale)
   capyImg.style.transform = 'scale(0.92)';
   setTimeout(() => {
     capyImg.style.transform = 'scale(1)';
-  }, 80);
+  }, 50);
 
-  // Getar HP
-  if (navigator.vibrate) navigator.vibrate(10);
+  // Feedback Getar (HP Support)
+  if (navigator.vibrate) navigator.vibrate(15);
 });
 </script>
 

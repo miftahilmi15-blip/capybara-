@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CryptoCapy - AAA Final Refinement</title>
+    <title>CryptoCapy - Premium Native Build</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
             user-select: none;
         }
 
+        /* Cinematic Grain: Subtler (0.01 opacity) */
         body::before {
             content: '';
             position: fixed;
@@ -30,77 +31,82 @@
 
         #parallax-wrap {
             will-change: transform;
-            transition: transform .25s ease-out;
+            transition: transform 0.3s ease-out;
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 20;
         }
 
+        /* MODERN BLANK INTERACTION: Total Ghosting on Tap */
+        #tap-container {
+            transition: opacity 0.05s ease-in-out;
+        }
+        #tap-container:active {
+            opacity: 0;
+        }
+
         #capy-img {
             transform-origin: center;
-            filter: contrast(1.08) saturate(1.05) brightness(1.02) drop-shadow(0 10px 30px rgba(0,0,0,0.5));
-            image-rendering: auto;
+            filter: contrast(1.05) brightness(1) drop-shadow(0 15px 35px rgba(0,0,0,0.6));
         }
 
         @keyframes floaty {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
         .animate-float { animation: floaty 6s ease-in-out infinite; }
 
+        /* FIX 2 & 3: Ghost Cards (iOS Native Style) */
         .glass-stats { 
-            background: rgba(18,18,18,0.7);
-            border: 1px solid rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.02);
             backdrop-filter: blur(20px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+            border: none; /* Border removed */
         }
 
-        .score-pop { animation: scorePop .25s cubic-bezier(0.175, 0.885, 0.32, 1.2); }
-        @keyframes scorePop {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        /* Instant Flash for Score */
+        .score-pop { animation: quickFlash 0.1s ease-out; }
+        @keyframes quickFlash {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
-
-        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .animate-spin-slow { animation: spinSlow 60s linear infinite; }
         
-        /* Custom Icon Styling */
-        .lucide { width: 20px; height: 20px; stroke-width: 2.5px; }
+        .lucide { width: 18px; height: 18px; stroke-width: 2.2px; }
     </style>
 </head>
 <body class="h-screen flex flex-col">
 
     <header class="relative z-50 p-6 flex justify-between items-center">
         <div class="flex items-center gap-3 glass-stats py-2 px-4 rounded-2xl">
-            <div class="w-9 h-9 rounded-xl bg-zinc-900 flex items-center justify-center border border-white/5 font-bold text-yellow-600 text-sm">M</div>
+            <div class="w-8 h-8 rounded-xl bg-zinc-900 flex items-center justify-center font-bold text-yellow-600/80 text-xs">M</div>
             <div>
-                <p class="text-[9px] text-zinc-500 font-bold uppercase tracking-[0.12em] mb-0.5">Player</p>
-                <p class="text-sm font-extrabold tracking-tight italic">Miftah_Dev</p>
+                <p class="text-[8px] text-zinc-600 font-bold uppercase tracking-[0.18em] mb-0.5">Player</p>
+                <p class="text-sm font-extrabold tracking-tight">Miftah_Dev</p>
             </div>
         </div>
-        <button class="glass-stats w-10 h-10 rounded-xl flex items-center justify-center active:scale-90 transition-transform text-zinc-400">
+        <button class="glass-stats w-10 h-10 rounded-xl flex items-center justify-center active:opacity-0 transition-opacity text-zinc-500">
             <i data-lucide="settings"></i>
         </button>
     </header>
 
-    <div class="relative z-50 text-center mt-2 mb-2">
-        <div class="flex items-center justify-center gap-3">
-            <i data-lucide="coins" class="text-yellow-600/60 w-6 h-6"></i>
-            <h1 id="score" class="text-5xl leading-none italic font-black tracking-tighter text-white/90">0</h1>
+    <div class="relative z-50 text-center mt-2 mb-6">
+        <div class="flex items-center justify-center gap-3 mb-1">
+            <i data-lucide="coins" class="text-white/20 w-4 h-4"></i>
+            <h1 id="score" class="text-5xl font-extrabold tracking-tighter text-white/95">0</h1>
         </div>
-        <div class="mt-5 px-24">
-            <div class="h-[4px] bg-zinc-900 rounded-full overflow-hidden border border-white/5">
-                <div id="progress-bar" class="h-full bg-gradient-to-r from-yellow-700/40 to-yellow-500/60 rounded-full" style="width: 30%"></div>
+        <div class="mt-6 px-24">
+            <div class="h-[2px] bg-white/[0.04] rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full rounded-full bg-white/30" style="width: 35%"></div>
             </div>
         </div>
     </div>
 
     <main class="relative flex-grow flex items-center justify-center z-10 overflow-hidden">
-        <div class="absolute w-[200px] h-[200px] rounded-full bg-yellow-600/[0.02] blur-[100px]"></div>
-        <div class="absolute w-[280px] h-[280px] rounded-full border border-white/[0.01] animate-spin-slow"></div>
+        <div class="absolute w-[220px] h-[220px] rounded-full bg-yellow-600/[0.015] blur-[100px]"></div>
 
-        <div id="tap-container" class="relative transition-transform duration-200 active:scale-[0.98] cursor-pointer">
-            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-32 h-6 bg-black/60 blur-2xl rounded-full"></div>
+        <div id="tap-container" class="relative cursor-pointer">
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 w-32 h-6 bg-black/60 blur-3xl rounded-full"></div>
             
             <div id="parallax-wrap" class="relative">
                 <div class="absolute inset-0 z-20 pointer-events-none scale-110 
@@ -113,50 +119,49 @@
                     alt="CryptoCapy">
             </div>
 
-            <div class="absolute top-6 right-2 z-40 px-2 py-0.5 rounded border border-white/[0.05] bg-black/40 backdrop-blur-sm">
-                <p class="text-[7px] font-bold tracking-[0.2em] text-yellow-700/80 uppercase">Legendary</p>
+            <div class="absolute top-6 right-2 z-40 px-2 py-0.5 rounded bg-white/[0.03]">
+                <p class="text-[7px] font-bold tracking-[0.18em] text-zinc-600 uppercase">Legendary</p>
             </div>
         </div>
     </main>
 
-    <div class="relative z-50 px-10 grid grid-cols-3 gap-3 -translate-y-4">
+    <div class="relative z-50 px-10 grid grid-cols-3 gap-3 -translate-y-1">
         <div class="glass-stats py-3 rounded-2xl flex flex-col items-center">
-            <span class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Tap Profit</span>
-            <span class="text-xs font-black text-zinc-300">+1</span>
-        </div>
-        <div class="glass-stats py-3 rounded-2xl flex flex-col items-center border-yellow-900/10">
-            <span class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Hourly</span>
-            <span class="text-xs font-black text-yellow-600/80">1.2K</span>
+            <span class="text-[7px] font-bold text-zinc-600 uppercase tracking-[0.18em] mb-1.5">Tap Profit</span>
+            <span class="text-xs font-extrabold text-zinc-400">+1</span>
         </div>
         <div class="glass-stats py-3 rounded-2xl flex flex-col items-center">
-            <span class="text-[8px] font-bold text-zinc-500 uppercase tracking-widest mb-1">Energy</span>
-            <span class="text-xs font-black text-zinc-300">1K</span>
+            <span class="text-[7px] font-bold text-zinc-600 uppercase tracking-[0.18em] mb-1.5">Hourly</span>
+            <span class="text-xs font-extrabold text-white/80">1.2K</span>
+        </div>
+        <div class="glass-stats py-3 rounded-2xl flex flex-col items-center">
+            <span class="text-[7px] font-bold text-zinc-600 uppercase tracking-[0.18em] mb-1.5">Energy</span>
+            <span class="text-xs font-extrabold text-zinc-400">1K</span>
         </div>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 h-20 backdrop-blur-3xl bg-black/95 border-t border-white/[0.03] flex items-center justify-around px-10 pb-4 z-50">
-        <div class="flex gap-8 text-zinc-500">
-            <i data-lucide="gem" class="active:text-yellow-600 transition-colors"></i>
-            <i data-lucide="clipboard-list" class="active:text-yellow-600 transition-colors"></i>
+    <footer class="fixed bottom-0 left-0 right-0 h-16 bg-black/70 backdrop-blur-xl border-t border-white/[0.02] flex items-center justify-around px-12 pb-2 z-50">
+        <div class="flex items-center gap-8 text-zinc-600">
+            <i data-lucide="gem" class="hover:text-white transition-colors"></i>
+            <i data-lucide="clipboard-list" class="hover:text-white transition-colors"></i>
         </div>
 
-        <div class="absolute -top-10 left-1/2 -translate-x-1/2">
-            <div class="w-20 h-20 bg-zinc-950 rounded-full p-1 border border-white/[0.05] active:scale-90 transition-transform shadow-[0_0_40px_rgba(161,98,7,0.15)]">
-                <div class="w-full h-full rounded-full bg-zinc-900/60 flex flex-col items-center justify-center border border-yellow-700/20">
-                    <span class="text-[10px] font-black text-yellow-700 tracking-tighter leading-none mb-0.5">FARM</span>
-                    <span class="text-[8px] font-bold text-white/40">0.00</span>
+        <div class="absolute -top-7 left-1/2 -translate-x-1/2">
+            <div class="w-16 h-16 bg-zinc-950 rounded-full p-1 border border-white/[0.03] active:opacity-0 transition-opacity shadow-none">
+                <div class="w-full h-full rounded-full bg-zinc-900/40 flex flex-col items-center justify-center border border-white/[0.03]">
+                    <span class="text-[9px] font-bold text-white/40 tracking-tighter leading-none mb-0.5">FARM</span>
+                    <span class="text-[7px] font-bold text-white/20">0.00</span>
                 </div>
             </div>
         </div>
 
-        <div class="flex gap-8 text-zinc-500">
-            <i data-lucide="users" class="active:text-yellow-600 transition-colors"></i>
-            <i data-lucide="gamepad-2" class="active:text-yellow-600 transition-colors"></i>
+        <div class="flex items-center gap-8 text-zinc-600">
+            <i data-lucide="users" class="hover:text-white transition-colors"></i>
+            <i data-lucide="gamepad-2" class="hover:text-white transition-colors"></i>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
         const scoreEl = document.getElementById('score');
@@ -165,44 +170,35 @@
         let currentScore = 0;
 
         document.addEventListener('pointermove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 85;
-            const y = (window.innerHeight / 2 - e.clientY) / 85;
+            const x = (window.innerWidth / 2 - e.clientX) / 95;
+            const y = (window.innerHeight / 2 - e.clientY) / 95;
             parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        function createShockwave(x, y) {
-            const ring = document.createElement('div');
-            ring.className = 'fixed w-4 h-4 rounded-full border border-white/10 pointer-events-none z-50';
-            ring.style.left = `${x - 8}px`; ring.style.top = `${y - 8}px`;
-            document.body.appendChild(ring);
-            ring.animate([{ transform: 'scale(1)', opacity: 0.5 }, { transform: 'scale(4)', opacity: 0 }], { duration: 400 });
-            setTimeout(() => ring.remove(), 400);
-        }
-
-        function createTapEffect(x, y) {
-            const plus = document.createElement('div');
-            plus.innerText = '+1';
-            // POLISH 8: Game-feel Animation
-            plus.className = 'fixed pointer-events-none text-xl font-black text-yellow-500/50 z-[60]';
-            plus.style.left = `${x}px`; plus.style.top = `${y}px`;
-            document.body.appendChild(plus);
+        // FIX 9: Subtle Yellow Spark
+        function createSpark(x, y) {
+            const spark = document.createElement('div');
+            spark.className = 'fixed w-1 h-1 bg-yellow-500/40 rounded-full pointer-events-none z-[60]';
+            spark.style.left = `${x}px`; spark.style.top = `${y}px`;
+            document.body.appendChild(spark);
             
-            plus.animate([
-                { opacity: 1, transform: 'translateY(0px) scale(1)', filter: 'blur(0px)' },
-                { opacity: 0, transform: 'translateY(-100px) scale(1.8)', filter: 'blur(4px)' }
-            ], { duration: 850, easing: 'ease-out' });
+            spark.animate([
+                { opacity: 1, scale: 1 },
+                { opacity: 0, scale: 10 }
+            ], { duration: 350, easing: 'ease-out' });
             
-            setTimeout(() => plus.remove(), 850);
+            setTimeout(() => spark.remove(), 350);
         }
 
         tapContainer.addEventListener('pointerdown', (e) => {
             currentScore += 1;
             scoreEl.innerText = Math.floor(currentScore).toLocaleString();
+            
             scoreEl.classList.remove('score-pop');
             void scoreEl.offsetWidth;
             scoreEl.classList.add('score-pop');
-            createTapEffect(e.clientX, e.clientY);
-            createShockwave(e.clientX, e.clientY);
+
+            createSpark(e.clientX, e.clientY);
         });
     </script>
 </body>

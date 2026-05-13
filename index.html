@@ -1,174 +1,455 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wealth OS - Asymmetric Authority</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
-    <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: #030303; /* Deepened black */
-            color: #d6d3d1; 
-            touch-action: none; 
-            overflow: hidden;
-            user-select: none;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wealth OS — Prime Capybara</title>
 
-        /* The Whisper Texture */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            opacity: .025; 
-            background-image: radial-gradient(#fff 1px, transparent 1px);
-            background-size: 4px 4px;
-            z-index: 100;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-        #score {
-            font-variant-numeric: tabular-nums;
-            letter-spacing: -0.06em;
-            color: #f5f5f4;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-        #tap-container {
-            transition: transform 0.05s cubic-bezier(0.2, 0, 0, 1);
-            will-change: transform;
-        }
-        #tap-container:active {
-            transform: scale(0.985);
-        }
+  <style>
+    *{
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        #parallax-wrap {
-            transition: transform 0.6s cubic-bezier(0.1, 0, 0, 1);
-        }
+    body{
+      font-family:'Inter',sans-serif;
+      overflow:hidden;
+      user-select:none;
+      touch-action:none;
 
-        .char-mask {
-            background: radial-gradient(circle, transparent 35%, #030303 92%);
-        }
+      background:
+      radial-gradient(circle at top,#111827 0%,#050505 45%,#020202 100%);
+      color:#e7e5e4;
+    }
 
-        #capy-img {
-            filter: drop-shadow(0 45px 90px rgba(0,0,0,0.85));
-        }
-    </style>
+    /* soft grain */
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.03;
+      background-image:
+      radial-gradient(rgba(255,255,255,.7) 1px, transparent 1px);
+      background-size:4px 4px;
+      z-index:999;
+    }
+
+    /* glow bg */
+    .orb{
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:999px;
+      background:radial-gradient(circle, rgba(34,211,238,.10), transparent 70%);
+      filter:blur(40px);
+      z-index:0;
+    }
+
+    .glass{
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.05);
+      backdrop-filter:blur(20px);
+      box-shadow:
+      0 10px 40px rgba(0,0,0,.45),
+      inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    #score{
+      font-variant-numeric:tabular-nums;
+      letter-spacing:-0.06em;
+      color:#22d3ee;
+      text-shadow:
+      0 0 25px rgba(34,211,238,.25),
+      0 0 60px rgba(34,211,238,.12);
+
+      animation:breathe 5s ease-in-out infinite;
+    }
+
+    @keyframes breathe{
+      0%,100%{
+        text-shadow:
+        0 0 20px rgba(34,211,238,.18),
+        0 0 40px rgba(34,211,238,.08);
+      }
+
+      50%{
+        text-shadow:
+        0 0 40px rgba(34,211,238,.35),
+        0 0 80px rgba(34,211,238,.18);
+      }
+    }
+
+    #tap-container{
+      transition:transform .08s ease-out;
+      will-change:transform;
+    }
+
+    #tap-container:active{
+      transform:scale(.97);
+    }
+
+    #parallax-wrap{
+      transition:transform .18s ease-out;
+      will-change:transform;
+    }
+
+    /* pedestal */
+    .pedestal{
+      position:absolute;
+      bottom:-10px;
+      left:50%;
+      transform:translateX(-50%);
+      width:260px;
+      height:60px;
+      border-radius:999px;
+
+      background:
+      linear-gradient(
+        to bottom,
+        rgba(255,255,255,.08),
+        rgba(255,255,255,.01)
+      );
+
+      border:1px solid rgba(255,255,255,.04);
+
+      backdrop-filter:blur(10px);
+
+      box-shadow:
+      0 30px 80px rgba(0,0,0,.9),
+      inset 0 2px 6px rgba(255,255,255,.03);
+
+      z-index:1;
+    }
+
+    /* shadow */
+    .capy-shadow{
+      position:absolute;
+      width:220px;
+      height:50px;
+      background:black;
+      opacity:.75;
+      border-radius:999px;
+      filter:blur(30px);
+
+      left:50%;
+      bottom:-20px;
+      transform:translateX(-50%);
+      z-index:0;
+    }
+
+    /* capybara */
+    #capy-img{
+      position:relative;
+      z-index:5;
+
+      filter:
+      drop-shadow(0 40px 80px rgba(0,0,0,.85));
+
+      animation:float 6s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-10px);
+      }
+    }
+
+    .char-mask{
+      position:absolute;
+      inset:0;
+      z-index:10;
+      pointer-events:none;
+
+      background:
+      radial-gradient(circle, transparent 28%, #020202 88%);
+    }
+
+    .footer-blur{
+      background:rgba(8,15,25,.45);
+      backdrop-filter:blur(30px);
+      border-top:1px solid rgba(255,255,255,.04);
+    }
+
+    .lucide{
+      stroke-width:1.7;
+    }
+
+    .nav-icon{
+      color:#52525b;
+      transition:.25s;
+    }
+
+    .nav-icon:hover{
+      color:#22d3ee;
+      transform:translateY(-1px);
+    }
+
+    .nav-icon.active{
+      color:#67e8f9;
+      filter:drop-shadow(0 0 10px rgba(34,211,238,.4));
+    }
+
+  </style>
 </head>
+
 <body class="h-screen flex flex-col">
 
-    <header class="relative z-50 p-8 flex justify-between items-start opacity-30">
-        <div class="flex flex-col gap-0.5">
-            <p class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em]">System.Node</p>
-            <p class="text-[10px] font-bold tracking-tighter text-zinc-400">Miftah_Institutional_v3</p>
-        </div>
-        <div class="flex items-center gap-1.5 px-3 py-1 bg-white/[0.01] border border-white/5 rounded-full">
-            <div class="w-1 h-1 rounded-full bg-emerald-500/30"></div>
-            <span class="text-[6px] font-black text-zinc-600 uppercase tracking-widest">Encrypted</span>
-        </div>
-    </header>
+  <!-- ambient orb -->
+  <div class="orb left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"></div>
 
-    <div class="relative z-50 text-center mt-6 flex-shrink-0">
-        <p class="text-[8px] font-black text-zinc-800 uppercase tracking-[0.7em] mb-4">Capital Allocation Index</p>
-        <div class="flex items-baseline justify-center">
-            <h1 id="score" class="text-7xl font-black">0</h1>
-            <span class="text-xl font-bold text-zinc-800 tabular-nums ml-2opacity-60">.00</span>
-        </div>
-        
-        <div class="mt-12 px-40">
-            <div class="h-[0.5px] w-full bg-white/5 relative">
-                <div id="progress-bar" class="absolute h-full bg-gradient-to-r from-white/40 to-white/5 transition-all duration-1000" style="width: 65%"></div>
-            </div>
-        </div>
+  <!-- HEADER -->
+  <header class="relative z-50 p-6 flex justify-between items-start">
+
+    <div class="glass px-5 py-3 rounded-3xl flex items-center gap-4">
+      <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-400/10 flex items-center justify-center">
+        <span class="text-cyan-400 font-black text-xs">M</span>
+      </div>
+
+      <div>
+        <p class="text-[9px] uppercase tracking-[0.35em] text-zinc-600 font-black mb-1">
+          Wealth Node
+        </p>
+
+        <p class="text-xs text-zinc-200 font-bold tracking-tight">
+          Miftah_Prime_System
+        </p>
+      </div>
     </div>
 
-    <main class="relative flex-grow flex items-center justify-center z-10 -mt-20">
-        <div id="tap-container" class="relative cursor-pointer">
-            <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-28 h-6 bg-black/80 blur-3xl z-0"></div>
-            
-            <div id="parallax-wrap" class="relative -left-3"> 
-                <div class="absolute inset-0 z-20 pointer-events-none char-mask scale-125"></div>
-                
-                <img id="capy-img"
-                    src="https://image.pollinations.ai/prompt/ultra_minimal_luxury_fintech_stoic_capybara_full_body_standing_directly_forward_facing_symmetrical_composition_clean_matte_brown_fur_cinematic_shadow_deep_matte_black_background_small_figure_in_frame_high_end_professional_product_photography_no_rodent_features_no_pig_features_--ar_1:1"
-                    class="relative z-10 w-60 h-60 md:w-64 md:h-64 object-contain brightness-[0.95] contrast-[1.1] saturate-[0.8] select-none pointer-events-none opacity-90 grayscale-[0.3]"
-                    alt="Asset Entity">
-            </div>
-        </div>
-    </main>
+    <div class="glass px-4 py-3 rounded-full flex items-center gap-2">
+      <div class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
 
-    <div class="relative z-50 px-14 grid grid-cols-3 gap-10 mb-32">
-        <div class="flex flex-col items-start opacity-20">
-            <span class="text-[6px] font-black text-zinc-600 uppercase tracking-[0.3em] mb-2">Yield / Act</span>
-            <span class="text-[10px] font-bold text-zinc-500 tabular-nums">+1.00</span>
-        </div>
-        
-        <div class="py-5 bg-white/[0.01] border-x border-white/[0.02] flex flex-col items-center -translate-y-4">
-            <span class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em] mb-2.5">Total PPh</span>
-            <span class="text-xs font-black text-zinc-300 tabular-nums tracking-tight">7.5M</span>
-        </div>
-
-        <div class="flex flex-col items-end opacity-20">
-            <span class="text-[6px] font-black text-zinc-600 uppercase tracking-[0.3em] mb-2">Load Grade</span>
-            <span class="text-[10px] font-bold text-zinc-500 tabular-nums">98.2%</span>
-        </div>
+      <span class="text-[9px] uppercase tracking-[0.25em] text-cyan-300 font-black">
+        Stable Sync
+      </span>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 h-24 bg-black/40 backdrop-blur-3xl flex items-center justify-around px-16 pb-10 z-50">
-        <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="layers" class="w-4 h-4 hover:text-zinc-600 transition-all"></i>
-            <i data-lucide="bar-chart-2" class="w-4 h-4 hover:text-zinc-600 transition-all"></i>
+  </header>
+
+  <!-- SCORE -->
+  <section class="relative z-40 text-center mt-3">
+
+    <p class="text-[10px] uppercase tracking-[0.5em] text-zinc-700 font-black mb-4">
+      Total Allocation
+    </p>
+
+    <div class="flex items-end justify-center">
+      <h1 id="score" class="text-7xl md:text-8xl font-black">
+        0
+      </h1>
+
+      <span class="text-2xl text-cyan-900 font-black mb-2 ml-1">
+        .00
+      </span>
+    </div>
+
+    <!-- progress -->
+    <div class="mt-8 px-16 md:px-40">
+      <div class="relative h-[2px] bg-white/5 overflow-hidden rounded-full">
+
+        <div
+          id="progress-bar"
+          class="absolute left-0 top-0 h-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,.6)] transition-all duration-500"
+          style="width:75%"
+        ></div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MAIN -->
+  <main class="flex-grow relative flex items-center justify-center -mt-6">
+
+    <div id="tap-container" class="relative cursor-pointer">
+
+      <div class="capy-shadow"></div>
+      <div class="pedestal"></div>
+
+      <div id="parallax-wrap" class="relative">
+
+        <div class="char-mask scale-125"></div>
+
+        <!-- FULL BODY CAPYBARA -->
+        <img
+          id="capy-img"
+          src="https://image.pollinations.ai/prompt/full_body_realistic_capybara_standing_on_black_luxury_pedestal_soft_cinematic_lighting_brown_fur_realistic_proportions_clean_background_premium_3d_render_front_view_--ar_1:1"
+          class="w-[340px] h-[340px] md:w-[430px] md:h-[430px] object-contain pointer-events-none select-none"
+          alt="Capybara"
+        />
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STATS -->
+  <section class="relative z-40 px-6 grid grid-cols-3 gap-4 mb-28">
+
+    <div class="glass rounded-3xl py-5 flex flex-col items-center">
+      <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
+        Yield
+      </span>
+
+      <span class="text-sm text-zinc-300 font-bold tabular-nums">
+        +1.00
+      </span>
+    </div>
+
+    <div class="glass rounded-3xl py-6 flex flex-col items-center -translate-y-3 border border-cyan-400/10">
+      <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-500 font-black mb-2">
+        PPh Index
+      </span>
+
+      <span class="text-base text-cyan-300 font-black tabular-nums">
+        7.5M
+      </span>
+    </div>
+
+    <div class="glass rounded-3xl py-5 flex flex-col items-center">
+      <span class="text-[8px] uppercase tracking-[0.3em] text-zinc-600 font-black mb-2">
+        Sync
+      </span>
+
+      <span class="text-sm text-zinc-300 font-bold tabular-nums">
+        98.2%
+      </span>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="fixed bottom-0 left-0 right-0 h-24 footer-blur flex items-center justify-around px-8 pb-5 z-50">
+
+    <div class="flex items-center gap-10">
+      <i data-lucide="layers-3" class="nav-icon w-5 h-5"></i>
+      <i data-lucide="bar-chart-3" class="nav-icon w-5 h-5"></i>
+    </div>
+
+    <!-- center button -->
+    <div class="absolute -top-8 left-1/2 -translate-x-1/2">
+
+      <div class="w-20 h-20 rounded-full p-[1px] bg-gradient-to-b from-cyan-400/30 to-transparent">
+
+        <div class="w-full h-full rounded-full bg-black/70 backdrop-blur-3xl flex items-center justify-center border border-cyan-400/10">
+
+          <div class="w-14 h-14 rounded-full bg-cyan-400/10 border border-cyan-300/10 flex items-center justify-center active:scale-90 transition">
+
+            <span class="text-[10px] font-black tracking-[0.25em] text-cyan-300">
+              EXEC
+            </span>
+
+          </div>
+
         </div>
 
-        <div class="w-10 h-10 bg-zinc-900/20 rounded-full flex items-center justify-center border border-white/5 opacity-10">
-            <i data-lucide="plus" class="w-3.5 h-3.5 text-white"></i>
-        </div>
+      </div>
 
-        <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="box" class="w-4 h-4 text-zinc-300"></i> <i data-lucide="terminal" class="w-4 h-4 hover:text-zinc-600 transition-all"></i>
-        </div>
-    </footer>
+    </div>
 
-    <script>
-        lucide.createIcons();
+    <div class="flex items-center gap-10">
+      <i data-lucide="shield-check" class="nav-icon active w-5 h-5"></i>
+      <i data-lucide="command" class="nav-icon w-5 h-5"></i>
+    </div>
 
-        const scoreEl = document.getElementById('score');
-        const tapContainer = document.getElementById('tap-container');
-        const parallaxWrap = document.getElementById('parallax-wrap');
-        let currentScore = 0;
+  </footer>
 
-        // Ultra-Subtle Weighted Parallax
-        document.addEventListener('pointermove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 220; 
-            const y = (window.innerHeight / 2 - e.clientY) / 220;
-            parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
-        });
+  <script>
 
-        // Response Physics
-        tapContainer.addEventListener('pointerdown', (e) => {
-            currentScore += 1;
-            scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
-            
-            scoreEl.animate([
-                { transform: 'translateY(1.5px)', opacity: 0.8 },
-                { transform: 'translateY(0)', opacity: 1 }
-            ], { duration: 50, easing: 'ease-out' });
+    lucide.createIcons();
 
-            // Micro Signal: White Thread
-            const signal = document.createElement('div');
-            signal.className = 'fixed w-[0.5px] h-4 bg-white/10 pointer-events-none z-[60]';
-            signal.style.left = `${e.clientX}px`; 
-            signal.style.top = `${e.clientY}px`;
-            document.body.appendChild(signal);
-            
-            signal.animate([
-                { transform: 'scaleY(1)', opacity: 0.7 },
-                { transform: 'translateY(-20px) scaleY(0)', opacity: 0 }
-            ], { duration: 300, easing: 'ease-in' });
-            
-            setTimeout(() => signal.remove(), 300);
-        });
-    </script>
+    const scoreEl = document.getElementById('score');
+    const tapContainer = document.getElementById('tap-container');
+    const parallaxWrap = document.getElementById('parallax-wrap');
+    const progressBar = document.getElementById('progress-bar');
+
+    let currentScore = 0;
+
+    // smooth parallax
+    document.addEventListener('pointermove', (e) => {
+
+      const x =
+      (window.innerWidth / 2 - e.clientX) / 50;
+
+      const y =
+      (window.innerHeight / 2 - e.clientY) / 50;
+
+      parallaxWrap.style.transform =
+      `translate(${x}px, ${y}px)`;
+
+    });
+
+    // tap interaction
+    tapContainer.addEventListener('pointerdown', (e) => {
+
+      currentScore += 1;
+
+      scoreEl.innerText =
+      Math.floor(currentScore).toLocaleString('en-US');
+
+      // progress movement
+      const progress =
+      Math.min(100, 75 + currentScore * 0.15);
+
+      progressBar.style.width = `${progress}%`;
+
+      // score snap
+      scoreEl.animate([
+        {
+          transform:'scale(1.06)',
+          opacity:.8
+        },
+        {
+          transform:'scale(1)',
+          opacity:1
+        }
+      ],
+      {
+        duration:120,
+        easing:'ease-out'
+      });
+
+      // pulse signal
+      const signal =
+      document.createElement('div');
+
+      signal.className =
+      'fixed w-[2px] h-5 rounded-full bg-cyan-400/70 pointer-events-none z-[999]';
+
+      signal.style.left = `${e.clientX}px`;
+      signal.style.top = `${e.clientY}px`;
+
+      document.body.appendChild(signal);
+
+      signal.animate([
+        {
+          transform:'translateY(0) scaleY(1)',
+          opacity:1
+        },
+        {
+          transform:'translateY(-28px) scaleY(0)',
+          opacity:0
+        }
+      ],
+      {
+        duration:500,
+        easing:'cubic-bezier(0.4,0,0.2,1)'
+      });
+
+      setTimeout(() => {
+        signal.remove();
+      }, 500);
+
+    });
+
+  </script>
 </body>
 </html>

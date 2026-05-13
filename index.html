@@ -3,176 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CryptoCapy - Ultra Premium</title>
+    <title>CryptoCapy - Stylized 3D Upgrade</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold-gradient: linear-gradient(135deg, #f3d6a4 0%, #c19a5b 50%, #8a6d3b 100%);
-            --glass-bg: rgba(15, 15, 15, 0.7);
         }
 
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background: #050505; 
             color: #fff; 
-            touch-action: none; /* Anti-zoom/bounce di iOS */
+            touch-action: none; 
             overflow: hidden;
         }
 
-        /* 1. Ambient Glow & Depth */
-        .ambient-light {
-            position: absolute;
-            width: 120%;
-            height: 60%;
-            top: 20%;
-            left: -10%;
-            background: radial-gradient(circle, rgba(193, 154, 91, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
-            filter: blur(80px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* 2. Capybara Floating Animation */
-        @keyframes floaty {
-            0%, 100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)); }
-            50% { transform: translateY(-15px) scale(1.02); filter: drop-shadow(0 40px 60px rgba(0,0,0,0.6)); }
-        }
-        .animate-float { animation: floaty 4s ease-in-out infinite; }
-
-        /* 4. Progress Shine Animation */
-        .progress-fill {
-            position: relative;
-            overflow: hidden;
-            transition: width 0.3s ease;
-        }
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-30deg);
-            animation: shine 2.5s infinite;
-        }
-        @keyframes shine { 100% { left: 200%; } }
-
-        /* 7. Teams Gold Shine */
-        .btn-gold-shine {
-            position: relative;
-            overflow: hidden;
-            background: var(--gold-gradient);
-        }
-        .btn-gold-shine::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: translateX(-150%);
-            animation: goldShine 4s infinite;
-        }
-        @keyframes goldShine { 100% { transform: translateX(250%); } }
-
-        /* Custom Scroll/Glass */
         .glass-stats {
             background: linear-gradient(180deg, rgba(30,30,30,0.6) 0%, rgba(10,10,10,0.8) 100%);
             border: 1px solid rgba(255,255,255,0.05);
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        .active-nav-glow {
-            box-shadow: 0 -10px 20px rgba(34, 211, 238, 0.1);
-            border-top: 2px solid #22d3ee;
+        /* ===== FLOATING CHARACTER ===== */
+        @keyframes floaty {
+            0%,100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-14px) rotate(1deg); }
         }
+        .animate-float { animation: floaty 4s ease-in-out infinite; }
+
+        /* ===== ROTATING RINGS ===== */
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes spinReverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+        .animate-spin-slow { animation: spinSlow 20s linear infinite; }
+        .animate-spin-reverse { animation: spinReverse 14s linear infinite; }
+
+        /* ===== BADGE FLOAT ===== */
+        @keyframes bounceSlow { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+        .animate-bounce-slow { animation: bounceSlow 3s ease-in-out infinite; }
+
+        /* ===== PARTICLES ===== */
+        .particles::before, .particles::after {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,.15) 1px, transparent 1px),
+                radial-gradient(circle at 70% 60%, rgba(255,215,0,.2) 2px, transparent 2px),
+                radial-gradient(circle at 40% 80%, rgba(34,211,238,.2) 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,.12) 1px, transparent 1px);
+            animation: particleMove 10s linear infinite;
+        }
+        .particles::after { animation-duration: 16s; opacity: .6; }
+        @keyframes particleMove { from { transform: translateY(0px); } to { transform: translateY(-40px); } }
+
+        /* ===== PREMIUM MOTION ===== */
+        #tap-container { transition: transform .25s cubic-bezier(.22,1,.36,1), opacity .25s ease; }
+
+        /* ===== SCORE FLASH ===== */
+        .score-pop { animation: scorePop .25s ease; }
+        @keyframes scorePop {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.08); filter: brightness(1.8); }
+        }
+
+        .btn-gold-shine {
+            position: relative; overflow: hidden; background: var(--gold-gradient);
+        }
+        .btn-gold-shine::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-150%); animation: goldShine 4s infinite;
+        }
+        @keyframes goldShine { 100% { transform: translateX(250%); } }
+
+        .progress-fill { position: relative; overflow: hidden; transition: width 0.3s ease; }
+        .progress-fill::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-30deg); animation: progressShine 2.5s infinite;
+        }
+        @keyframes progressShine { 100% { left: 200%; } }
     </style>
 </head>
 <body class="h-screen flex flex-col p-safe">
 
-    <div class="ambient-light"></div>
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute w-[500px] h-[500px] top-1/4 left-1/2 -translate-x-1/2 rounded-full bg-yellow-500/5 blur-[120px]"></div>
+    </div>
 
-    <header class="relative z-10 p-5 flex justify-between items-center">
+    <header class="relative z-30 p-5 flex justify-between items-center">
         <div class="flex items-center gap-3 glass-stats py-2 px-3 rounded-2xl">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/10">
-                <span class="text-sm font-bold">M</span>
-            </div>
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center border border-white/10 text-sm font-bold">M</div>
             <div>
-                <p class="text-[9px] text-zinc-500 font-extrabold uppercase tracking-tighter">Level 2 Wanderer</p>
+                <p class="text-[9px] text-zinc-500 font-extrabold uppercase tracking-tighter">Level 0 Newbie</p>
                 <p class="text-sm font-bold leading-none">Miftah_Dev</p>
             </div>
         </div>
-        <div class="flex gap-2">
-            <button class="glass-stats w-10 h-10 rounded-xl flex items-center justify-center text-lg active:scale-90 transition-transform">⚙️</button>
-        </div>
+        <button class="glass-stats w-10 h-10 rounded-xl flex items-center justify-center text-lg active:scale-90 transition-transform">⚙️</button>
     </header>
 
-    <div class="relative z-10 px-5 mb-8">
-        <button class="btn-gold-shine w-full py-4 rounded-2xl flex items-center justify-center gap-3 text-zinc-950 font-black uppercase tracking-[0.2em] italic text-sm shadow-2xl">
-            <span class="text-lg">🛡️</span> Join Team
+    <div class="relative z-30 px-5 mb-6">
+        <button class="btn-gold-shine w-full py-3.5 rounded-2xl flex items-center justify-center gap-3 text-zinc-950 font-black uppercase tracking-[0.2em] italic text-xs shadow-2xl">
+            <span class="text-base">🛡️</span> Join Team
         </button>
     </div>
 
-    <div class="relative z-10 text-center mb-6">
+    <div class="relative z-30 text-center mb-4">
         <div class="flex items-center justify-center gap-3">
-            <img src="https://img.icons8.com/emoji/96/gold-coin.png" class="w-12 h-12 drop-shadow-[0_0_20px_rgba(193,154,91,0.4)]" alt="coin">
+            <img src="https://img.icons8.com/emoji/96/gold-coin.png" class="w-10 h-10 drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]" alt="coin">
             <h1 id="score" class="text-6xl font-black tracking-tighter italic bg-clip-text text-transparent bg-gradient-to-b from-white to-zinc-500">
-                273 425
+                0
             </h1>
         </div>
-        <div class="mt-4 px-10">
-            <div class="flex justify-between text-[10px] font-bold text-zinc-400 mb-1">
-                <span>PROGRESS TO LEVEL 3</span>
-                <span class="text-zinc-200">65%</span>
+        <div class="mt-4 px-12">
+            <div class="flex justify-between text-[9px] font-black text-zinc-500 mb-1 tracking-widest">
+                <span>NEWBIE PROGRESS</span>
+                <span class="text-zinc-300">0%</span>
             </div>
-            <div class="h-2.5 bg-zinc-900 rounded-full border border-white/5 p-[2px]">
-                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-yellow-700 to-yellow-300" style="width: 65%"></div>
+            <div class="h-2 bg-zinc-900/50 rounded-full border border-white/5 p-[1px]">
+                <div class="progress-fill h-full rounded-full bg-gradient-to-r from-yellow-700 to-yellow-300" style="width: 0%"></div>
             </div>
         </div>
     </div>
 
-    <main class="relative flex-grow flex items-center justify-center z-10">
-        <div id="tap-container" class="relative transition-transform duration-75">
-            <div class="absolute inset-0 bg-yellow-500/20 blur-[100px] rounded-full scale-150"></div>
-            
-            <img id="capy-img" 
-                 src="https://image.pollinations.ai/prompt/Highly_detailed_realistic_3D_render_of_a_majestic_capybara_sitting_on_a_mossy_stone_pedestal,_tactical_gear,_cinematic_rim_lighting,_dark_studio_background_--ar_1:1" 
-                 class="w-72 h-72 md:w-96 md:h-96 object-contain animate-float pointer-events-none"
-                 alt="Legendary Capy">
+    <main class="relative flex-grow flex items-center justify-center z-10 overflow-hidden">
+        <div class="absolute w-[500px] h-[500px] rounded-full bg-yellow-500/10 blur-[120px]"></div>
+
+        <div class="absolute w-[420px] h-[420px] rounded-full border border-yellow-500/10 animate-spin-slow"></div>
+        <div class="absolute w-[320px] h-[320px] rounded-full border border-cyan-400/10 animate-spin-reverse"></div>
+
+        <div class="particles absolute inset-0 pointer-events-none"></div>
+
+        <div id="tap-container" class="relative transition-all duration-200 active:scale-95 cursor-pointer">
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 w-56 h-12 bg-black/60 blur-2xl rounded-full"></div>
+            <div class="absolute inset-0 rounded-full bg-gradient-to-b from-yellow-400/10 to-cyan-400/5 blur-3xl scale-125"></div>
+
+            <img id="capy-img"
+                src="https://image.pollinations.ai/prompt/stylized_3D_capybara_mascot_character,_soft_lighting,_clean_shading,_transparent_background,_minimal_tactical_vest,_cute_and_premium_mobile_game_style,_simple_shapes,_gold_and_cyan_accents,_dark_background_compatible,_high_quality_game_asset_--ar_1:1"
+                class="relative z-10 w-72 h-72 md:w-[26rem] md:h-[26rem] object-contain animate-float select-none pointer-events-none"
+                alt="CryptoCapy"
+            >
+
+            <div class="absolute top-10 right-4 z-20 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/20 backdrop-blur-xl animate-bounce-slow">
+                <p class="text-[10px] font-black tracking-widest text-yellow-300">LEGENDARY</p>
+            </div>
         </div>
     </main>
 
-    <div class="relative z-20 px-5 grid grid-cols-3 gap-3 -translate-y-10">
-        <div class="glass-stats p-4 rounded-[2rem] flex flex-col items-center">
-            <span class="text-[9px] font-black text-zinc-500 uppercase mb-1">Per Tap</span>
-            <span class="text-sm font-extrabold text-yellow-500">+1.50</span>
+    <div class="relative z-30 px-5 grid grid-cols-3 gap-3 -translate-y-6">
+        <div class="glass-stats p-3.5 rounded-[1.5rem] flex flex-col items-center">
+            <span class="text-[8px] font-black text-zinc-500 uppercase mb-0.5 tracking-tighter">Per Tap</span>
+            <span class="text-xs font-extrabold text-yellow-500">+1</span>
         </div>
-        <div class="glass-stats p-4 rounded-[2rem] flex flex-col items-center scale-110 shadow-2xl bg-zinc-900 border-yellow-500/20">
-            <span class="text-[9px] font-black text-zinc-500 uppercase mb-1">Per Hour</span>
-            <span class="text-sm font-extrabold text-green-400">6.4K</span>
+        <div class="glass-stats p-3.5 rounded-[1.5rem] flex flex-col items-center border-yellow-500/20 shadow-2xl scale-105">
+            <span class="text-[8px] font-black text-zinc-500 uppercase mb-0.5 tracking-tighter">Per Hour</span>
+            <span class="text-xs font-extrabold text-green-400">0</span>
         </div>
-        <div class="glass-stats p-4 rounded-[2rem] flex flex-col items-center">
-            <span class="text-[9px] font-black text-zinc-500 uppercase mb-1">Energy</span>
-            <span class="text-sm font-extrabold">4.9K</span>
+        <div class="glass-stats p-3.5 rounded-[1.5rem] flex flex-col items-center">
+            <span class="text-[8px] font-black text-zinc-500 uppercase mb-0.5 tracking-tighter">Energy</span>
+            <span class="text-xs font-extrabold">50/50</span>
         </div>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 h-28 bg-zinc-950/80 backdrop-blur-2xl border-t border-white/5 flex items-center justify-around px-4 pb-4 z-40">
+    <footer class="fixed bottom-0 left-0 right-0 h-28 bg-zinc-950/90 backdrop-blur-3xl border-t border-white/5 flex items-center justify-around px-4 pb-4 z-40">
         <div class="flex gap-10">
             <button class="flex flex-col items-center gap-1 opacity-40">
-                <span class="text-xl">💎</span>
-                <span class="text-[9px] font-bold uppercase tracking-widest">Staking</span>
+                <span class="text-xl">📚</span>
+                <p class="text-[8px] font-bold uppercase mt-1">Staking</p>
             </button>
             <button class="flex flex-col items-center gap-1 text-cyan-400 relative">
                 <div class="absolute -inset-4 bg-cyan-400/10 blur-xl rounded-full"></div>
                 <span class="text-xl">📋</span>
-                <span class="text-[9px] font-bold uppercase tracking-widest">Tasks</span>
+                <p class="text-[8px] font-bold uppercase mt-1">Tasks</p>
             </button>
         </div>
 
-        <div class="absolute -top-10 left-1/2 -translate-x-1/2 group">
-            <div class="w-24 h-24 bg-zinc-950 rounded-full p-1.5 shadow-[0_0_40px_rgba(193,154,91,0.2)] border border-yellow-500/20 active:scale-90 transition-transform">
-                <div class="w-full h-full rounded-full border-4 border-yellow-500/40 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-black">
-                    <p class="text-[9px] font-black text-yellow-500">02:56:54</p>
-                    <p class="text-base font-black text-white leading-none">334.8</p>
+        <div class="absolute -top-12 left-1/2 -translate-x-1/2">
+            <div class="w-24 h-24 bg-zinc-950 rounded-full p-1 shadow-[0_0_30px_rgba(193,154,91,0.2)] border border-yellow-500/20 active:scale-90 transition-transform">
+                <div class="w-full h-full rounded-full border-[3px] border-yellow-500/40 flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-black">
+                    <p class="text-[8px] text-yellow-500 font-bold tracking-tighter">FARMING</p>
+                    <p class="text-sm font-black tracking-tighter">0.0</p>
                 </div>
             </div>
         </div>
@@ -180,11 +189,11 @@
         <div class="flex gap-10">
             <button class="flex flex-col items-center gap-1 opacity-40">
                 <span class="text-xl">👥</span>
-                <span class="text-[9px] font-bold uppercase tracking-widest">Friends</span>
+                <p class="text-[8px] font-bold uppercase mt-1">Friends</p>
             </button>
             <button class="flex flex-col items-center gap-1 opacity-40">
-                <span class="text-xl">🎮</span>
-                <span class="text-[9px] font-bold uppercase tracking-widest">Games</span>
+                <span class="text-xl">🐭</span>
+                <p class="text-[8px] font-bold uppercase mt-1">Games</p>
             </button>
         </div>
     </footer>
@@ -192,42 +201,70 @@
     <script>
         const scoreEl = document.getElementById('score');
         const tapContainer = document.getElementById('tap-container');
-        const capyImg = document.getElementById('capy-img');
-        
-        let currentScore = 273425;
 
-        tapContainer.addEventListener('pointerdown', (e) => {
-            currentScore += 1.5;
-            scoreEl.innerText = Math.floor(currentScore).toLocaleString().replace(/,/g, ' ');
+        let currentScore = 0;
 
-            // 9. Visual Haptic Feel
-            tapContainer.animate([
-                { transform: 'scale(1)' },
-                { transform: 'scale(0.93)' },
-                { transform: 'scale(1)' }
-            ], { duration: 120, easing: 'ease-out' });
+        function animateScore(){
+            scoreEl.classList.remove('score-pop');
+            void scoreEl.offsetWidth; // Trigger reflow
+            scoreEl.classList.add('score-pop');
+        }
 
-            // 6. Premium Tap Effect (Scale + Blur Fade)
-            createTapEffect(e.clientX, e.clientY);
-        });
+        function createShockwave(x,y){
+            const ring = document.createElement('div');
+            ring.className = 'fixed w-10 h-10 rounded-full border border-yellow-400/40 pointer-events-none z-50';
+            ring.style.left = `${x-20}px`;
+            ring.style.top = `${y-20}px`;
 
-        function createTapEffect(x, y) {
+            document.body.appendChild(ring);
+            ring.animate([
+                { transform:'scale(.5)', opacity:1 },
+                { transform:'scale(4)', opacity:0 }
+            ],{ duration:700, easing:'ease-out' });
+
+            setTimeout(()=> ring.remove(),700);
+        }
+
+        function createTapEffect(x,y,text='+1'){
             const plus = document.createElement('div');
-            plus.innerText = '+1.5';
+            plus.innerText = text;
             plus.className = 'fixed pointer-events-none text-2xl font-black text-yellow-400 z-50';
             plus.style.left = `${x}px`;
             plus.style.top = `${y}px`;
-            plus.style.textShadow = '0 0 20px rgba(251,191,36,0.6)';
-            
+            plus.style.textShadow = '0 0 20px rgba(251,191,36,0.7)';
+
             document.body.appendChild(plus);
-
             plus.animate([
-                { opacity: 1, transform: 'translateY(0) scale(1)', filter: 'blur(0px)' },
-                { opacity: 0, transform: 'translateY(-150px) scale(2)', filter: 'blur(8px)' }
-            ], { duration: 900, easing: 'ease-out' });
+                { opacity:1, transform:'translateY(0px) scale(1)', filter:'blur(0px)' },
+                { opacity:0, transform:'translateY(-160px) scale(2)', filter:'blur(8px)' }
+            ],{ duration:900, easing:'ease-out' });
 
-            setTimeout(() => plus.remove(), 900);
+            setTimeout(()=> plus.remove(),900);
         }
+
+        function randomCrit(x,y){
+            if(Math.random() > 0.92){
+                createTapEffect(x,y,'CRIT +12');
+                currentScore += 12;
+            }
+        }
+
+        tapContainer.addEventListener('pointerdown', (e) => {
+            currentScore += 1;
+            scoreEl.innerText = Math.floor(currentScore).toLocaleString().replace(/,/g,' ');
+
+            animateScore();
+
+            tapContainer.animate([
+                { transform:'scale(1)' },
+                { transform:'scale(.93)' },
+                { transform:'scale(1)' }
+            ],{ duration:120, easing:'ease-out' });
+
+            createTapEffect(e.clientX, e.clientY);
+            createShockwave(e.clientX, e.clientY);
+            randomCrit(e.clientX, e.clientY);
+        });
     </script>
 </body>
 </html>

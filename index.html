@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Wealth OS - Stoic Guardian</title>
+    <title>Wealth OS - Stoic Sovereign</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
@@ -17,12 +17,12 @@
             user-select: none;
         }
 
-        /* Material Simulation: The Whisper */
+        /* Institutional Noise Floor */
         body::before {
             content: '';
             position: fixed; inset: 0;
             pointer-events: none;
-            opacity: .018; 
+            opacity: .02; 
             background-image: radial-gradient(#fff 1px, transparent 1px);
             background-size: 4px 4px;
             z-index: 100;
@@ -32,6 +32,7 @@
             font-variant-numeric: tabular-nums;
             letter-spacing: -0.06em;
             color: #f5f5f4;
+            filter: drop-shadow(0 0 30px rgba(255,255,255,0.05));
         }
 
         #tap-container {
@@ -39,7 +40,7 @@
             will-change: transform;
         }
         #tap-container:active {
-            transform: scale(0.98);
+            transform: scale(0.985);
         }
 
         #parallax-wrap {
@@ -47,11 +48,15 @@
         }
 
         .char-mask {
-            background: radial-gradient(circle, transparent 30%, #020202 90%);
+            background: radial-gradient(circle, transparent 35%, #020202 92%);
         }
 
+        /* Premium Mascot Filter Logic */
         #capy-img {
-            filter: drop-shadow(0 40px 80px rgba(0,0,0,1));
+            filter: 
+                drop-shadow(0 50px 100px rgba(0,0,0,0.95))
+                contrast(1.05)
+                saturate(0.85);
         }
     </style>
 </head>
@@ -59,74 +64,74 @@
 
     <header class="relative z-50 p-8 flex justify-between items-start opacity-25">
         <div class="flex flex-col gap-0.5">
-            <p class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em]">Auth.Protocol</p>
-            <p class="text-[10px] font-bold tracking-tighter text-zinc-500">Guardian_Asset_v5.0</p>
+            <p class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.5em]">Network.Status</p>
+            <p class="text-[10px] font-bold tracking-tighter text-zinc-500">Sovereign_Asset_v6</p>
         </div>
         <div class="flex items-center gap-2">
             <div class="w-1 h-1 rounded-full bg-emerald-500/30"></div>
-            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-widest">Active_Node</span>
+            <span class="text-[7px] font-black text-zinc-700 uppercase tracking-widest">Authorized</span>
         </div>
     </header>
 
     <div class="relative z-50 text-center mt-4">
-        <p class="text-[8px] font-black text-zinc-800 uppercase tracking-[0.8em] mb-4">Consolidated Capital</p>
+        <p class="text-[8px] font-black text-zinc-800 uppercase tracking-[0.8em] mb-4">Total Liquid Assets</p>
         <div class="flex items-baseline justify-center">
             <h1 id="score" class="text-7xl font-black">0</h1>
-            <span class="text-xl font-bold text-zinc-800 tabular-nums ml-2 opacity-50">.00</span>
+            <span class="text-xl font-bold text-zinc-800 tabular-nums ml-2 opacity-40">.00</span>
         </div>
         
         <div class="mt-12 px-48">
-            <div class="h-[0.5px] w-full bg-white/[0.02] relative">
-                <div id="progress-bar" class="absolute h-full bg-gradient-to-r from-white/30 to-white/0 transition-all duration-1000" style="width: 70%"></div>
+            <div class="h-[0.5px] w-full bg-white/[0.03] relative">
+                <div id="progress-bar" class="absolute h-full bg-gradient-to-r from-white/40 to-white/0 transition-all duration-1000" style="width: 65%"></div>
             </div>
         </div>
     </div>
 
     <main class="relative flex-grow flex items-center justify-center z-10 -mt-20">
         <div id="tap-container" class="relative cursor-pointer">
-            <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-8 bg-black blur-3xl z-0"></div>
+            <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-44 h-10 bg-black blur-3xl z-0"></div>
             
             <div id="parallax-wrap" class="relative"> 
                 <div class="absolute inset-0 z-20 pointer-events-none char-mask scale-125"></div>
                 
                 <img id="capy-img"
-                    src="https://image.pollinations.ai/prompt/hyper-realistic_frontal_portrait_of_a_stoic_capybara_sitting_on_a_minimal_black_stone_pedestal_dramatic_rim_lighting_deep_shadows_cinematic_lighting_luxury_asset_vibe_clean_black_background_8k_resolution_--ar_16:9"
-                    class="relative z-10 w-64 h-64 md:w-72 md:h-72 object-contain brightness-[0.85] contrast-[1.1] saturate-[0.7] select-none pointer-events-none"
-                    alt="The Guardian">
+                    src="https://image.pollinations.ai/prompt/ultra_minimal_stoic_capybara_front_view_clean_round_face_soft_brown_fur_luxury_fintech_mascot_cinematic_shadow_black_background_high_end_3d_render_octane_symmetrical_composition_no_pig_features_no_rat_features_--ar_1:1"
+                    class="relative z-10 w-64 h-64 md:w-72 md:h-72 object-contain brightness-[0.9] select-none pointer-events-none"
+                    alt="The Sovereign">
             </div>
         </div>
     </main>
 
     <div class="relative z-50 px-16 grid grid-cols-3 gap-12 mb-32">
         <div class="flex flex-col items-start opacity-20">
-            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.3em] mb-2">Net_Yield</span>
+            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Yield_Rate</span>
             <span class="text-[9px] font-bold text-zinc-600 tabular-nums">+1.00</span>
         </div>
         
         <div class="py-5 bg-white/[0.01] border-x border-white/[0.02] flex flex-col items-center -translate-y-4">
-            <span class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.6em] mb-2.5">Global_PPh</span>
+            <span class="text-[7px] font-black text-zinc-600 uppercase tracking-[0.6em] mb-2.5">Capital_PPh</span>
             <span class="text-xs font-black text-zinc-300 tabular-nums">7.5M</span>
         </div>
 
         <div class="flex flex-col items-end opacity-20">
-            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.3em] mb-2">Node_Sync</span>
-            <span class="text-[9px] font-bold text-zinc-600 tabular-nums">98.2%</span>
+            <span class="text-[6px] font-black text-zinc-700 uppercase tracking-[0.4em] mb-2">Node_Sync</span>
+            <span class="text-[9px] font-bold text-zinc-600 tabular-nums">99.8%</span>
         </div>
     </div>
 
-    <footer class="fixed bottom-0 left-0 right-0 h-24 bg-black/50 backdrop-blur-3xl flex items-center justify-around px-16 pb-12 z-50">
+    <footer class="fixed bottom-0 left-0 right-0 h-24 bg-black/60 backdrop-blur-3xl flex items-center justify-around px-16 pb-12 z-50">
         <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="shield-check" class="w-4 h-4 hover:text-zinc-500 transition-all"></i>
-            <i data-lucide="activity" class="w-4 h-4 hover:text-zinc-500 transition-all"></i>
+            <i data-lucide="shield" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
+            <i data-lucide="bar-chart-3" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
         </div>
 
         <div class="w-10 h-10 bg-zinc-900/10 rounded-full flex items-center justify-center border border-white/5 opacity-10">
-            <i data-lucide="crosshair" class="w-3.5 h-3.5 text-white"></i>
+            <i data-lucide="scan-face" class="w-3.5 h-3.5 text-white"></i>
         </div>
 
         <div class="flex items-center gap-14 text-zinc-800">
-            <i data-lucide="database" class="w-4 h-4 text-zinc-300"></i>
-            <i data-lucide="cpu" class="w-4 h-4 hover:text-zinc-500 transition-all"></i>
+            <i data-lucide="layers" class="w-4 h-4 text-zinc-300 transition-all cursor-pointer"></i>
+            <i data-lucide="terminal" class="w-4 h-4 hover:text-zinc-500 transition-all cursor-pointer"></i>
         </div>
     </footer>
 
@@ -138,24 +143,24 @@
         const parallaxWrap = document.getElementById('parallax-wrap');
         let currentScore = 0;
 
-        // Heavy Weight Parallax Simulation
+        // Extreme Heavy Weight Parallax
         document.addEventListener('pointermove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 280; 
-            const y = (window.innerHeight / 2 - e.clientY) / 280;
+            const x = (window.innerWidth / 2 - e.clientX) / 320; 
+            const y = (window.innerHeight / 2 - e.clientY) / 320;
             parallaxWrap.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        // Response Haptics
+        // Haptic Logic
         tapContainer.addEventListener('pointerdown', (e) => {
             currentScore += 1;
             scoreEl.innerText = Math.floor(currentScore).toLocaleString('en-US');
             
             scoreEl.animate([
-                { transform: 'translateY(1px)', opacity: 0.8 },
+                { transform: 'translateY(1.5px)', opacity: 0.8 },
                 { transform: 'translateY(0)', opacity: 1 }
-            ], { duration: 40, easing: 'ease-out' });
+            ], { duration: 50, easing: 'ease-out' });
 
-            // Micro-feedback Signal
+            // Micro Signal: Laser Thread
             const signal = document.createElement('div');
             signal.className = 'fixed w-[0.5px] h-4 bg-white/10 pointer-events-none z-[60]';
             signal.style.left = `${e.clientX}px`; 
@@ -163,11 +168,11 @@
             document.body.appendChild(signal);
             
             signal.animate([
-                { transform: 'scaleY(1)', opacity: 0.6 },
-                { transform: 'translateY(-25px) scaleY(0)', opacity: 0 }
-            ], { duration: 400, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
+                { transform: 'scaleY(1)', opacity: 0.7 },
+                { transform: 'translateY(-30px) scaleY(0)', opacity: 0 }
+            ], { duration: 450, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' });
             
-            setTimeout(() => signal.remove(), 400);
+            setTimeout(() => signal.remove(), 450);
         });
     </script>
 </body>

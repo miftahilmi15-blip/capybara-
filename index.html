@@ -48,15 +48,6 @@ body::after {
   flex-shrink: 0;
 }
 
-.glass {
-  background: rgba(10, 15, 20, 0.8);
-  border: 1px solid rgba(34, 211, 238, 0.15);
-  padding: 8px 14px;
-  border-radius: 10px;
-  backdrop-filter: blur(15px);
-  font-size: 11px;
-}
-
 /* CENTER AREA */
 .content-area {
   flex: 1;
@@ -65,18 +56,7 @@ body::after {
   justify-content: center;
   align-items: center;
   position: relative;
-  /* Tambahkan area klik yang luas */
   cursor: pointer;
-  touch-action: manipulation;
-}
-
-#score-label {
-  font-size: 10px;
-  color: #888;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  pointer-events: none;
 }
 
 #score {
@@ -85,18 +65,15 @@ body::after {
   color: white;
   line-height: 1;
   margin-bottom: 20px;
-  text-shadow: 0 0 30px rgba(34, 211, 238, 0.2);
+  text-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
   pointer-events: none;
 }
 
-/* CAPYBARA */
+/* CAPYBARA & ANIMATION */
 .capy-container {
   position: relative;
   width: 280px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: none; /* Klik tembus ke content-area */
+  pointer-events: none;
 }
 
 .float-wrapper {
@@ -109,17 +86,16 @@ body::after {
   width: 100%;
   max-width: 280px;
   filter: drop-shadow(0 0 40px rgba(0,0,0,1));
-  transition: transform 0.05s ease;
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .pedestal {
   width: 220px;
   height: 12px;
   background: #0a0a0a;
-  border-top: 2px solid rgba(34, 211, 238, 0.6);
+  border-top: 2px solid rgba(34,211,238,0.6);
   border-radius: 50% / 100% 100% 0 0;
-  margin-top: -18px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+  margin: -18px auto 0;
 }
 
 @keyframes float {
@@ -127,9 +103,25 @@ body::after {
   50% { transform: translateY(-15px); }
 }
 
-/* STATS - DINAIKKAN */
+/* FLOATING TEXT (+1) */
+.plus-one {
+  position: absolute;
+  color: #22d3ee;
+  font-weight: 900;
+  font-size: 24px;
+  pointer-events: none;
+  animation: flyUp 0.8s ease-out forwards;
+  z-index: 100;
+}
+
+@keyframes flyUp {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-120px); opacity: 0; }
+}
+
+/* STATS - DINAIKKAN LAGI */
 .stats-container {
-  padding: 0 20px 130px; /* Padding bawah ditambah supaya naik */
+  padding: 0 20px 145px; /* Naik lebih tinggi */
   flex-shrink: 0;
 }
 
@@ -141,7 +133,7 @@ body::after {
 
 .card {
   background: rgba(10, 15, 20, 0.85);
-  border: 1px solid rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.15);
   padding: 12px 5px;
   border-radius: 12px;
   text-align: center;
@@ -151,56 +143,33 @@ body::after {
 /* FOOTER */
 .footer {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 90px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 40px;
   background: rgba(5, 7, 10, 0.98);
-  border-top: 1px solid rgba(34, 211, 238, 0.15);
-  z-index: 100;
+  border-top: 1px solid rgba(34, 211, 238, 0.2);
+  z-index: 1000;
 }
 
-.nav-group {
-  display: flex;
-  gap: 60px;
-}
-
-.nav-item {
-  color: #3f3f46;
-  cursor: pointer;
-}
-
-.nav-item.active {
-  color: #22d3ee;
-  filter: drop-shadow(0 0 5px #22d3ee);
-}
+.nav-group { display: flex; gap: 60px; }
+.nav-item { color: #3f3f46; cursor: pointer; }
+.nav-item.active { color: #22d3ee; }
 
 .exec-btn {
   position: absolute;
-  left: 50%;
-  bottom: 45px;
+  left: 50%; bottom: 45px;
   transform: translateX(-50%) rotate(45deg);
-  width: 60px;
-  height: 60px;
+  width: 60px; height: 60px;
   background: #05070a;
   border: 1px solid #22d3ee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
-  cursor: pointer;
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
 }
 
-.exec-inner {
-  transform: rotate(-45deg);
-  font-size: 10px;
-  font-weight: 900;
-  color: #22d3ee;
-}
+.exec-inner { transform: rotate(-45deg); font-size: 10px; font-weight: 900; color: #22d3ee; }
 </style>
 </head>
 
@@ -208,17 +177,15 @@ body::after {
 
   <div class="header">
     <div>
-      <div style="font-weight:900;color:#22d3ee;font-size:22px;line-height:1">M</div>
-      <div style="font-size:9px;color:#666;text-transform:uppercase;margin-top:2px">Security Level: Prime</div>
+      <div style="font-weight:900;color:#22d3ee;font-size:22px;">M</div>
       <div style="font-size:12px;color:white;font-weight:700">Miftah_Prime_OS</div>
     </div>
-    <div class="glass">
+    <div style="background:rgba(10,15,20,0.8); padding:8px 14px; border-radius:10px; border:1px solid rgba(34,211,238,0.2); font-size:11px;">
       <span style="color:#22d3ee">●</span> ENCRYPTED
     </div>
   </div>
 
-  <div class="content-area" id="main-tap-area">
-    <div id="score-label">Resource Allocation</div>
+  <div class="content-area" id="tap-zone">
     <div id="score">0</div>
 
     <div class="capy-container">
@@ -234,16 +201,16 @@ body::after {
   <div class="stats-container">
     <div class="stats-grid">
       <div class="card">
-        <div style="font-size:10px;color:#888;margin-bottom:2px">Hash Rate</div>
-        <b style="font-size:15px;color:white">+1.0</b>
+        <div style="font-size:10px;color:#888">Hash Rate</div>
+        <b style="font-size:15px;">+1.0</b>
       </div>
       <div class="card">
-        <div style="font-size:10px;color:#888;margin-bottom:2px">Index PPh</div>
+        <div style="font-size:10px;color:#888">Index PPh</div>
         <b style="font-size:15px;color:#22d3ee">7.5M</b>
       </div>
       <div class="card">
-        <div style="font-size:10px;color:#888;margin-bottom:2px">Uptime</div>
-        <b style="font-size:15px;color:white">99.9%</b>
+        <div style="font-size:10px;color:#888">Uptime</div>
+        <b style="font-size:15px;">99.9%</b>
       </div>
     </div>
   </div>
@@ -253,11 +220,7 @@ body::after {
       <div class="nav-item"><i data-lucide="database"></i></div>
       <div class="nav-item"><i data-lucide="activity"></i></div>
     </div>
-
-    <div class="exec-btn" onclick="alert('SYSTEM OVERRIDE: ACTIVE')">
-      <div class="exec-inner">EXEC</div>
-    </div>
-
+    <div class="exec-btn"><div class="exec-inner">EXEC</div></div>
     <div class="nav-group">
       <div class="nav-item active"><i data-lucide="shield"></i></div>
       <div class="nav-item"><i data-lucide="cpu"></i></div>
@@ -267,26 +230,36 @@ body::after {
 <script>
 lucide.createIcons();
 
-// Logic Skor & Klik
-let score = parseInt(localStorage.getItem('miftah_prime_score')) || 0;
+let score = parseInt(localStorage.getItem('miftah_score')) || 0;
 const scoreDisplay = document.getElementById('score');
-const tapArea = document.getElementById('main-tap-area');
+const tapZone = document.getElementById('tap-zone');
 const capyImg = document.getElementById('capy-img');
 
 scoreDisplay.innerText = score.toLocaleString();
 
-tapArea.addEventListener('click', (e) => {
+tapZone.addEventListener('click', (e) => {
   score++;
   scoreDisplay.innerText = score.toLocaleString();
-  localStorage.setItem('miftah_prime_score', score);
+  localStorage.setItem('miftah_score', score);
 
-  // Animasi Pencet tetap di Capybara
-  capyImg.style.transform = 'scale(0.92)';
-  setTimeout(() => {
-    capyImg.style.transform = 'scale(1)';
-  }, 50);
+  // 1. Animasi Capy (Smooth Bounce)
+  capyImg.style.transform = 'scale(0.9)';
+  setTimeout(() => { capyImg.style.transform = 'scale(1)'; }, 100);
 
-  // Getar
+  // 2. Efek +1 Melayang
+  const plusOne = document.createElement('div');
+  plusOne.innerText = '+1';
+  plusOne.className = 'plus-one';
+  
+  // Posisi muncul di tempat jari/mouse klik
+  plusOne.style.left = `${e.clientX - 10}px`;
+  plusOne.style.top = `${e.clientY - 20}px`;
+  
+  document.body.appendChild(plusOne);
+  
+  // Hapus elemen setelah animasi selesai
+  setTimeout(() => { plusOne.remove(); }, 800);
+
   if (navigator.vibrate) navigator.vibrate(10);
 });
 </script>

@@ -25,14 +25,14 @@ body {
   color: #e7e5e4;
   height: 100vh;
   display: flex;
-  flex-direction: column; /* Bagi layar jadi atas, tengah, bawah */
+  flex-direction: column;
 }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: 
+  background:
     linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
   background-size: 30px 30px;
@@ -45,7 +45,6 @@ body::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-shrink: 0;
 }
 
 .glass {
@@ -57,19 +56,13 @@ body::after {
   font-size: 12px;
 }
 
-/* AREA SKOR & CAPY (TENGAH) */
+/* CENTER */
 .content-area {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 20px;
-}
-
-.score-container {
-  text-align: center;
-  margin-bottom: 20px;
 }
 
 #score {
@@ -77,11 +70,10 @@ body::after {
   font-weight: 900;
   color: white;
   line-height: 1;
-  text-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
 }
 
+/* CAPY */
 .capy-box {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -91,10 +83,9 @@ body::after {
 #capy-img {
   max-width: 280px;
   width: 70vw;
-  filter: drop-shadow(0 0 30px rgba(0,0,0,0.9));
   animation: float 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(0,0,0,0.9));
   transition: transform 0.1s ease;
-  z-index: 2;
 }
 
 .pedestal {
@@ -104,7 +95,6 @@ body::after {
   border-top: 2px solid rgba(34, 211, 238, 0.5);
   margin-top: -15px;
   border-radius: 50% / 100% 100% 0 0;
-  box-shadow: 0 5px 15px rgba(0,0,0,1);
 }
 
 @keyframes float {
@@ -112,10 +102,9 @@ body::after {
   50% { transform: translateY(-12px); }
 }
 
-/* STATS AREA */
+/* STATS */
 .stats-container {
-  padding: 0 20px 110px 20px; /* Jarak bawah biar gak ketutup footer */
-  flex-shrink: 0;
+  padding: 0 20px 110px;
 }
 
 .stats-grid {
@@ -130,10 +119,9 @@ body::after {
   padding: 12px 5px;
   border-radius: 12px;
   text-align: center;
-  backdrop-filter: blur(10px);
 }
 
-/* FOOTER FIX */
+/* FOOTER */
 .footer {
   position: fixed;
   bottom: 0;
@@ -146,7 +134,6 @@ body::after {
   padding: 0 40px;
   background: rgba(5, 7, 10, 0.98);
   border-top: 1px solid rgba(34, 211, 238, 0.15);
-  z-index: 100;
 }
 
 .nav-group {
@@ -156,14 +143,11 @@ body::after {
 
 .nav-item {
   color: #3f3f46;
-  cursor: pointer;
 }
 
 .nav-item.active {
   color: #22d3ee;
-  filter: drop-shadow(0 0 5px #22d3ee);
 }
-
 .exec-btn {
   position: absolute;
   left: 50%;
@@ -171,12 +155,10 @@ body::after {
   transform: translateX(-50%) rotate(45deg);
   width: 60px;
   height: 60px;
-  background: #05070a;
   border: 1px solid #22d3ee;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 0 15px rgba(34, 211, 238, 0.2);
 }
 
 .exec-inner {
@@ -190,92 +172,86 @@ body::after {
 
 <body>
 
-    <div class="header">
-        <div>
-            <div style="font-weight:900; color:#22d3ee; font-size: 20px;">M</div>
-            <div style="font-size:9px; color:#666; text-transform: uppercase; letter-spacing: 1px;">Security Level: Prime</div>
-            <div style="font-size:12px; color:white; font-weight:700">Miftah_Prime_OS</div>
-        </div>
-        <div class="glass">
-            <span style="color:#22d3ee">●</span> ENCRYPTED
-        </div>
+<div class="header">
+  <div>
+    <div style="font-weight:900;color:#22d3ee;font-size:20px;">M</div>
+    <div style="font-size:9px;color:#666;">Security Level: Prime</div>
+    <div style="font-size:12px;color:white;font-weight:700">Miftah_Prime_OS</div>
+  </div>
+
+  <div class="glass">
+    <span style="color:#22d3ee">●</span> ENCRYPTED
+  </div>
+</div>
+
+<div class="content-area">
+  <div style="text-align:center;margin-bottom:20px;">
+    <div style="font-size:10px;color:#888;">Resource Allocation</div>
+    <div id="score">0</div>
+  </div>
+
+  <div class="capy-box" id="click-target">
+    <img id="capy-img"
+      src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1"
+      alt="System Core" />
+    <div class="pedestal"></div>
+  </div>
+</div>
+
+<div class="stats-container">
+  <div class="stats-grid">
+    <div class="card">
+      <div style="font-size:10px;color:#888;">Hash Rate</div>
+      <b>+1.0</b>
     </div>
-
-    <div class="content-area">
-        <div class="score-container">
-            <div style="font-size:10px; color:#888; letter-spacing:3px; text-transform: uppercase; margin-bottom: 5px;">Resource Allocation</div>
-            <div id="score">0</div>
-        </div>
-
-        <div class="capy-box" id="click-target">
-            <img id="capy-img" 
-                 src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1" 
-                 alt="System Core" />
-            <div class="pedestal"></div>
-        </div>
+    <div class="card">
+      <div style="font-size:10px;color:#888;">Index PPh</div>
+      <b style="color:#22d3ee;">7.5M</b>
     </div>
-
-    <div class="stats-container">
-        <div class="stats-grid">
-            <div class="card">
-                <div style="font-size:10px; color:#888;">Hash Rate</div>
-                <b style="font-size:14px;">+1.0</b>
-            </div>
-            <div class="card">
-                <div style="font-size:10px; color:#888;">Index PPh</div>
-                <b style="font-size:14px; color:#22d3ee;">7.5M</b>
-            </div>
-            <div class="card">
-                <div style="font-size:10px; color:#888;">Uptime</div>
-                <b style="font-size:14px;">99.9%</b>
-            </div>
-        </div>
+    <div class="card">
+      <div style="font-size:10px;color:#888;">Uptime</div>
+      <b>99.9%</b>
     </div>
+  </div>
+</div>
 
-    <div class="footer">
-        <div class="nav-group">
-            <div class="nav-item"><i data-lucide="database"></i></div>
-            <div class="nav-item"><i data-lucide="activity"></i></div>
-        </div>
+<div class="footer">
+  <div class="nav-group">
+    <div class="nav-item"><i data-lucide="database"></i></div>
+    <div class="nav-item"><i data-lucide="activity"></i></div>
+  </div>
 
-        <div class="exec-btn">
-            <div class="exec-inner">EXEC</div>
-        </div>
+  <div class="exec-btn">
+    <div class="exec-inner">EXEC</div>
+  </div>
 
-        <div class="nav-group">
-            <div class="nav-item active"><i data-lucide="shield"></i></div>
-            <div class="nav-item"><i data-lucide="cpu"></i></div>
-        </div>
-    </div>
+  <div class="nav-group">
+    <div class="nav-item active"><i data-lucide="shield"></i></div>
+    <div class="nav-item"><i data-lucide="cpu"></i></div>
+  </div>
+</div>
 
-    <script>
-        // Init Lucide Icons
-        lucide.createIcons();
+<script>
+lucide.createIcons();
 
-        // Game Logic
-        let score = parseInt(localStorage.getItem('miftah_prime_score')) || 0;
-        const scoreDisplay = document.getElementById('score');
-        const clickTarget = document.getElementById('click-target');
-        const capyImg = document.getElementById('capy-img');
+let score = parseInt(localStorage.getItem('miftah_prime_score')) || 0;
+const scoreDisplay = document.getElementById('score');
+const clickTarget = document.getElementById('click-target');
+const capyImg = document.getElementById('capy-img');
 
-        // Render initial score
-        scoreDisplay.innerText = score.toLocaleString();
+scoreDisplay.innerText = score.toLocaleString();
 
-        clickTarget.addEventListener('click', () => {
-            // Update Score
-            score++;
-            scoreDisplay.innerText = score.toLocaleString();
-            localStorage.setItem('miftah_prime_score', score);
+clickTarget.addEventListener('click', () => {
+  score++;
+  scoreDisplay.innerText = score.toLocaleString();
+  localStorage.setItem('miftah_prime_score', score);
 
-            // Pop animation
-            capyImg.style.transform = 'scale(0.94)';
-            setTimeout(() => {
-                capyImg.style.transform = 'scale(1)';
-            }, 80);
+  capyImg.style.transform = 'scale(0.94)';
+  setTimeout(() => capyImg.style.transform = 'scale(1)', 80);
 
-            // Haptic
-            if (navigator.vibrate) navigator.vibrate(10);
-        });
-    </script>
+  if (navigator.vibrate) navigator.vibrate(10);
+});
+</script>
+
 </body>
 </html>

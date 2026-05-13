@@ -21,22 +21,28 @@
 body{
   font-family:'Inter',sans-serif;
   overflow:hidden;
-  touch-action:none;
   user-select:none;
-  color:#e7e5e4;
   background:#05070a;
-  padding-bottom:20px;
+  color:#e7e5e4;
 }
 
 body::after{
   content:'';
   position:fixed;
   inset:0;
-  background-image:
+  background:
     linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
   background-size:30px 30px;
   z-index:-1;
+}
+
+/* HEADER */
+.header{
+  padding:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
 .glass{
@@ -46,24 +52,94 @@ body::after{
   box-shadow:0 15px 35px rgba(0,0,0,.8);
 }
 
-.footer-blur{
-  background:rgba(5,7,10,.92);
-  border-top:1px solid rgba(34,211,238,.12);
-  height:96px;
+/* SCORE */
+.score{
+  text-align:center;
+  margin-top:10px;
 }
 
-/* NAV ICON */
-.nav-icon{
-  color:#3f3f46;
-  transition:.25s;
+#score{
+  font-size:64px;
+  font-weight:900;
+  color:white;
 }
-.nav-icon.active{
+
+/* MAIN */
+.main{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:420px;
+  position:relative;
+}
+
+#capy-img{
+  max-width:320px;
+  filter:drop-shadow(0 0 20px black);
+  animation:float 4s ease-in-out infinite;
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+
+.pedestal{
+  width:280px;
+  height:20px;
+  background:#111;
+  border-top:2px solid rgba(34,211,238,.4);
+  margin:0 auto;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:20px;
+}
+
+.card{
+  background:rgba(10,15,20,.8);
+  border:1px solid rgba(34,211,238,.15);
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+}
+
+/* FOOTER */
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:90px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  background:rgba(5,7,10,.95);
+  border-top:1px solid rgba(34,211,238,.1);
+}
+
+.nav{
+  display:flex;
+  gap:70px;
+}
+
+.nav i{
+  cursor:pointer;
+  color:#3f3f46;
+}
+
+.nav i.active{
   color:#22d3ee;
   filter:drop-shadow(0 0 8px #22d3ee);
 }
 
-/* EXEC BUTTON */
-.exec-btn{
+/* EXEC */
+.exec{
   position:absolute;
   left:50%;
   transform:translateX(-50%) rotate(45deg);
@@ -71,73 +147,90 @@ body::after{
   height:64px;
   background:#0a0a0a;
   border:1px solid rgba(34,211,238,.4);
-  box-shadow:0 0 25px rgba(34,211,238,.15);
   display:flex;
-  align-items:center;
   justify-content:center;
-  transition:.2s;
+  align-items:center;
 }
-.exec-btn:active{
-  transform:translateX(-50%) rotate(45deg) scale(.92);
-}
-.exec-text{
+
+.exec div{
   transform:rotate(-45deg);
-  font-size:9px;
+  font-size:10px;
   font-weight:900;
   color:#22d3ee;
-  letter-spacing:.08em;
 }
 </style>
 </head>
 
-<body class="h-screen flex flex-col">
+<body>
 
 <!-- HEADER -->
-<header class="relative z-50 p-6 flex justify-between items-center">
-  <div class="flex items-center gap-3">
-    <div class="w-10 h-10 bg-zinc-900 border border-cyan-500/30 flex items-center justify-center">
-      <span class="text-cyan-400 font-black text-sm">M</span>
-    </div>
-    <div>
-      <p class="text-[8px] uppercase tracking-[.4em] text-cyan-500/50 font-bold">Security Level: Prime</p>
-      <p class="text-xs text-white font-bold">Miftah_Prime_OS</p>
-    </div>
+<div class="header">
+  <div>
+    <div style="font-weight:900;color:#22d3ee">M</div>
+    <div style="font-size:10px;color:#888">Security Level: Prime</div>
+    <div style="font-size:12px;color:white;font-weight:700">Miftah_Prime_OS</div>
   </div>
 
-  <div class="glass px-4 py-2 rounded-lg flex items-center gap-2">
-    <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
-    <span class="text-[9px] uppercase text-cyan-300 font-bold">Encrypted</span>
+  <div class="glass" style="padding:8px 14px;border-radius:10px">
+    Encrypted
   </div>
-</header>
+</div>
+
+<!-- SCORE -->
+<div class="score">
+  <div style="font-size:10px;color:#888;letter-spacing:4px">Resource Allocation</div>
+  <div id="score">0</div>
+  <div style="color:#22d3ee;font-weight:800">.00 Units</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div>
+    <img id="capy-img"
+      src="https://image.pollinations.ai/prompt/ultra_realistic_front_view_capybara_brown_fur_dark_background_cyan_rim_light_standing_on_black_stone_pedestal_stoic_cinematic_mood_high_detail_clean_background_full_body_centered_no_crop_--ar_1:1"
+      alt="core" />
+
+    <div class="pedestal"></div>
+  </div>
+
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="card">
+    Hash Rate<br><b>+1.0</b>
+  </div>
+
+  <div class="card">
+    Index PPh<br><b style="color:#22d3ee">7.5M</b>
+  </div>
+
+  <div class="card">
+    Uptime<br><b>99.9%</b>
+  </div>
+</div>
 
 <!-- FOOTER -->
-<footer class="fixed bottom-0 left-0 right-0 footer-blur flex items-center justify-between px-12 pb-6 z-50 relative">
+<div class="footer">
 
-  <!-- LEFT -->
-  <div class="flex gap-16 items-center">
-    <i data-lucide="database" class="nav-icon w-5 h-5 cursor-pointer"
-       onclick="location.href='nodes.html'"></i>
-
-    <i data-lucide="activity" class="nav-icon w-5 h-5 cursor-pointer"
-       onclick="location.href='stats.html'"></i>
+  <div class="nav">
+    <i data-lucide="database" onclick="location.href='nodes.html'"></i>
+    <i data-lucide="activity" onclick="location.href='stats.html'"></i>
   </div>
 
-  <!-- CENTER EXEC -->
-  <div class="exec-btn" onclick="location.href='exec.html'">
-    <div class="exec-text">EXEC</div>
+  <div class="exec" onclick="location.href='exec.html'">
+    <div>EXEC</div>
   </div>
 
-  <!-- RIGHT -->
-  <div class="flex gap-16 items-center">
-    <i data-lucide="shield" class="nav-icon active w-5 h-5 cursor-pointer"
-       onclick="location.href='security.html'"></i>
-
-    <i data-lucide="cpu" class="nav-icon w-5 h-5 cursor-pointer"
-       onclick="location.href='terminal.html'"></i>
+  <div class="nav">
+    <i data-lucide="shield" class="active" onclick="location.href='security.html'"></i>
+    <i data-lucide="cpu" onclick="location.href='terminal.html'"></i>
   </div>
 
-</footer>
+</div>
 
+<script src="https://unpkg.com/lucide@latest"></script>
 <script>
 lucide.createIcons();
 </script>

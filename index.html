@@ -27,6 +27,7 @@ body {
   display: flex; 
   flex-direction: column;
   overflow: hidden; 
+  position: relative;
 }
 
 body::after {
@@ -38,7 +39,16 @@ body::after {
 
 .header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; z-index: 1001; }
 
-#content-frame { flex: 1; width: 100%; border: none; background: transparent; z-index: 1; }
+/* --- IFRAME FULL SCREEN --- */
+#content-frame { 
+  flex: 1; 
+  width: 100%; 
+  border: none; 
+  background: transparent; 
+  z-index: 1;
+  /* Memastikan iframe mengambil sisa ruang sampai bawah sebelum footer */
+  margin-bottom: 80px; 
+}
 
 /* --- FOOTER FIXED --- */
 .footer { 

@@ -10,8 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* Reset & Base */
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; overflow: hidden; }
+/* Reset global tetap pakai overflow hidden biar body gak goyang */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 body {
   font-family: 'Inter', sans-serif; 
   background: #05070a; 
@@ -19,9 +19,9 @@ body {
   height: 100vh; 
   display: flex; 
   flex-direction: column;
+  overflow: hidden; 
 }
 
-/* Background Grid (Tetap di belakang semua halaman) */
 body::after {
   content: ''; position: fixed; inset: 0;
   background: linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px), 
@@ -29,32 +29,17 @@ body::after {
   background-size: 30px 30px; z-index: -1;
 }
 
-/* Header Static */
-.header { 
-  padding: 20px 24px; 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  flex-shrink: 0; 
-  z-index: 1001; 
-}
+.header { padding: 20px 24px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; z-index: 1001; }
 
-/* Frame Konten Utama (Wadah untuk home.html, database.html, dll) */
-#content-frame { 
-  flex: 1; 
-  width: 100%; 
-  border: none; 
-  background: transparent; 
-  z-index: 1;
-}
+#content-frame { flex: 1; width: 100%; border: none; background: transparent; z-index: 1; }
 
-/* Footer Nav (Locked / Tidak Bergerak) */
+/* --- PERBAIKAN FOOTER --- */
 .footer { 
   position: fixed; 
   bottom: 0; 
   left: 0; 
   right: 0; 
-  height: 95px; 
+  height: 80px; /* Tinggi standar footer */
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
@@ -63,35 +48,48 @@ body::after {
   border-top: 1px solid rgba(34, 211, 238, 0.2); 
   z-index: 1000; 
   backdrop-filter: blur(20px); 
+  /* KRITIKAL: Matikan overflow hidden di sini */
+  overflow: visible !important; 
 }
 
 .nav-group { display: flex; gap: 50px; }
 .nav-item { color: #3f3f46; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
 .nav-item.active { color: #22d3ee; filter: drop-shadow(0 0 8px #22d3ee); }
 
-/* Tombol EXEC (Diamond Style) */
+/* --- PERBAIKAN TOMBOL EXEC --- */
 .exec-btn { 
   position: absolute; 
   left: 50%; 
-  bottom: 45px; 
+  /* bottom: 35px berarti titik tengah diamond naik melewati garis footer */
+  bottom: 30px; 
   transform: translateX(-50%) rotate(45deg); 
-  width: 65px; 
-  height: 65px; 
+  width: 62px; 
+  height: 62px; 
   background: #05070a; 
   border: 2px solid #22d3ee; 
   display: flex; 
   justify-content: center; 
   align-items: center; 
-  box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); 
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.4); 
   cursor: pointer; 
-  transition: 0.2s;
+  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 1002;
 }
-.exec-btn:active { transform: translateX(-50%) rotate(45deg) scale(0.9); }
-.exec-inner { transform: rotate(-45deg); font-size: 11px; font-weight: 900; color: #22d3ee; letter-spacing: 1px; }
+
+.exec-btn:active { 
+  transform: translateX(-50%) rotate(45deg) scale(0.85); 
+  box-shadow: 0 0 50px rgba(34, 211, 238, 0.7);
+}
+
+.exec-inner { 
+  transform: rotate(-45deg); 
+  font-size: 10px; 
+  font-weight: 900; 
+  color: #22d3ee; 
+  letter-spacing: 1.5px; 
+}
 </style>
 </head>
-
 <body>
 
   <div class="header">
@@ -119,28 +117,15 @@ body::after {
 
 <script>
 lucide.createIcons();
-
-// Fungsi Ganti Halaman
 function changePage(fileName, element) {
     const frame = document.getElementById('content-frame');
-    
-    // Set sumber iframe ke file yang dituju
     frame.src = fileName;
-
-    // Reset status aktif semua icon
-    document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    
-    // Set status aktif pada menu yang diklik (kecuali tombol EXEC diamond)
-    if (element.classList.contains('nav-item')) {
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    if (element && element.classList.contains('nav-item')) {
         element.classList.add('active');
     }
-
-    // Feedback getar ponsel (jika didukung)
     if (navigator.vibrate) navigator.vibrate(8);
 }
 </script>
-
 </body>
 </html>

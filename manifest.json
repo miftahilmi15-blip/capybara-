@@ -1,7 +1,7 @@
 {
-  "name": "Miftah Prime Wealth OS",
-  "short_name": "MiftahOS",
-  "description": "Institutional-grade wealth management interface for digital assets.",
+  "name": "Capy Sovereign Wealth OS",
+  "short_name": "CapySovereign",
+  "description": "Institutional-grade wealth management with the silent dominance of the Capybara.",
   "start_url": "/index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -34,7 +34,7 @@
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Wealth OS Dashboard"
+      "label": "Capy Sovereign Dashboard"
     }
   ]
 }

@@ -4,29 +4,98 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Wealth OS — Miftah Prime</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; overflow: hidden; }
-    body { font-family: 'Inter', sans-serif; background: #05070a; color: #e7e5e4; height: 100vh; display: flex; flex-direction: column; }
-    
-    /* Area Konten: Memanggil file luar */
-    #content-frame { flex: 1; width: 100%; border: none; background: transparent; }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-    /* Footer Tetap (Locked) */
-    .footer { position: fixed; bottom: 0; left: 0; right: 0; height: 95px; display: flex; justify-content: space-between; align-items: center; padding: 0 40px; background: rgba(5, 7, 10, 0.98); border-top: 1px solid rgba(34, 211, 238, 0.2); z-index: 1000; }
-    .nav-group { display: flex; gap: 50px; }
-    .nav-item { color: #3f3f46; cursor: pointer; transition: 0.3s; }
-    .nav-item.active { color: #22d3ee; filter: drop-shadow(0 0 8px #22d3ee); }
-    .exec-btn { position: absolute; left: 50%; bottom: 45px; transform: translateX(-50%) rotate(45deg); width: 65px; height: 65px; background: #05070a; border: 2px solid #22d3ee; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); cursor: pointer; }
-    .exec-inner { transform: rotate(-45deg); font-size: 11px; font-weight: 900; color: #22d3ee; }
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; overflow: hidden; }
+body {
+  font-family: 'Inter', sans-serif; 
+  background: #05070a; 
+  color: #e7e5e4; 
+  height: 100vh; 
+  display: flex; 
+  flex-direction: column;
+}
+
+/* Background Grid Tetap */
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background: linear-gradient(rgba(34,211,238,0.03) 1px, transparent 1px), 
+              linear-gradient(90deg, rgba(34,211,238,0.03) 1px, transparent 1px);
+  background-size: 30px 30px; z-index: -1;
+}
+
+/* HEADER STATIC */
+.header { 
+  padding: 20px 24px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  flex-shrink: 0; 
+  z-index: 1001; 
+}
+
+/* FRAME KONTEN UTAMA */
+#content-frame { 
+  flex: 1; 
+  width: 100%; 
+  border: none; 
+  background: transparent; 
+  z-index: 1;
+}
+
+/* FOOTER NAV (LOCKED) */
+.footer { 
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  height: 95px; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 0 40px; 
+  background: rgba(5, 7, 10, 0.98); 
+  border-top: 1px solid rgba(34, 211, 238, 0.2); 
+  z-index: 1000; 
+  backdrop-filter: blur(20px); 
+}
+
+.nav-group { display: flex; gap: 50px; }
+.nav-item { color: #3f3f46; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
+.nav-item.active { color: #22d3ee; filter: drop-shadow(0 0 8px #22d3ee); }
+
+/* TOMBOL EXEC TENGAH */
+.exec-btn { 
+  position: absolute; 
+  left: 50%; 
+  bottom: 45px; 
+  transform: translateX(-50%) rotate(45deg); 
+  width: 65px; 
+  height: 65px; 
+  background: #05070a; 
+  border: 2px solid #22d3ee; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  box-shadow: 0 0 25px rgba(34, 211, 238, 0.4); 
+  cursor: pointer; 
+  transition: 0.2s;
+  z-index: 1002;
+}
+.exec-btn:active { transform: translateX(-50%) rotate(45deg) scale(0.9); }
+.exec-inner { transform: rotate(-45deg); font-size: 11px; font-weight: 900; color: #22d3ee; letter-spacing: 1px; }
 </style>
 </head>
+
 <body>
 
-  <div class="header" style="padding: 20px 24px; display: flex; align-items: center; gap: 12px;">
+  <div class="header">
     <div style="font-weight:900;color:#22d3ee;font-size:24px;background:rgba(34,211,238,0.1);width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(34,211,238,0.3);">M</div>
-    <div style="font-size:14px;color:white;font-weight:700;">Miftah_Prime_OS</div>
+    <div style="font-size:14px;color:white;font-weight:700;letter-spacing:0.5px">Miftah_Prime_OS</div>
   </div>
 
   <iframe id="content-frame" src="home.html"></iframe>
@@ -36,7 +105,11 @@
       <div class="nav-item" onclick="changePage('database.html', this)"><i data-lucide="database"></i></div>
       <div class="nav-item" onclick="changePage('activity.html', this)"><i data-lucide="activity"></i></div>
     </div>
-    <div class="exec-btn" onclick="changePage('exec.html', this)"><div class="exec-inner">EXEC</div></div>
+
+    <div class="exec-btn" onclick="changePage('exec.html', this)">
+      <div class="exec-inner">EXEC</div>
+    </div>
+
     <div class="nav-group">
       <div class="nav-item active" id="home-btn" onclick="changePage('home.html', this)"><i data-lucide="shield"></i></div>
       <div class="nav-item" onclick="changePage('cpu.html', this)"><i data-lucide="cpu"></i></div>
@@ -44,13 +117,29 @@
   </div>
 
 <script>
-    lucide.createIcons();
-    function changePage(page, el) {
-        document.getElementById('content-frame').src = page;
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        if(el.classList.contains('nav-item')) el.classList.add('active');
-        if (navigator.vibrate) navigator.vibrate(5);
+lucide.createIcons();
+
+// FUNGSI PINDAH HALAMAN TANPA RELOAD NAVIGASI
+function changePage(fileName, element) {
+    const frame = document.getElementById('content-frame');
+    
+    // Ganti isi iframe
+    frame.src = fileName;
+
+    // Update styling tombol aktif
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Jika yang diklik adalah nav-item (bukan EXEC), kasih class active
+    if (element.classList.contains('nav-item')) {
+        element.classList.add('active');
     }
+
+    // Feedback getar tipis
+    if (navigator.vibrate) navigator.vibrate(8);
+}
 </script>
+
 </body>
 </html>

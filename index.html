@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Wealth OS — Miftah Prime</title>
+<title>Capy Sovereign — Wealth OS</title>
 
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MiftahOS">
+<meta name="apple-mobile-web-app-title" content="CapySovereign">
 <link rel="apple-touch-icon" href="logo-192.png">
 <meta name="theme-color" content="#05070a">
 
@@ -40,13 +40,13 @@ body::after {
 
 #content-frame { flex: 1; width: 100%; border: none; background: transparent; z-index: 1; }
 
-/* --- PERBAIKAN FOOTER --- */
+/* --- FOOTER FIXED --- */
 .footer { 
   position: fixed; 
   bottom: 0; 
   left: 0; 
   right: 0; 
-  height: 80px; /* Tinggi standar footer */
+  height: 80px; 
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
@@ -55,7 +55,6 @@ body::after {
   border-top: 1px solid rgba(34, 211, 238, 0.2); 
   z-index: 1000; 
   backdrop-filter: blur(20px); 
-  /* KRITIKAL: Matikan overflow hidden di sini */
   overflow: visible !important; 
 }
 
@@ -63,11 +62,10 @@ body::after {
 .nav-item { color: #3f3f46; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
 .nav-item.active { color: #22d3ee; filter: drop-shadow(0 0 8px #22d3ee); }
 
-/* --- PERBAIKAN TOMBOL EXEC --- */
+/* --- DIAMOND EXEC BUTTON --- */
 .exec-btn { 
   position: absolute; 
   left: 50%; 
-  /* bottom: 35px berarti titik tengah diamond naik melewati garis footer */
   bottom: 30px; 
   transform: translateX(-50%) rotate(45deg); 
   width: 62px; 
@@ -100,8 +98,8 @@ body::after {
 <body>
 
   <div class="header">
-    <div style="font-weight:900;color:#22d3ee;font-size:24px;background:rgba(34,211,238,0.1);width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(34,211,238,0.3);">M</div>
-    <div style="font-size:14px;color:white;font-weight:700;letter-spacing:0.5px">Miftah_Prime_OS</div>
+    <div style="font-weight:900;color:#22d3ee;font-size:24px;background:rgba(34,211,238,0.1);width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(34,211,238,0.3);">C</div>
+    <div style="font-size:14px;color:white;font-weight:700;letter-spacing:0.5px">Capy_Sovereign_OS</div>
   </div>
 
   <iframe id="content-frame" src="home.html"></iframe>

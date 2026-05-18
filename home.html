@@ -1,1 +1,36 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>* { border-radius: 0px !important; } body { background: transparent; color: white; padding: 12px; }</style>
+</head>
+<body>
+    <div class="text-center my-6">
+        <div class="text-[10px] text-cyan-400 font-mono tracking-widest uppercase">&gt; Extracted Balance</div>
+        <h1 id="coin-display" class="text-3xl font-black tracking-tight text-white mt-1">150,000</h1>
+    </div>
+    
+    <div class="flex justify-center my-12">
+        <button onclick="handleTap()" class="w-40 h-40 bg-cyan-950/40 border-4 border-cyan-500 flex flex-col items-center justify-center active:scale-95 transition">
+            <span class="text-4xl">🦾</span>
+            <span class="text-[9px] font-black text-cyan-400 tracking-widest mt-2">TAP CORE</span>
+        </button>
+    </div>
+
+    <script>
+        function handleTap() {
+            if(window.parent && window.parent.playerData) {
+                window.parent.playerData.coins += 1;
+                document.getElementById('coin-display').innerText = window.parent.playerData.coins.toLocaleString('id-ID');
+            }
+        }
+        setInterval(() => {
+            if(window.parent && window.parent.playerData) {
+                document.getElementById('coin-display').innerText = window.parent.playerData.coins.toLocaleString('id-ID');
+            }
+        }, 500);
+    </script>
+</body>
+</html>

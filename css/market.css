@@ -1,0 +1,83 @@
+/* ==========================================================================
+   CAPY SOVEREIGN OS - MARKET UPGRADES SYSTEM STYLES
+   ========================================================================== */
+
+/* Standarisasi Reset Interior Lapak */
+body {
+    background: transparent;
+    color: #e7e5e4;
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Sembunyikan Scrollbar default biar terkesan seamless seperti OS asli */
+body::-webkit-scrollbar {
+    width: 4px;
+}
+body::-webkit-scrollbar-track {
+    background: rgba(5, 7, 10, 0.5);
+}
+body::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.2);
+}
+body::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 211, 238, 0.5);
+}
+
+/* Kartu Komponen/Rig Semen Kaku */
+.upgrade-card { 
+    background: rgba(10, 15, 20, 0.95); 
+    border: 1px solid rgba(34, 211, 238, 0.15); 
+    padding: 12px; 
+    height: 195px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Efek Sorot Hover Kartu Pasif */
+.upgrade-card:hover {
+    border-color: rgba(34, 211, 238, 0.4);
+    background: rgba(14, 22, 30, 0.95);
+    box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+}
+
+/* Kunci Tinggi Deskripsi Kartu Biar Grid Gak Loncat-loncat */
+.upgrade-card p {
+    font-size: 8.5px;
+    color: #9ca3af;
+    line-height: 1.4;
+    margin-top: 6px;
+    height: 48px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Animasi Tombol Upgrade yang Responsif */
+.upgrade-card button {
+    outline: none;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.upgrade-card button:not(:disabled):active {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}
+
+/* Keadaan Tombol Pas Kartu Sudah Mentok (MAX LEVEL) */
+.upgrade-card button:disabled {
+    background: #1e293b !important;
+    color: #34d399 !important;
+    border: 1px solid rgba(52, 211, 153, 0.2);
+    cursor: not-allowed;
+    box-shadow: none;
+}

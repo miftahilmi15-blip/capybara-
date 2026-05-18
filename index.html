@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Capy Sovereign OS</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Desain kaku total semen militer tanpa toleransi melengkung */
         * { border-radius: 0px !important; box-sizing: border-box; }
         body { background: #020617; color: white; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
         .nav-item-box.active { background: rgba(34, 211, 238, 0.1); border-color: #22d3ee; color: #22d3ee; }
@@ -41,7 +43,7 @@
     </div>
 
     <script>
-        // Global Player Data Database Mockup
+        // Global Player Database (Dicadangkan untuk mutasi data real-time anak iframe)
         window.playerData = {
             telegram_id: "miftah_dev",
             coins: 150000,
@@ -54,10 +56,43 @@
             referred_bonus_total: 1250
         };
 
+        // Otomatisasi inisialisasi Telegram WebApp SDK
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.Telegram && window.Telegram.WebApp) {
+                const tg = window.Telegram.WebApp;
+                tg.ready();
+                tg.expand(); // Paksa aplikasi terbuka full screen di HP
+
+                // Tarik data profil asli dari telegram user
+                const user = tg.initDataUnsafe?.user;
+                if (user) {
+                    window.playerData.telegram_id = user.username || user.id.toString();
+                    document.getElementById('username-display').innerText = window.playerData.telegram_id.toUpperCase();
+                }
+            }
+        });
+
+        // Controller Navigasi Iframe
         function changePage(pageUrl, btn) {
             document.getElementById('content-frame').src = pageUrl;
             document.querySelectorAll('.nav-item-box').forEach(b => b.classList.remove('active'));
             if(btn) btn.classList.add('active');
+        }
+
+        // Bridge Database Jembatan Penghubung menuju Firebase Cloud
+        function saveDataToFirebase(updatedData) {
+            console.log("📡 Mengirim enkripsi data baru ke Firebase:", updatedData);
+            
+            // Satukan mutasi data lokal agar sinkronisasi realtime gak patah
+            Object.assign(window.playerData, updatedData);
+
+            // TODO: Tempat naruh endpoint fetch() API Firebase lu besok, Bos!
+            /*
+            fetch('https://your-firebase-url.firebaseio.com/users/' + window.playerData.telegram_id + '.json', {
+                method: 'PATCH',
+                body: JSON.stringify(updatedData)
+            });
+            */
         }
     </script>
 </body>

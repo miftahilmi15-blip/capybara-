@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capy Sovereign — Market Upgrades</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Standarisasi Kaku Kotak Militer Sovereign */
+        * { border-radius: 0px !important; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: transparent; color: #e7e5e4; padding: 16px; font-family: sans-serif; overflow-y: auto; }
+        
+        /* Kartu Upgrade Semen Kaku */
+        .upgrade-card { 
+            background: rgba(10, 15, 20, 0.95); 
+            border: 1px solid rgba(34, 211, 238, 0.15); 
+            padding: 10px; 
+            height: 190px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            transition: all 0.2s;
+        }
+        .upgrade-card:hover {
+            border-color: rgba(34, 211, 238, 0.4);
+            background: rgba(14, 22, 30, 0.95);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="flex justify-between items-center mb-5 p-3 bg-slate-950/80 border border-cyan-500/20 backdrop-blur-sm shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+        <div>
+            <div class="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Operational Balance</div>
+            <div class="text-sm font-black text-white tracking-wide" id="net-score-display">0 COINS</div>
+        </div>
+        <div class="text-right">
+            <div class="text-[8px] text-cyan-500 font-bold uppercase tracking-wider">Network CPH</div>
+            <div class="text-xs font-black text-cyan-400 tracking-wide" id="net-cph-display">+0 / hr</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3" id="market-grid-container">
+        </div>
+
+    <script type="module">
+        import { upgradeCardsDatabase } from './data/upgrades.js';
+        import { StorageEngine } from './js/storage.js';
+
+        let globalScore = 0;
+
+        // Fungsi utama membuat & menampilkan daftar kartu dari database /data/upgrades.js
+        function renderMarketCards() {
+            const grid = document.getElementById('market-grid-container');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            // Menyatukan semua kategori data kartu jadi satu lapak pasar utama
+            const allCards = [
+                ...(upgradeCardsDatabase.computing || []),
+                ...(upgradeCardsDatabase.power || []),
+                ...(upgradeCardsDatabase.data || []),
+                ...(upgradeCardsDatabase.security || [])
+            ];
+
+            allCards.forEach(card => {
+                const currentLvl = StorageEngine.getCardLevel(card.id);
+                const isMax = currentLvl >= card.maxLvl;
+                
+                // Rumus kenaikan harga pangkat bertingkat berdasarkan level saat ini
+                const currentCost = Math.floor(card.baseCost * Math.pow(card.costMultiplier, currentLvl));
+
+                const cardElement = document.createElement('div');
+                cardElement.className = 'upgrade-card';
+                cardElement.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start gap-1">
+                            <b class="text-[10px] text-white uppercase font-black tracking-wide leading-tight truncate w-full" title="${card.name}">${card.name}</b>
+                            <span class="text-[8px] text-cyan-400/70 font-mono font-bold shrink-0">LVL ${currentLvl}/${card.maxLvl}</span>
+                        </div>
+                        <p class="text-[8px] text-gray-400 mt-2 leading-relaxed h-[45px] overflow-hidden">${card.desc}</p>
+                        <div class="text-[8px] text-emerald-400 font-bold mt-1 font-mono">
+                            ${isMax ? 'MAX OUT' : `+${card.baseBonus} ${card.type.toUpperCase()}/LVL`}
+                        </div>
+                    </div>
+                    <button id="btn-up-${card.id}" ${isMax ? 'disabled' : ''} class="w-full text-[9px] font-black py-1.5 px-2 flex justify-between items-center transition-all ${isMax ? 'bg-slate-800 text-emerald-400 cursor-not-allowed' : 'bg-cyan-500 text-black hover:bg-cyan-400 active:scale-95'}">
+                        <span>${isMax ? 'MAXED' : 'UPGRADE'}</span>
+                        <span class="font-mono">${isMax ? '⚙️' : currentCost.toLocaleString('id-ID')}</span>
+                    </button>
+                `;
+                
+                // Pasang pemicu klik beli jika status kartu belum mentok
+                if (!isMax) {
+                    cardElement.querySelector('button').addEventListener('click', () => buyUpgrade(card, currentCost, currentLvl));
+                }
+
+                grid.appendChild(cardElement);
+            });
+        }
+
+        // Logika Transaksi Pembelian Upgrade Kartu
+        function buyUpgrade(card, cost, currentLvl) {
+            let pData = window.parent?.playerData;
+            let currentCoins = pData ? pData.coins : (parseInt(localStorage.getItem('miftah_prime_score')) || 0);
+
+            // Validasi saldo
+            if (currentCoins < cost) { 
+                alert("Sovereign Balance Insufficient! Amankan koin Anda terlebih dahulu."); 
+                return; 
+            }
+
+            // Simpan level terbaru ke jembatan storage
+            StorageEngine.saveCardLevel(card.id, currentLvl + 1);
+
+            // Perbarui data balance & atribut CPH/Energy di State Induk Utama (index.html)
+            if (pData) {
+                pData.coins -= cost;
+                pData[card.type] = (pData[card.type] || 0) + card.baseBonus;
+                
+                // Kirim push sync instan ke Firestore Cloud jika fungsi tersedia
+                if (window.parent.saveDataToFirebase) {
+                    window.parent.saveDataToFirebase(pData);
+                }
+            } else {
+                // Cadangan enkripsi lokal jika dimainkan di luar ekosistem iframe induk
+                localStorage.setItem('miftah_prime_score', currentCoins - cost);
+            }
+
+            // Segarkan visual angka layar dan render ulang status kartu terbaru
+            syncDataDisplay();
+            renderMarketCards();
+
+            // Berikan feedback getaran ringan khas Telegram
+            if (window.parent?.Telegram?.WebApp?.HapticFeedback) {
+                window.parent.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
+            }
+        }
+
+        // Jembatan Komunikasi: Dipanggil otomatis tiap detik oleh Ticker di berkas induk index.html
+        window.updateUI = function() {
+            syncDataDisplay();
+        };
+
+        // Sinkronisasi sinkron tampilan angka di atas layar
+        function syncDataDisplay() {
+            let pData = window.parent?.playerData;
+            globalScore = pData ? pData.coins : (parseInt(localStorage.getItem('miftah_prime_score')) || 0);
+            let cph = pData ? pData.cph : 0;
+
+            const scoreText = document.getElementById('net-score-display');
+            const cphText = document.getElementById('net-cph-display');
+
+            if (scoreText) scoreText.innerText = Math.floor(globalScore).toLocaleString('id-ID') + " COINS";
+            if (cphText) cphText.innerText = "+" + cph.toLocaleString('id-ID') + " / hr";
+        }
+
+        // Bootstrap awal saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            syncDataDisplay();
+            renderMarketCards();
+            
+            // Loop internal agar angka pecahan koin tetap maju bergulir halus di layar
+            setInterval(syncDataDisplay, 1000);
+        });
+    </script>
+</body>
+</html>

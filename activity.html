@@ -1,1 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Alliance Network Node</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700;800;900&display=swap" rel="stylesheet">
 
+<style>
+/* Paksa rigid kaku total 90 derajat semen militer tanpa sudut melengkung */
+* { border-radius: 0px !important; box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: transparent; color: #e7e5e4; padding: 12px; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Dashboard Statistik Aliansi */
+.alliance-dashboard { 
+    background: rgba(5, 7, 10, 0.9); 
+    border: 2px solid rgba(34, 211, 238, 0.2); 
+    padding: 12px; 
+    margin-bottom: 12px; 
+    flex-shrink: 0; 
+}
+
+/* Kotak Tautan Link */
+.link-box {
+    background: rgba(10, 15, 20, 0.8);
+    border: 1px solid rgba(34, 211, 238, 0.15);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* Scroll Area Daftar Teman */
+.alliance-scroll-area { flex: 1 1 0%; overflow-y: auto; padding-right: 2px; touch-action: pan-y; }
+
+/* Item Baris Teman */
+.agent-card {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(34, 211, 238, 0.1);
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Scrollbar Style */
+.alliance-scroll-area::-webkit-scrollbar { width: 3px; }
+.alliance-scroll-area::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+.alliance-scroll-area::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.3); }
+</style>
+</head>
+
+<body>
+
+    <div class="alliance-dashboard">
+        <h2 class="text-[10px] font-black text-cyan-400 uppercase tracking-widest mb-2">&gt; Alliance Protocol</h2>
+        <div class="grid grid-cols-2 gap-4 border-t border-cyan-500/10 pt-2">
+            <div>
+                <div class="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Agents Recruited</div>
+                <div class="text-base font-black text-white" id="total-agents-text">0 AGENTS</div>
+            </div>
+            <div class="text-right">
+                <div class="text-[8px] text-emerald-500 font-bold uppercase tracking-wider">Syndicate Dividends</div>
+                <div class="text-base font-black text-emerald-400" id="total-bonus-text">+0 COINS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-cyan-950/10 border border-cyan-500/20 p-3 mb-3 flex flex-col gap-1.5 flex-shrink-0">
+        <div class="flex justify-between items-center">
+            <span class="text-[9px] font-black text-white uppercase tracking-wide">⚡ Standard Agent Recruit</span>
+            <b class="text-[10px] font-mono text-cyan-400 font-black">+150 COINS</b>
+        </div>
+        <div class="flex justify-between items-center border-t border-cyan-500/10 pt-1.5">
+            <span class="text-[9px] font-black text-yellow-500 uppercase tracking-wide">⭐ Premium Agent Recruit</span>
+            <b class="text-[10px] font-mono text-yellow-400 font-black">+500 COINS</b>
+        </div>
+        <p class="text-[7px] text-gray-500 font-bold uppercase mt-1">*Kamu juga mendapatkan komisi pasif mikro dari hasil tapping aliansimu.</p>
+    </div>
+
+    <div class="link-box flex-shrink-0">
+        <div class="truncate max-w-[70%]">
+            <span class="text-[7px] text-gray-500 font-bold uppercase block tracking-wider">Your Encryption Referral Link</span>
+            <span id="ref-link-text" class="text-[10px] font-mono text-gray-300 font-medium truncate block">https://t.me/capysovereignbot/game?startapp=ref_loading</span>
+        </div>
+        <button onclick="copyReferralLink()" id="btn-copy" class="bg-cyan-500 hover:bg-cyan-400 text-black text-[9px] font-black px-3 py-1.5 transition tracking-wider">
+            COPY LINK
+        </button>
+    </div>
+
+    <button onclick="inviteTelegramAgent()" class="w-full bg-slate-900 border-2 border-cyan-500/40 text-cyan-400 hover:bg-cyan-500 hover:text-black font-black text-[10px] py-2.5 mb-4 tracking-widest transition flex justify-center items-center gap-2 flex-shrink-0">
+        <span>[+] DEPLOY INVITE COMMAND</span>
+    </button>
+
+    <h3 class="text-[9px] font-black text-gray-500 uppercase tracking-widest mb-2 px-1 flex-shrink-0">&gt; Active Syndicate Grid</h3>
+    <div class="alliance-scroll-area">
+        <div id="syndicate-list-container"></div>
+    </div>
+
+<script>
+let realSyndicateList = [];
+
+function syncAllianceUI() {
+    let rawAgentsCount = 0;
+    let rawBonusTotal = 0;
+    let userId = "user";
+
+    // Hubungkan langsung ke Parent Frame Database
+    if (window.parent && window.parent.playerData) {
+        userId = window.parent.playerData.telegram_id || "miftah_dev";
+        
+        if (window.parent.playerData.referred_agents && Array.isArray(window.parent.playerData.referred_agents)) {
+            realSyndicateList = window.parent.playerData.referred_agents;
+        }
+        rawBonusTotal = window.parent.playerData.referred_bonus_total || 0;
+        rawAgentsCount = realSyndicateList.length;
+    } else {
+        // Fallback data simulasi jika diakses standalone pas dev-test
+        userId = localStorage.getItem('miftah_prime_uid') || "dev_agent";
+        realSyndicateList = [
+            { username: "crypto_phantom", lvl: 4, isPremium: true, contribution: 1250 },
+            { username: "cyber_santri", lvl: 2, isPremium: false, contribution: 450 },
+            { username: "vps_overlord", lvl: 7, isPremium: false, contribution: 3100 }
+        ];
+        rawAgentsCount = realSyndicateList.length;
+        rawBonusTotal = realSyndicateList.reduce((acc, curr) => acc + curr.contribution, 0);
+    }
+
+    document.getElementById('ref-link-text').innerText = `https://t.me/capysovereignbot/game?startapp=ref_${userId}`;
+    document.getElementById('total-agents-text').innerText = `${rawAgentsCount} AGENTS`;
+    document.getElementById('total-bonus-text').innerText = `+${rawBonusTotal.toLocaleString('id-ID')} COINS`;
+
+    renderSyndicateList();
+}
+
+function renderSyndicateList() {
+    const container = document.getElementById('syndicate-list-container');
+    if (!container) return;
+
+    if (realSyndicateList.length === 0) {
+        container.innerHTML = `
+            <div class="text-center py-8 border border-dashed border-slate-800 text-gray-600 text-[9px] font-bold uppercase tracking-wider">
+                [ NO AGENTS DETECTED IN YOUR GRID ]
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = '';
+    realSyndicateList.forEach(agent => {
+        const card = document.createElement('div');
+        card.className = 'agent-card';
+        card.innerHTML = `
+            <div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-black text-white">${agent.username}</span>
+                    ${agent.isPremium ? '<span class="text-[7px] bg-yellow-500/10 text-yellow-400 px-1 font-black">PREM</span>' : ''}
+                </div>
+                <div class="text-[7px] text-gray-500 font-bold uppercase mt-0.5">Operational Level: ${agent.lvl}</div>
+            </div>
+            <div class="text-right">
+                <div class="text-[9px] font-mono font-black text-cyan-400">+${agent.contribution.toLocaleString('id-ID')}</div>
+                <div class="text-[6px] text-gray-500 font-bold uppercase">Mined Kickback</div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function copyReferralLink() {
+    const linkText = document.getElementById('ref-link-text').innerText;
+    navigator.clipboard.writeText(linkText).then(() => {
+        const btn = document.getElementById('btn-copy');
+        btn.innerText = "COPIED!";
+        btn.className = "bg-emerald-500 text-black text-[9px] font-black px-3 py-1.5 tracking-wider";
+        
+        if (window.parent && window.parent.Telegram?.WebApp?.HapticFeedback) {
+            window.parent.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+        }
+
+        setTimeout(() => {
+            btn.innerText = "COPY LINK";
+            btn.className = "bg-cyan-500 hover:bg-cyan-400 text-black text-[9px] font-black px-3 py-1.5 tracking-wider";
+        }, 2000);
+    }).catch(err => {
+        alert("Gagal menyalin tautan.");
+    });
+}
+
+function inviteTelegramAgent() {
+    const linkText = document.getElementById('ref-link-text').innerText;
+    const shareText = encodeURIComponent("🚨 DEPLOY SIGNAL! Gabung ke Jaringan Aliansi Sovereign OS milik gua. Ekstraksi koin TON bareng Capy, gas bantai farm dari bawah! 🦾🔥");
+    const fullTelegramShareUrl = `https://t.me/share/url?url=${encodeURIComponent(linkText)}&text=${shareText}`;
+    
+    if (window.parent && window.parent.Telegram?.WebApp) {
+        window.parent.Telegram.WebApp.openTelegramLink(fullTelegramShareUrl);
+    } else {
+        window.open(fullTelegramShareUrl, '_blank');
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    syncAllianceUI();
+});
+</script>
+</body>
+</html>

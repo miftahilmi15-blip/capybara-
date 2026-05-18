@@ -1,0 +1,57 @@
+/* ==========================================================================
+   CAPY SOVEREIGN OS - ADVANCED CYBER ANIMATIONS
+   ========================================================================== */
+
+/* 1. Animasi Putaran Lingkaran Luar pada Boot Screen */
+@keyframes spinLinear {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 2. Animasi Putaran Terbalik Lingkaran Dalam (Dashed) */
+@keyframes spinLinearReverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* 3. Efek Kedip Titik Hijau / Biru Status Node Terkoneksi */
+@keyframes statusPulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 4px #22d3ee); }
+}
+
+/* 4. Efek Denyut Pendar Logo Capy Inti */
+@keyframes logoPulse {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.2)) brightness(0.9); }
+    50% { filter: drop-shadow(0 0 25px rgba(34, 211, 238, 0.5)) brightness(1.1); }
+}
+
+/* 5. Efek Transisi Masuk Halaman Anak (Fade In Smooth) */
+@keyframes pageEnter {
+    from { opacity: 0; transform: translateY(4px); filter: blur(2px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ==========================================================================
+   MAPPING UTILITY CLASSES (Tinggal Panggil di HTML/JS)
+   ========================================================================== */
+
+.animate-spin-fast {
+    animation: spinLinear 15s linear infinite;
+}
+
+.animate-spin-reverse {
+    animation: spinLinearReverse 10s linear infinite;
+}
+
+.animate-status-pulse {
+    animation: statusPulse 1.5s infinite ease-in-out;
+}
+
+.animate-logo-glow {
+    animation: logoPulse 4s infinite ease-in-out;
+}
+
+.page-transition-active {
+    animation: pageEnter 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}

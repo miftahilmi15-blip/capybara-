@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Network Node Vault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Paksa kotak kaku total semen militer tanpa toleransi melengkung */
+        * { border-radius: 0px !important; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: transparent; color: white; padding: 16px; -webkit-tap-highlight-color: transparent; }
+        
+        /* Kartu Aset Kaku */
+        .data-card { 
+            background: rgba(5, 7, 10, 0.85); 
+            border: 2px solid rgba(34, 211, 238, 0.2); 
+            padding: 15px; 
+            margin-bottom: 16px; 
+            backdrop-filter: blur(5px); 
+        }
+        
+        /* Grid Absen Harian Box (Sesuai Mockup) */
+        .checkin-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .day-box {
+            background: rgba(10, 15, 25, 0.6);
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            padding: 10px 4px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 68px;
+            transition: all 0.2s ease;
+        }
+        .day-box.completed {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: #10b981;
+        }
+        .day-box.ready {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: #22d3ee;
+            cursor: pointer;
+            box-shadow: inset 0 0 10px rgba(34, 211, 238, 0.1);
+        }
+        .day-box.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Gaya Misi Sosial Tactical */
+        .task-card {
+            background: rgba(5, 7, 10, 0.7);
+            border: 1px solid rgba(34, 211, 238, 0.15);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Modifikasi scrollbar internal iframe */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: rgba(5,7,10,0.5); }
+        ::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.3); }
+    </style>
+</head>
+<body>
+    
+    <h2 class="text-xs font-black text-cyan-400 uppercase tracking-widest mb-3">&gt; Vault Assets</h2>
+    <div class="data-card flex justify-between items-center">
+        <div>
+            <div class="text-[9px] text-gray-500 font-bold uppercase tracking-wider">Total Extraction</div>
+            <div class="text-xl font-black text-white" id="vault-ton-text">0,00 TON</div>
+        </div>
+        <div class="text-cyan-400 font-mono text-[10px] font-bold tracking-widest bg-cyan-500/5 border border-cyan-500/30 px-2 py-0.5">TON_NETWORK</div>
+    </div>
+    
+    <div class="flex justify-between items-center mb-3 mt-4">
+        <h2 class="text-xs font-black text-cyan-400 uppercase tracking-widest">&gt; Daily Signal Sync</h2>
+        <div id="checkin-streak-text" class="text-[9px] font-mono text-emerald-400 font-bold uppercase tracking-wider">STREAK: 0 DAYS</div>
+    </div>
+    
+    <div class="checkin-grid" id="checkin-container"></div>
+    
+    <h2 class="text-xs font-black text-cyan-400 uppercase tracking-widest mt-6 mb-3">&gt; Tactical Operations</h2>
+    
+    <div id="tasks-container">
+        <div class="task-card">
+            <div>
+                <div class="text-xs font-bold text-white uppercase tracking-wide">Join Telegram Channel</div>
+                <div class="text-[10px] text-cyan-400 font-mono mt-0.5">+5.000 COINS</div>
+            </div>
+            <button onclick="executeTask('task_tg', 5000, 'https://t.me/yourchannel')" id="btn-task_tg" class="bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-black px-4 py-2 transition tracking-wider">
+                START
+            </button>
+        </div>
+
+        <div class="task-card">
+            <div>
+                <div class="text-xs font-bold text-white uppercase tracking-wide">Follow X Account</div>
+                <div class="text-[10px] text-cyan-400 font-mono mt-0.5">+3.000 COINS</div>
+            </div>
+            <button onclick="executeTask('task_x', 3000, 'https://x.com/youraccount')" id="btn-task_x" class="bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-black px-4 py-2 transition tracking-wider">
+                START
+            </button>
+        </div>
+
+        <div class="task-card">
+            <div>
+                <div class="text-xs font-bold text-white uppercase tracking-wide">Watch Core Update Youtube</div>
+                <div class="text-[10px] text-cyan-400 font-mono mt-0.5">+10.000 COINS</div>
+            </div>
+            <button onclick="executeTask('task_yt', 10000, 'https://youtube.com/yourchannel')" id="btn-task_yt" class="bg-cyan-500 hover:bg-cyan-400 text-black text-[10px] font-black px-4 py-2 transition tracking-wider">
+                START
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Skema hadiah koin absensi progresif Day 1 - 20
+        const checkInRewards = {
+            1: 1000, 2: 2000, 3: 3000, 4: 4000, 5: 6000,
+            6: 8000, 7: 10000, 8: 12000, 9: 15000, 10: 20000,
+            11: 25000, 12: 30000, 13: 35000, 14: 40000, 15: 50000,
+            16: 60000, 17: 70000, 18: 80000, 19: 90000, 20: 120000
+        };
+
+        // Render struktur Grid Absen Day 1 - 20 otomatis
+        function renderCheckInGrid() {
+            const container = document.getElementById('checkin-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            for (let day = 1; day <= 20; day++) {
+                const reward = checkInRewards[day];
+                const box = document.createElement('div');
+                box.id = `day-box-${day}`;
+                box.className = 'day-box locked'; 
+                box.innerHTML = `
+                    <div class="text-[9px] font-black text-gray-400">D-${day}</div>
+                    <div class="text-[8px] font-mono font-bold text-cyan-400">+${reward >= 1000 ? (reward/1000)+'K' : reward}</div>
+                    <div class="text-[7px] font-bold" id="day-status-${day}">LOCK</div>
+                `;
+                container.appendChild(box);
+            }
+        }
+
+        // Sinkronisasi data real-time dengan Parent Database (index.html)
+        function syncVaultDisplay() {
+            let pData = null;
+            if (window.parent && window.parent.playerData) {
+                pData = window.parent.playerData;
+            }
+
+            if (pData) {
+                // 1. Konversi Saldo Koin Game ke Saldo TON (1 TON = 100.000 Koin)
+                const currentCoins = pData.coins || 0;
+                const totalTon = (currentCoins / 100000); 
+                
+                document.getElementById('vault-ton-text').innerText = totalTon.toLocaleString('id-ID', {minimumFractionDigits: 2, maximumFractionDigits: 4}) + " TON";
+
+                // 2. Sinkronisasi Status Misi Sosial
+                const completedTasks = pData.completed_tasks || {};
+                ['task_tg', 'task_x', 'task_yt'].forEach(taskId => {
+                    const btn = document.getElementById(`btn-${taskId}`);
+                    if (btn && completedTasks[taskId]) {
+                        btn.innerText = "COMPLETED";
+                        btn.disabled = true;
+                        btn.className = "bg-slate-800 text-gray-500 text-[10px] font-black px-4 py-2 cursor-not-allowed border border-slate-700";
+                    }
+                });
+
+                // 3. Logika Inti Absen Harian (Daily Check-In)
+                const lastCheckIn = pData.last_checkin_time || 0; 
+                const currentStreak = pData.checkin_streak || 0;  
+                
+                document.getElementById('checkin-streak-text').innerText = `STREAK: ${currentStreak} DAYS`;
+
+                const now = Date.now();
+                const oneDayMs = 24 * 60 * 60 * 1000;
+                const isReadyToClaim = (now - lastCheckIn) >= oneDayMs || lastCheckIn === 0;
+
+                let targetDay = currentStreak + 1;
+                if (targetDay > 20) targetDay = 1; 
+
+                for (let day = 1; day <= 20; day++) {
+                    const box = document.getElementById(`day-box-${day}`);
+                    const statusText = document.getElementById(`day-status-${day}`);
+                    if (!box || !statusText) continue;
+
+                    if (day <= currentStreak) {
+                        box.className = 'day-box completed';
+                        statusText.innerText = "DONE";
+                        statusText.className = "text-[7px] font-black text-emerald-400";
+                        box.onclick = null;
+                    } 
+                    else if (day === targetDay && isReadyToClaim) {
+                        box.className = 'day-box ready';
+                        statusText.innerText = "SYNC";
+                        statusText.className = "text-[7px] font-black text-black bg-cyan-400 px-1 w-full text-center tracking-tight";
+                        box.onclick = () => claimDailyBonus(day, checkInRewards[day]);
+                    } 
+                    else if (day === targetDay && !isReadyToClaim) {
+                        box.className = 'day-box';
+                        box.style.borderColor = 'rgba(234, 179, 8, 0.4)'; 
+                        statusText.innerText = "WAIT";
+                        statusText.className = "text-[7px] font-black text-yellow-500";
+                        box.onclick = () => alert("Sinyal enkripsi aman. Kembali lagi dalam 24 jam untuk sinkronisasi berikutnya!");
+                    } 
+                    else {
+                        box.className = 'day-box locked';
+                        statusText.innerText = "LOCK";
+                        statusText.className = "text-[7px] font-black text-gray-500";
+                        box.onclick = null;
+                    }
+                }
+            } else {
+                // Fallback LocalStorage jika dites di luar iframe
+                let localCoins = parseInt(localStorage.getItem('miftah_prime_score')) || 0;
+                document.getElementById('vault-ton-text').innerText = (localCoins / 100000).toLocaleString('id-ID', {minimumFractionDigits: 2}) + " TON";
+            }
+        }
+
+        // Eksekutor klaim absen harian
+        function claimDailyBonus(day, rewardAmount) {
+            if (!window.parent || !window.parent.playerData) return;
+            const pData = window.parent.playerData;
+
+            let currentCoins = pData.coins || 0;
+            let currentStreak = pData.checkin_streak || 0;
+
+            let newStreak = currentStreak + 1;
+            if (newStreak > 20) newStreak = 1;
+
+            if (window.parent && typeof window.parent.saveDataToFirebase === 'function') {
+                window.parent.saveDataToFirebase({
+                    coins: currentCoins + rewardAmount,
+                    checkin_streak: newStreak,
+                    last_checkin_time: Date.now()
+                });
+                
+                // Force mutasi lokal parent agar UI atas langsung sinkron tanpa delay
+                pData.coins = currentCoins + rewardAmount;
+                pData.checkin_streak = newStreak;
+                pData.last_checkin_time = Date.now();
+            }
+
+            if (window.parent.Telegram?.WebApp?.HapticFeedback) {
+                window.parent.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+            }
+
+            alert(`Signal Synchronized! Sukses klaim Day ${day}, +${rewardAmount.toLocaleString('id-ID')} Koin ditambahkan.`);
+            syncVaultDisplay();
+        }
+
+        // Eksekutor misi harian / sosial media
+        function executeTask(taskId, reward, targetLink) {
+            if (!window.parent || !window.parent.playerData) return;
+            const pData = window.parent.playerData;
+            let completedTasks = pData.completed_tasks || {};
+
+            if (completedTasks[taskId]) return;
+
+            window.open(targetLink, '_blank');
+
+            const btn = document.getElementById(`btn-${taskId}`);
+            btn.innerText = "VERIFYING...";
+            btn.disabled = true;
+            btn.className = "bg-yellow-500/10 border border-yellow-500/40 text-yellow-500 text-[10px] font-black px-4 py-2 cursor-wait";
+
+            setTimeout(() => {
+                let currentCoins = pData.coins || 0;
+                completedTasks[taskId] = true;
+
+                if (window.parent && typeof window.parent.saveDataToFirebase === 'function') {
+                    window.parent.saveDataToFirebase({
+                        coins: currentCoins + reward,
+                        completed_tasks: completedTasks
+                    });
+                    
+                    // Force sinkronisasi instan parent frame
+                    pData.coins = currentCoins + reward;
+                    pData.completed_tasks = completedTasks;
+                }
+
+                if (window.parent.Telegram?.WebApp?.HapticFeedback) {
+                    window.parent.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+                }
+
+                syncVaultDisplay();
+            }, 2000);
+        }
+
+        // Inisialisasi awal saat halaman dimuat penuh
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCheckInGrid();
+            syncVaultDisplay();
+            setInterval(syncVaultDisplay, 1000);
+        });
+    </script>
+</body>
+</html>
